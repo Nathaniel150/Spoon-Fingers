@@ -13,11 +13,10 @@ function StoryScene({updateState, story}) {
         console.log(sceneIndex)
         if(sceneIndex < story.length - 1) {
             setSceneIndex(sceneIndex + 1);
-            
         } 
          
         else {
-             //finish him
+             updateState()
         }
     }
 

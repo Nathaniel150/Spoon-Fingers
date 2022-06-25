@@ -1,7 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet, Pressable } from "react-native";
 
+
 function NarrationScene({scene}) {
+
     return (
         
         <View style={styles.container}>

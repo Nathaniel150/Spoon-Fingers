@@ -1,17 +1,59 @@
 import { View, Text, StyleSheet, Image } from "react-native";
 
+import Constants from "../Constants";
+
 function DialogueScene ({scene})  {
- 
+  var textBoxWidth = Constants.MAX_WIDTH *.9
+  var textBoxHeight = Constants.MAX_HEIGHT *.22
+  var photoSqDim= textBoxHeight * .55
+  var nameFontSize = 23
+  var nameHeightPadding = 5
+  var nameContainerHeight = nameHeightPadding * 2 + nameFontSize //the distance the photo is away from top of text box
+  
+
   return (
     <View style={styles.container}>
-      <View style={styles.content}>
-          <View style={styles.photoContainer}>
-              <Image style={ [{backgroundColor:scene.character.backgroundColor}, styles.photo]} source={scene.character.photo} />
+      <View style={{ //content
+        backgroundColor: "#fcfdffc7",
+        width: textBoxWidth,
+        height: textBoxHeight,
+        alignSelf: "center",
+        marginBottom: 30,
+        flexDirection: "row"
+      }}>
+          <View style={{ //photo containter
+            flex: 1.1,
+            width: "100%",
+            paddingHorizontal: 10,
+            alignItems: "center",
+            top: nameContainerHeight
+          }}>
+              <Image style={{ //photo
+                backgroundColor:scene.character.backgroundColor,
+                width:photoSqDim,
+                height:photoSqDim
+              }} 
+                source={scene.character.photo} />
           </View>
-          <View style={styles.text}> 
+          <View style={{ //text container
+            flex: 2,
+            paddingRight: 20,
+            paddingTop: nameContainerHeight, 
+          }}> 
             <Text style={{fontSize:18}}>{scene.text}</Text>
           </View>
-        <Text style={styles.name}>{scene.character.name}</Text>
+        <Text style={{ //name tag
+          position: 'absolute',
+          top: -(nameContainerHeight/2),
+          left: -15,
+          backgroundColor: "#ffffff",
+          fontSize: nameFontSize,
+          textAlignVertical: "center",
+          paddingHorizontal: 15,
+          paddingVertical: nameHeightPadding,
+        }}> 
+          {scene.character.name}
+        </Text>
       </View>
     </View>
   );
@@ -23,43 +65,8 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
 
 },
-content: {
-    backgroundColor: "#fcfdffc7",
-    width: '90%',
-    height: '22%',
-    alignSelf: "center",
-    marginBottom: 30,
-    flexDirection: "row"
-},
-text: {
-    flex: 2,
-    paddingRight: 20,
-    paddingTop: 20
-    //top: "8%",
-  
-    
-},
-photoContainer: {
-    flex: 1.1,
-    width: "100%",
-    top: "10%",
-    paddingHorizontal: 10
-},
 
-photo: {
-    width: "90%",
-    height: "55%",
 
-},
-name: {
-    position: 'absolute',
-    top: '-8%',
-    left: '-3%',
-    backgroundColor: "#ffffff",
-    fontSize: 20,
-    paddingHorizontal: 15,
-    paddingVertical: 5,
-}
 });
 
 export default DialogueScene;
