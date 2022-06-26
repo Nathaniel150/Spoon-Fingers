@@ -1,7 +1,31 @@
-let hole = { isRock: false, visited: true, win: false };
-let rock = { isRock: true, visited: false, win: false };
-let ground = { isRock: false, visited: false, win: false };
-let win = { isRock: false, visited: false, win: true };
+let hole = {
+  isRock: false,
+  visited: true,
+  win: false,
+  guardStunned: false,
+  isSpoon: false,
+};
+let rock = {
+  isRock: true,
+  visited: false,
+  win: false,
+  guardStunned: false,
+  isSpoon: false,
+};
+let ground = {
+  isRock: false,
+  visited: false,
+  win: false,
+  guardStunned: false,
+  isSpoon: false,
+};
+let win = {
+  isRock: false,
+  visited: false,
+  win: true,
+  guardStunned: false,
+  isSpoon: false,
+};
 
 export var level1 = [
   [

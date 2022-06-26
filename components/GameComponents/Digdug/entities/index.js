@@ -12,6 +12,10 @@ const DirtArray = ({ playerPosition, guardPosition }) => {
     setDirt(level1);
   }, []);
 
+  useEffect(() => {
+    console.log("rendered");
+  }, [dirt]);
+
   return (
     <>
       <View
@@ -24,16 +28,16 @@ const DirtArray = ({ playerPosition, guardPosition }) => {
       >
         {dirt.map((row, i) => {
           return (
-            <View>
+            <View key={`row+${i}`}>
               {row.map((square, j) => {
                 return (
                   <DirtSquare
+                    key={`square+${i}+${j}`}
                     playerPosition={playerPosition}
                     guardPosition={guardPosition}
                     i={i}
                     j={j}
-                    dirt={dirt}
-                    setDirt={setDirt}
+                    square={square}
                   />
                 );
               })}
@@ -45,15 +49,13 @@ const DirtArray = ({ playerPosition, guardPosition }) => {
   );
 };
 
-const DirtSquare = ({ playerPosition, guardPosition, i, j, dirt, setDirt }) => {
+const DirtSquare = ({ playerPosition, guardPosition, i, j, square }) => {
   let dimensions = level1.length;
 
   const blockSize = Constants.MAX_WIDTH / dimensions;
   // the player is currently in this square
   if (i == playerPosition[0] && j == playerPosition[1]) {
-    let newDirt = dirt;
-    newDirt[i][j].visited = true;
-    setDirt(newDirt);
+    square.visited = true;
 
     return (
       <Image
@@ -64,74 +66,107 @@ const DirtSquare = ({ playerPosition, guardPosition, i, j, dirt, setDirt }) => {
           resizeMode: "contain",
         }}
         source={require("../../../../assets/prisonerEyepatch.png")}
-        // We can use a gif here for short digging animation
       />
     );
   }
   //the guard is currently in this square
   else if (i == guardPosition[0] && j == guardPosition[1]) {
-    return (
-      <Image
-        style={{
-          backgroundColor: "black",
-          height: blockSize,
-          width: blockSize,
-          resizeMode: "contain",
-        }}
-        source={require("../../../../assets/prisonerMohawk.png")}
-        // We can use a gif here for short digging animation
-      />
-    );
-  } else {
-    if (dirt[i][j].win) {
+    //the guard is stunned
+    if (square.guardStunned) {
       return (
         <Image
           style={{
-            backgroundColor: "#915947",
+            backgroundColor: "red",
             height: blockSize,
             width: blockSize,
             resizeMode: "contain",
           }}
-          source={require("../../../../assets/star.png")}
+          source={require("../../../../assets/prisonerMohawk.png")}
+          // We can use a gif here for short digging animation
         />
       );
     }
-    //If is is not a rock, and has been visited
-    if (!dirt[i][j].isRock && dirt[i][j].visited) {
+    //the guard is not stunned
+    else {
       return (
-        <View
+        <Image
           style={{
             backgroundColor: "black",
             height: blockSize,
             width: blockSize,
-          }}
-        />
-      );
-    }
-    //if the square is a rock.
-    else if (dirt[i][j].isRock) {
-      return (
-        <Image
-          style={{
-            backgroundColor: "#915947",
-            height: blockSize,
-            width: blockSize,
             resizeMode: "contain",
           }}
-          source={require("../../../../assets/rock.png")}
-        />
-      );
-    } else {
-      return (
-        <View
-          style={{
-            backgroundColor: "#915947",
-            height: blockSize,
-            width: blockSize,
-          }}
+          source={require("../../../../assets/prisonerMohawk.png")}
+          // We can use a gif here for short digging animation
         />
       );
     }
+  }
+  //this is not working yet, but eventually I want to show the spoon moving through the air
+  else if (square.isSpoon) {
+    return (
+      <Image
+        style={{
+          backgroundColor: "#915947",
+          height: blockSize,
+          width: blockSize,
+          resizeMode: "contain",
+        }}
+        source={require("../../../../assets/spoon.png")}
+      />
+    );
+  }
+  //this is the winning square
+  else if (square.win) {
+    return (
+      <Image
+        style={{
+          backgroundColor: "#915947",
+          height: blockSize,
+          width: blockSize,
+          resizeMode: "contain",
+        }}
+        source={require("../../../../assets/star.png")}
+      />
+    );
+  }
+  //If it has been visited
+  else if (square.visited) {
+    return (
+      <View
+        style={{
+          backgroundColor: "black",
+          height: blockSize,
+          width: blockSize,
+        }}
+      />
+    );
+  }
+  //if the square is a rock.
+  else if (square.isRock) {
+    return (
+      <Image
+        style={{
+          backgroundColor: "#915947",
+          height: blockSize,
+          width: blockSize,
+          resizeMode: "contain",
+        }}
+        source={require("../../../../assets/rock.png")}
+      />
+    );
+  }
+  //unvisited ground square
+  else {
+    return (
+      <View
+        style={{
+          backgroundColor: "#915947",
+          height: blockSize,
+          width: blockSize,
+        }}
+      />
+    );
   }
 };
 

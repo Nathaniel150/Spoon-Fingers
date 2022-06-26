@@ -2,26 +2,25 @@ import { level1 } from "./levels.js/level1";
 
 var stunned = false;
 var stunnedTimer = 0;
+var TIMER_LENGTH = 50;
 const MoveAvatar = (entities, { events, dispatch }) => {
   let { dirtArray } = entities; //get the dirt entity
-
+  let x = dirtArray.playerPosition[0];
+  let y = dirtArray.playerPosition[1];
   //If the guard is stunned, move the timer down
   if (stunnedTimer > 0) {
     stunnedTimer--;
     //when the stunnedTimer gets to 1, the guard is no longer stunned.
     if (stunnedTimer == 1) {
       stunned = false;
+      level1[dirtArray.guardPosition[0]][
+        dirtArray.guardPosition[1]
+      ].guardStunned = false;
     }
   }
 
   if (events.length) {
     events.forEach((e) => {
-      let x = dirtArray.playerPosition[0];
-      let y = dirtArray.playerPosition[1];
-      //when the player reaches the winning square, dispatch a "winner" event to tell the game engine they won
-      if (level1[x][y].win) {
-        dispatch("winner");
-      }
       //if the guard and player on on the same square, and the guard is not stunned.
       // I dispatch "caught" event so the game engine ends the game.
       if (
@@ -111,6 +110,11 @@ const MoveAvatar = (entities, { events, dispatch }) => {
     });
   }
 
+  //when the player reaches the winning square, dispatch a "winner" event to tell the game engine they won
+  if (level1[x][y].win) {
+    dispatch("winner");
+  }
+
   return { ...entities };
 };
 
@@ -145,33 +149,35 @@ const moveGuard = (playerPosition, guardPosition) => {
 
 //tries to throw a spoon in the specified direction
 //returns true if the spoon hits a guard, false otherwise.
-const throwSpoon = (playerPosition, guardPosition, xDir, yDir) => {
+const throwSpoon = async (playerPosition, guardPosition, xDir, yDir) => {
   let spoonPosX = playerPosition[0];
   let spoonPosY = playerPosition[1];
 
-  while (canMove(spoonPosX, spoonPosY)) {
+  while (canThrowSpoon(spoonPosX, spoonPosY)) {
+    //TODO Make the spoon appeard on the screen
+    //reset the current square to not have a spoon
+    level1[spoonPosX][spoonPosY].isSpoon = false;
     spoonPosX += xDir;
     spoonPosY += yDir;
+    //set the spoon into the new square
+    level1[spoonPosX][spoonPosY].isSpoon = true;
     //when the spoonPosition matches the guardPosition, the guard is hit;
     if (spoonPosX == guardPosition[0] && spoonPosY == guardPosition[1]) {
       //the guard is stunned until this timer hits 0.
       //
       stunned = true;
-      stunnedTimer = 100;
-      return;
+      stunnedTimer = TIMER_LENGTH;
+      level1[guardPosition[0]][guardPosition[1]].guardStunned = true;
     }
+
+    //reset the current square to not have a spoon
+    level1[spoonPosX][spoonPosY].isSpoon = false;
   }
 };
 
 const breakRock = (i, j, dirX, dirY) => {
-  console.log("Break rock");
-  //if the rock they want to break is inbounds, break it;
-  if (
-    i + dirX >= 0 &&
-    i + dirX < level1.length &&
-    j + dirY >= 0 &&
-    j + dirY < level1[0].length
-  ) {
+  //if the rock they want to break is in bounds, break it;
+  if (canBreakRock(i + dirX, j + dirY)) {
     //set the status of rock to false to indicate that the rock has been broken/ removed
     level1[i + dirX][j + dirY].isRock = false;
     return;
@@ -187,6 +193,21 @@ const canMove = (i, j) => {
     j < level1[0].length &&
     !level1[i][j].isRock
   );
+};
+
+const canThrowSpoon = (i, j) => {
+  return (
+    i >= 0 &&
+    i < level1.length &&
+    j >= 0 &&
+    j < level1[0].length &&
+    level1[i][j].visited &&
+    !level1[i][j].isRock
+  );
+};
+
+const canBreakRock = (i, j) => {
+  return i >= 0 && i < level1.length && j >= 0 && j < level1[0].length;
 };
 
 export { MoveAvatar };
