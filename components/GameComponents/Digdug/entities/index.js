@@ -5,7 +5,7 @@ import { View, Image, Text, Button } from "react-native";
 import Constants from "../Constants";
 import { level1 } from "../levels.js/level1";
 
-const DirtArray = ({ playerPosition, guardPosition }) => {
+const DirtArray = ({ playerPosition, guardPositions }) => {
   const [dirt, setDirt] = useState([]);
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const DirtArray = ({ playerPosition, guardPosition }) => {
                   <DirtSquare
                     key={`square+${i}+${j}`}
                     playerPosition={playerPosition}
-                    guardPosition={guardPosition}
+                    guardPositions={guardPositions}
                     i={i}
                     j={j}
                     square={square}
@@ -49,10 +49,22 @@ const DirtArray = ({ playerPosition, guardPosition }) => {
   );
 };
 
-const DirtSquare = ({ playerPosition, guardPosition, i, j, square }) => {
+const DirtSquare = ({ playerPosition, guardPositions, i, j, square }) => {
   let dimensions = level1.length;
 
   const blockSize = Constants.MAX_WIDTH / dimensions;
+
+  const hasGuard = (i, j) => {
+    //iterates over all the guards to see if any of them are in the current square;
+    for (let k = 0; k < guardPositions.length; k++) {
+      if (guardPositions[k][0] == i && guardPositions[k][1] == j) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+
   // the player is currently in this square
   if (i == playerPosition[0] && j == playerPosition[1]) {
     square.visited = true;
@@ -70,7 +82,7 @@ const DirtSquare = ({ playerPosition, guardPosition, i, j, square }) => {
     );
   }
   //the guard is currently in this square
-  else if (i == guardPosition[0] && j == guardPosition[1]) {
+  else if (hasGuard(i, j)) {
     //the guard is stunned
     if (square.guardStunned) {
       return (
@@ -107,7 +119,7 @@ const DirtSquare = ({ playerPosition, guardPosition, i, j, square }) => {
     return (
       <Image
         style={{
-          backgroundColor: "#915947",
+          backgroundColor: "brown",
           height: blockSize,
           width: blockSize,
           resizeMode: "contain",
@@ -121,7 +133,7 @@ const DirtSquare = ({ playerPosition, guardPosition, i, j, square }) => {
     return (
       <Image
         style={{
-          backgroundColor: "grey",
+          backgroundColor: "#663801",
           height: blockSize,
           width: blockSize,
           resizeMode: "contain",
@@ -147,24 +159,26 @@ const DirtSquare = ({ playerPosition, guardPosition, i, j, square }) => {
     return (
       <Image
         style={{
-          backgroundColor: "grey",
+          backgroundColor: "brown",
           height: blockSize,
           width: blockSize,
           resizeMode: "contain",
         }}
-        source={require("../../../../assets/rock1.png")}
+        source={require("../../../../assets/rock1withdirt.png")}
       />
     );
   }
   //unvisited ground square
   else {
     return (
-      <View
+      <Image
         style={{
-          backgroundColor: "grey",
+          backgroundColor: "black",
           height: blockSize,
           width: blockSize,
+          resizeMode: "contain",
         }}
+        source={require("../../../../assets/dirt1.png")}
       />
     );
   }

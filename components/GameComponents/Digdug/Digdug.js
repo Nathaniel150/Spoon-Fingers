@@ -24,7 +24,11 @@ export default function Digdug() {
   const [entities, setEntities] = useState({
     dirtArray: {
       playerPosition: [1, 1],
-      guardPosition: [3, 5],
+      guardPositions: [
+        [3, 6],
+        [5, 0],
+        [9, 3],
+      ],
       renderer: <DirtArray />,
     },
   });

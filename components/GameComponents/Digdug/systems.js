@@ -13,49 +13,47 @@ const MoveAvatar = (entities, { events, dispatch }) => {
     //when the stunnedTimer gets to 1, the guard is no longer stunned.
     if (stunnedTimer == 1) {
       stunned = false;
-      level1[dirtArray.guardPosition[0]][
-        dirtArray.guardPosition[1]
+      //TODO I need to fix this. Right now, all the guards
+      // get stunned at the same time, even if only one is hit.
+      level1[dirtArray.guardPositions[0][0]][
+        dirtArray.guardPositions[0][1]
+      ].guardStunned = false;
+      level1[dirtArray.guardPositions[1][0]][
+        dirtArray.guardPositions[1][1]
+      ].guardStunned = false;
+      level1[dirtArray.guardPositions[2][0]][
+        dirtArray.guardPositions[2][1]
       ].guardStunned = false;
     }
   }
 
   if (events.length) {
     events.forEach((e) => {
-      //if the guard and player on on the same square, and the guard is not stunned.
-      // I dispatch "caught" event so the game engine ends the game.
-      if (
-        !stunned &&
-        x == dirtArray.guardPosition[0] &&
-        y == dirtArray.guardPosition[1]
-      ) {
-        dispatch("caught");
-      }
-
       switch (e) {
         case "move-down":
           //only update if the next square is not a rock
           if (canMove(x, y + 1)) {
             dirtArray.playerPosition[1] += 1;
           }
-          moveGuard(dirtArray.playerPosition, dirtArray.guardPosition);
+          moveGuard(dirtArray.playerPosition, dirtArray.guardPositions);
           return;
         case "move-up":
           if (canMove(x, y - 1)) {
             dirtArray.playerPosition[1] -= 1;
           }
-          moveGuard(dirtArray.playerPosition, dirtArray.guardPosition);
+          moveGuard(dirtArray.playerPosition, dirtArray.guardPositions);
           return;
         case "move-left":
           if (canMove(x - 1, y)) {
             dirtArray.playerPosition[0] -= 1;
           }
-          moveGuard(dirtArray.playerPosition, dirtArray.guardPosition);
+          moveGuard(dirtArray.playerPosition, dirtArray.guardPositions);
           return;
         case "move-right":
           if (canMove(x + 1, y)) {
             dirtArray.playerPosition[0] += 1;
           }
-          moveGuard(dirtArray.playerPosition, dirtArray.guardPosition);
+          moveGuard(dirtArray.playerPosition, dirtArray.guardPositions);
           return;
         case "break-rock-down":
           console.log("Break rock down");
@@ -65,7 +63,7 @@ const MoveAvatar = (entities, { events, dispatch }) => {
             0,
             1
           );
-          moveGuard(dirtArray.playerPosition, dirtArray.guardPosition);
+          moveGuard(dirtArray.playerPosition, dirtArray.guardPositions);
           return;
         case "break-rock-up":
           breakRock(
@@ -74,7 +72,7 @@ const MoveAvatar = (entities, { events, dispatch }) => {
             0,
             -1
           );
-          moveGuard(dirtArray.playerPosition, dirtArray.guardPosition);
+          moveGuard(dirtArray.playerPosition, dirtArray.guardPositions);
           return;
         case "break-rock-left":
           breakRock(
@@ -83,7 +81,7 @@ const MoveAvatar = (entities, { events, dispatch }) => {
             -1,
             0
           );
-          moveGuard(dirtArray.playerPosition, dirtArray.guardPosition);
+          moveGuard(dirtArray.playerPosition, dirtArray.guardPositions);
           return;
         case "break-rock-right":
           breakRock(
@@ -92,19 +90,19 @@ const MoveAvatar = (entities, { events, dispatch }) => {
             1,
             0
           );
-          moveGuard(dirtArray.playerPosition, dirtArray.guardPosition);
+          moveGuard(dirtArray.playerPosition, dirtArray.guardPositions);
           return;
         case "throw-spoon-down":
-          throwSpoon(dirtArray.playerPosition, dirtArray.guardPosition, 0, 1);
+          throwSpoon(dirtArray.playerPosition, dirtArray.guardPositions, 0, 1);
           return;
         case "throw-spoon-up":
-          throwSpoon(dirtArray.playerPosition, dirtArray.guardPosition, 0, -1);
+          throwSpoon(dirtArray.playerPosition, dirtArray.guardPositions, 0, -1);
           return;
         case "throw-spoon-left":
-          throwSpoon(dirtArray.playerPosition, dirtArray.guardPosition, -1, 0);
+          throwSpoon(dirtArray.playerPosition, dirtArray.guardPositions, -1, 0);
           return;
         case "throw-spoon-right":
-          throwSpoon(dirtArray.playerPosition, dirtArray.guardPosition, 1, 0);
+          throwSpoon(dirtArray.playerPosition, dirtArray.guardPositions, 1, 0);
           return;
       }
     });
@@ -114,42 +112,59 @@ const MoveAvatar = (entities, { events, dispatch }) => {
   if (level1[x][y].win) {
     dispatch("winner");
   }
+  //if the guard and player on on the same square, and the guard is not stunned.
+  // I dispatch "caught" event so the game engine ends the game.
+  if (gotCaught(x, y, dirtArray.guardPositions)) {
+    dispatch("caught");
+  }
 
   return { ...entities };
 };
 
-const moveGuard = (playerPosition, guardPosition) => {
+const moveGuard = (playerPosition, guardPositions) => {
   //when the guard is stunned, he can't move;
   if (stunned) {
     return;
   }
-  let pX = playerPosition[0];
-  let pY = playerPosition[1];
-  let gX = guardPosition[0];
-  let gY = guardPosition[1];
-  //find the difference between where the guard is and where the player is.
-  let diffX = pX - gX;
-  let diffY = pY - gY;
-  //player is to the right;
-  if (diffX > 0 && canMove(gX + 1, gY) && level1[gX + 1][gY].visited) {
-    guardPosition[0] += 1;
+  for (let i = 0; i < guardPositions.length; i++) {
+    let pX = playerPosition[0];
+    let pY = playerPosition[1];
+    let gX = guardPositions[i][0];
+    let gY = guardPositions[i][1];
+    //find the difference between where the guard is and where the player is.
+    let diffX = pX - gX;
+    let diffY = pY - gY;
+    //player is to the right;
+    if (diffX > 0 && canMove(gX + 1, gY) && level1[gX + 1][gY].visited) {
+      guardPositions[i][0] += 1;
+    }
+    //player is below
+    else if (diffY > 0 && canMove(gX, gY + 1) && level1[gX][gY + 1].visited) {
+      guardPositions[i][1] += 1;
+    }
+    //move the guard left if the player is to the left, and the square to the left is not a rock
+    else if (diffX < 0 && canMove(gX - 1, gY) && level1[gX - 1][gY].visited) {
+      //move left
+      guardPositions[i][0] -= 1;
+    } else if (diffY < 0 && canMove(gX, gY - 1) && level1[gX][gY - 1].visited) {
+      guardPositions[i][1] -= 1;
+    }
   }
-  //player is below
-  else if (diffY > 0 && canMove(gX, gY + 1) && level1[gX][gY + 1].visited) {
-    guardPosition[1] += 1;
+};
+
+const gotCaught = (x, y, guardPositions) => {
+  for (let i = 0; i < guardPositions.length; i++) {
+    if (!stunned && guardPositions[i][0] == x && guardPositions[i][1] == y) {
+      return true;
+    }
   }
-  //move the guard left if the player is to the left, and the square to the left is not a rock
-  else if (diffX < 0 && canMove(gX - 1, gY) && level1[gX - 1][gY].visited) {
-    //move left
-    guardPosition[0] -= 1;
-  } else if (diffY < 0 && canMove(gX, gY - 1) && level1[gX][gY - 1].visited) {
-    guardPosition[1] -= 1;
-  }
+
+  return false;
 };
 
 //tries to throw a spoon in the specified direction
 //returns true if the spoon hits a guard, false otherwise.
-const throwSpoon = async (playerPosition, guardPosition, xDir, yDir) => {
+const throwSpoon = async (playerPosition, guardPositions, xDir, yDir) => {
   let spoonPosX = playerPosition[0];
   let spoonPosY = playerPosition[1];
 
@@ -161,13 +176,19 @@ const throwSpoon = async (playerPosition, guardPosition, xDir, yDir) => {
     spoonPosY += yDir;
     //set the spoon into the new square
     level1[spoonPosX][spoonPosY].isSpoon = true;
-    //when the spoonPosition matches the guardPosition, the guard is hit;
-    if (spoonPosX == guardPosition[0] && spoonPosY == guardPosition[1]) {
-      //the guard is stunned until this timer hits 0.
-      //
-      stunned = true;
-      stunnedTimer = TIMER_LENGTH;
-      level1[guardPosition[0]][guardPosition[1]].guardStunned = true;
+    console.log("Here");
+    for (let i = 0; i < guardPositions.length; i++) {
+      //when the spoonPosition matches the guardPosition, the guard is hit;
+      if (
+        spoonPosX == guardPositions[i][0] &&
+        spoonPosY == guardPositions[i][1]
+      ) {
+        //the guard is stunned until this timer hits 0.
+        //
+        stunned = true;
+        stunnedTimer = TIMER_LENGTH;
+        level1[guardPositions[i][0]][guardPositions[i][1]].guardStunned = true;
+      }
     }
 
     //reset the current square to not have a spoon
