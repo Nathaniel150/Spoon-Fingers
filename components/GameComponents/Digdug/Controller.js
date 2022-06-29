@@ -21,6 +21,10 @@ export default function Controller({
   return (
     <>
       <View style={styles.controlContainer}>
+        {/* First row (just text) */}
+        <View style={styles.row}>
+          <Text>{type} controller</Text>
+        </View>
         {/* First row */}
         <View style={styles.row}>
           <Pressable onPressIn={() => handlePress("up")} style={styles.button}>
@@ -76,5 +80,6 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: "center",
+    fontSize: 12,
   },
 });

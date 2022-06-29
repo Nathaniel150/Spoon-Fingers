@@ -121,7 +121,7 @@ const DirtSquare = ({ playerPosition, guardPosition, i, j, square }) => {
     return (
       <Image
         style={{
-          backgroundColor: "#915947",
+          backgroundColor: "grey",
           height: blockSize,
           width: blockSize,
           resizeMode: "contain",
@@ -147,12 +147,12 @@ const DirtSquare = ({ playerPosition, guardPosition, i, j, square }) => {
     return (
       <Image
         style={{
-          backgroundColor: "#915947",
+          backgroundColor: "grey",
           height: blockSize,
           width: blockSize,
           resizeMode: "contain",
         }}
-        source={require("../../../../assets/rock.png")}
+        source={require("../../../../assets/rock1.png")}
       />
     );
   }
@@ -161,7 +161,7 @@ const DirtSquare = ({ playerPosition, guardPosition, i, j, square }) => {
     return (
       <View
         style={{
-          backgroundColor: "#915947",
+          backgroundColor: "grey",
           height: blockSize,
           width: blockSize,
         }}
