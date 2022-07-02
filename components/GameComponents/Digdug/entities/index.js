@@ -57,7 +57,7 @@ const DirtSquare = ({ playerPosition, guardPositions, i, j, square }) => {
   const hasGuard = (i, j) => {
     //iterates over all the guards to see if any of them are in the current square;
     for (let k = 0; k < guardPositions.length; k++) {
-      if (guardPositions[k][0] == i && guardPositions[k][1] == j) {
+      if (guardPositions[k].xPos == i && guardPositions[k].yPos == j) {
         return true;
       }
     }

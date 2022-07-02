@@ -1,5 +1,6 @@
 import { StyleSheet, Pressable, Text, View } from "react-native";
 
+//handleThrowSpoon, handleBreakRock are optional;
 export default function Controller({
   engine,
   type,
@@ -15,6 +16,8 @@ export default function Controller({
     if (handleBreakRock) {
       handleBreakRock();
     }
+    //if the action does not use spoons or there are still spoons left.
+
     //dispatch the type of event in the correct direction
     engine.current.dispatch(`${type}-${direction}`);
   };

@@ -25,9 +25,21 @@ export default function Digdug() {
     dirtArray: {
       playerPosition: [1, 1],
       guardPositions: [
-        [3, 6],
-        [5, 0],
-        [9, 3],
+        {
+          xPos: 3,
+          yPos: 6,
+          stunned: false,
+          stunnedTimer: 0,
+        },
+        {
+          xPos: 5,
+          yPos: 0,
+          stunned: false,
+          stunnedTimer: 0,
+        },
+        // [3, 6],
+        // [5, 0],
+        // [9, 3],
       ],
       renderer: <DirtArray />,
     },
@@ -35,10 +47,16 @@ export default function Digdug() {
 
   //these can be the same function I think decrementSpoonCount
   const handleThrowSpoon = () => {
+    if (spoonCount <= 0) {
+      setRunning(false);
+    }
     setSpoonCount(spoonCount - 1);
   };
 
   const handleBreakRock = () => {
+    if (spoonCount <= 0) {
+      setRunning(false);
+    }
     setSpoonCount(spoonCount - 1);
   };
 
@@ -82,14 +100,16 @@ export default function Digdug() {
           engine={engine}
           type="throw-spoon"
           handleThrowSpoon={handleThrowSpoon}
+          spoonCount={spoonCount}
         />
         <Controller
           engine={engine}
           type="break-rock"
           handleBreakRock={handleBreakRock}
+          spoonCount={spoonCount}
         />
       </View>
-      <Controller engine={engine} type="move" />
+      <Controller engine={engine} type="move" spoonCount={spoonCount} />
 
       <View style={styles.spacer}></View>
     </>

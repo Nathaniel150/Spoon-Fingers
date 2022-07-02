@@ -1,31 +1,20 @@
 import { level1 } from "./levels.js/level1";
 
-var stunned = false;
-var stunnedTimer = 0;
 var TIMER_LENGTH = 50;
+
 const MoveAvatar = (entities, { events, dispatch }) => {
   let { dirtArray } = entities; //get the dirt entity
   let x = dirtArray.playerPosition[0];
   let y = dirtArray.playerPosition[1];
-  //If the guard is stunned, move the timer down
-  if (stunnedTimer > 0) {
-    stunnedTimer--;
-    //when the stunnedTimer gets to 1, the guard is no longer stunned.
-    if (stunnedTimer == 1) {
-      stunned = false;
-      //TODO I need to fix this. Right now, all the guards
-      // get stunned at the same time, even if only one is hit.
-      level1[dirtArray.guardPositions[0][0]][
-        dirtArray.guardPositions[0][1]
-      ].guardStunned = false;
-      level1[dirtArray.guardPositions[1][0]][
-        dirtArray.guardPositions[1][1]
-      ].guardStunned = false;
-      level1[dirtArray.guardPositions[2][0]][
-        dirtArray.guardPositions[2][1]
-      ].guardStunned = false;
-    }
+
+  //if the guard and player on on the same square, and the guard is not stunned.
+  // I dispatch "caught" event so the game engine ends the game.
+  if (gotCaught(x, y, dirtArray.guardPositions)) {
+    console.log("caught");
+    dispatch("caught");
   }
+
+  handleStun(dirtArray.guardPositions);
 
   if (events.length) {
     events.forEach((e) => {
@@ -104,6 +93,10 @@ const MoveAvatar = (entities, { events, dispatch }) => {
         case "throw-spoon-right":
           throwSpoon(dirtArray.playerPosition, dirtArray.guardPositions, 1, 0);
           return;
+        case "move-guard":
+          //TODO make some pop up that shows the player is out of spoons
+          moveGuard(dirtArray.playerPosition, dirtArray.guardPositions);
+          break;
       }
     });
   }
@@ -112,49 +105,54 @@ const MoveAvatar = (entities, { events, dispatch }) => {
   if (level1[x][y].win) {
     dispatch("winner");
   }
-  //if the guard and player on on the same square, and the guard is not stunned.
-  // I dispatch "caught" event so the game engine ends the game.
-  if (gotCaught(x, y, dirtArray.guardPositions)) {
-    dispatch("caught");
-  }
 
   return { ...entities };
 };
 
 const moveGuard = (playerPosition, guardPositions) => {
   //when the guard is stunned, he can't move;
-  if (stunned) {
-    return;
-  }
+  // if (stunned) {
+  //   return;
+  // }
   for (let i = 0; i < guardPositions.length; i++) {
+    console.log(guardPositions[i]);
+    //skip the guards that are stunned
+    if (guardPositions[i].stunned) {
+      continue;
+    }
+
     let pX = playerPosition[0];
     let pY = playerPosition[1];
-    let gX = guardPositions[i][0];
-    let gY = guardPositions[i][1];
+    let gX = guardPositions[i].xPos;
+    let gY = guardPositions[i].yPos;
     //find the difference between where the guard is and where the player is.
     let diffX = pX - gX;
     let diffY = pY - gY;
     //player is to the right;
     if (diffX > 0 && canMove(gX + 1, gY) && level1[gX + 1][gY].visited) {
-      guardPositions[i][0] += 1;
+      guardPositions[i].xPos += 1;
     }
     //player is below
     else if (diffY > 0 && canMove(gX, gY + 1) && level1[gX][gY + 1].visited) {
-      guardPositions[i][1] += 1;
+      guardPositions[i].yPos += 1;
     }
     //move the guard left if the player is to the left, and the square to the left is not a rock
     else if (diffX < 0 && canMove(gX - 1, gY) && level1[gX - 1][gY].visited) {
       //move left
-      guardPositions[i][0] -= 1;
+      guardPositions[i].xPos -= 1;
     } else if (diffY < 0 && canMove(gX, gY - 1) && level1[gX][gY - 1].visited) {
-      guardPositions[i][1] -= 1;
+      guardPositions[i].yPos -= 1;
     }
   }
 };
 
 const gotCaught = (x, y, guardPositions) => {
   for (let i = 0; i < guardPositions.length; i++) {
-    if (!stunned && guardPositions[i][0] == x && guardPositions[i][1] == y) {
+    if (
+      x == guardPositions[i].xPos &&
+      y == guardPositions[i].yPos &&
+      !guardPositions[i].stunned
+    ) {
       return true;
     }
   }
@@ -168,26 +166,32 @@ const throwSpoon = async (playerPosition, guardPositions, xDir, yDir) => {
   let spoonPosX = playerPosition[0];
   let spoonPosY = playerPosition[1];
 
-  while (canThrowSpoon(spoonPosX, spoonPosY)) {
+  let stunnedAGuard = false;
+  while (!stunnedAGuard && canThrowSpoon(spoonPosX, spoonPosY)) {
     //TODO Make the spoon appeard on the screen
     //reset the current square to not have a spoon
     level1[spoonPosX][spoonPosY].isSpoon = false;
     spoonPosX += xDir;
     spoonPosY += yDir;
+
     //set the spoon into the new square
-    level1[spoonPosX][spoonPosY].isSpoon = true;
-    console.log("Here");
     for (let i = 0; i < guardPositions.length; i++) {
       //when the spoonPosition matches the guardPosition, the guard is hit;
       if (
-        spoonPosX == guardPositions[i][0] &&
-        spoonPosY == guardPositions[i][1]
+        spoonPosX == guardPositions[i].xPos &&
+        spoonPosY == guardPositions[i].yPos
       ) {
-        //the guard is stunned until this timer hits 0.
-        //
-        stunned = true;
-        stunnedTimer = TIMER_LENGTH;
-        level1[guardPositions[i][0]][guardPositions[i][1]].guardStunned = true;
+        guardPositions[i].stunned = true;
+        //the guard will be stunned until this timer hits 0.
+        guardPositions[i].stunnedTimer = TIMER_LENGTH;
+
+        //only one guard should be stunned
+        stunnedAGuard = true;
+        //set the square in the level to stunned so it can render correctly.
+        level1[guardPositions[i].xPos][
+          guardPositions[i].yPos
+        ].guardStunned = true;
+        break;
       }
     }
 
@@ -229,6 +233,19 @@ const canThrowSpoon = (i, j) => {
 
 const canBreakRock = (i, j) => {
   return i >= 0 && i < level1.length && j >= 0 && j < level1[0].length;
+};
+
+const handleStun = (guardPositions) => {
+  for (let i = 0; i < guardPositions.length; i++) {
+    if (guardPositions[i].stunnedTimer > 0) {
+      guardPositions[i].stunnedTimer--;
+    } else {
+      guardPositions[i].stunned = false;
+      level1[guardPositions[i].xPos][
+        guardPositions[i].yPos
+      ].guardStunned = false;
+    }
+  }
 };
 
 export { MoveAvatar };
