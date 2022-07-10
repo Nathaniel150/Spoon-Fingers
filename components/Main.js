@@ -8,6 +8,7 @@ import BattleShip from "./GameComponents/Battleship/Battleship";
 import Digdug from "./GameComponents/Digdug/Digdug";
 
 import { storyP1 } from "../assets/StoryData/scenes";
+import Lockle from "./GameComponents/Wordle/Lockle";
 
 const Main = () => {
   //use to track what part ofe game we are currently in;
@@ -20,7 +21,7 @@ const Main = () => {
   if (stateTracker == 1) {
     return <StoryScene updateState={updateState} story={storyP1}/>;
   } else if (stateTracker == 2) {
-    return <Wordle updateState={updateState} />;
+    return <Lockle updateState={updateState} />;
   } else if (stateTracker == 3) {
     return <BattleShip updateState={updateState} />;
   } else if (stateTracker == 4) {

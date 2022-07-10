@@ -4,13 +4,13 @@ export let storyP1= [
     {
         type: "narration",
         text: "The prison walls quivered as the new prisoner approached",
-        bkgdImage: require("../BackgroundImages/background.jpeg")
+        bkgdImage: require("../BackgroundImages/prison.png")
 
     },
     {
         type: "narration",
         text: "They sensed something in the air...",
-        bkgdImage: require("../BackgroundImages/background.jpeg")
+        bkgdImage: require("../BackgroundImages/prison.png")
 
     },
     {
