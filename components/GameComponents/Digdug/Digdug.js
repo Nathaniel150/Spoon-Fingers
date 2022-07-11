@@ -11,7 +11,7 @@ import { GameEngine } from "react-native-game-engine";
 import { MoveAvatar } from "./systems";
 import { DirtArray } from "./entities";
 import Controller from "./Controller";
-import Constants from "./Constants";
+import Constants from "../../Constants";
 
 export default function Digdug() {
   const [running, setRunning] = useState(true);

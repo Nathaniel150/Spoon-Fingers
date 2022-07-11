@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 
 import { View, Image, Text, Button } from "react-native";
-import Constants from "../Constants";
+import Constants from "../../../Constants";
 import { level1 } from "../levels.js/level1";
 
 const DirtArray = ({ playerPosition, guardPositions }) => {
