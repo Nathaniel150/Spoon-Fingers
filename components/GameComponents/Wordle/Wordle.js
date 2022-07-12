@@ -3,19 +3,15 @@ import { useState, useEffect } from "react";
 import Keyboard from "./Keyboard";
 import { CLEAR, ENTER, colors} from "./wordleConstants";
 import { set } from "react-native-reanimated";
-const NUM_TRIES = 6
+const NUM_TRIES = 3
 
 const copyArray = (arr) => {
   return [...arr.map(rows => [...rows])]
 }
 
-const Wordle = ({ setVisible }) => {
-  const words = ["spoon", "knife", "guard", "loser", "fight", "under", "brick", "pixel", "mouse"]
-
-  const getWord = () => {
-    return "spoon"
-  }
-  const word = getWord();
+const Wordle = ({ setVisible, setWon, targetWord }) => {
+  console.log(targetWord)
+  const word = targetWord;
   const letters = word.split(''); // ['h', 'e', 'l', 'l', 'o']
 
   const [rows, setRows] = useState(
@@ -31,14 +27,26 @@ const Wordle = ({ setVisible }) => {
     }
 
   }, [currRow])
+  
+  const clearGame = () => {
+    setRows(new Array(NUM_TRIES).fill(new Array(letters.length).fill("")))
+    setCurrRow(0)
+    setCurrCol(0)
+  }
 
   const checkGameState = () => {
     if(checkIfWon()) {
       console.log("won")
+      setWon(true)
       setVisible(true)
+      clearGame()
+
     } else if(checkIfLost()) {
       console.log("lost")
+      setWon(false)
       setVisible(true)
+      clearGame()
+
     }
   }
   

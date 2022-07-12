@@ -15,6 +15,7 @@ export const colors = {
   
   export const ENTER = "ENTER";
   export const CLEAR = "CLEAR";
+
   
   export const keys = [
     ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
