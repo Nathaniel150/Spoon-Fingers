@@ -2,20 +2,17 @@ import { View, Text, StyleSheet, SafeAreaView, ScrollView, DatePickerAndroid, Al
 import { useState, useEffect } from "react";
 import Keyboard from "./Keyboard";
 import { CLEAR, ENTER, colors} from "./wordleConstants";
-import { set } from "react-native-reanimated";
-const NUM_TRIES = 6
+import CountDown from 'react-native-countdown-component';
+
+const NUM_TRIES = 5
 
 const copyArray = (arr) => {
   return [...arr.map(rows => [...rows])]
 }
 
-const Wordle = ({ setVisible }) => {
-  const words = ["spoon", "knife", "guard", "loser", "fight", "under", "brick", "pixel", "mouse"]
-
-  const getWord = () => {
-    return "spoon"
-  }
-  const word = getWord();
+const Wordle = ({ setVisible, setWon, targetWord, timerOn, setTimerOn, timeLimit, key }) => {
+  console.log(targetWord)
+  const word = targetWord;
   const letters = word.split(''); // ['h', 'e', 'l', 'l', 'o']
 
   const [rows, setRows] = useState(
@@ -31,15 +28,45 @@ const Wordle = ({ setVisible }) => {
     }
 
   }, [currRow])
+  
+  const clearGame = () => {
+    setRows(new Array(NUM_TRIES).fill(new Array(letters.length).fill("")))
+    setCurrRow(0)
+    setCurrCol(0)
+    setTimerOn(false)
+  }
+
+  function wait(ms){
+    var start = new Date().getTime();
+    var end = start;
+    while(end < start + ms) {
+      end = new Date().getTime();
+    }
+  }
 
   const checkGameState = () => {
     if(checkIfWon()) {
+      wait(500)
       console.log("won")
+      setWon(true)
       setVisible(true)
+      clearGame()
+
     } else if(checkIfLost()) {
+      wait(500)
       console.log("lost")
+      setWon(false)
       setVisible(true)
+      clearGame()
+
     }
+  }
+
+  const loseGame = () => {
+    wait(500)
+    setWon(false)
+    setVisible(true)
+    clearGame()
   }
   
   const checkIfWon = () => {
@@ -117,6 +144,17 @@ const Wordle = ({ setVisible }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>LOCKLE</Text>
+      <CountDown
+          key={key}
+          until={timeLimit}
+          size={25}
+          onFinish={() => loseGame()}
+          digitStyle={{backgroundColor: 'white'}}
+          digitTxtStyle={{color: colors.darkgrey}}
+          timeToShow={['M', 'S']}
+          timeLabels={{m:null,s: null}}
+          running={timerOn}
+      />
       <View style={styles.map}>
 
         {rows.map((row, i) => (
@@ -159,6 +197,7 @@ const styles = StyleSheet.create({
 
   },
   title: {
+    paddingTop: 6,
     fontSize: 32,
     fontWeight: "bold",
     letterSpacing: 7,
