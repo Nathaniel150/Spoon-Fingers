@@ -12,7 +12,7 @@ import Lockle from "./GameComponents/Wordle/Lockle";
 
 const Main = () => {
   //use to track what part ofe game we are currently in;
-  const [stateTracker, setStateTracker] = useState(2);
+  const [stateTracker, setStateTracker] = useState(5);
 
   const updateState = () => {
     setStateTracker(stateTracker + 1);
