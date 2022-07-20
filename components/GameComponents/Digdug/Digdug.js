@@ -13,7 +13,7 @@ import { DirtArray } from "./entities";
 import Controller from "./Controller";
 import Constants from "../../Constants";
 
-export default function Digdug() {
+export default function Digdug({ updateState }) {
   const [running, setRunning] = useState(true);
   const [hasWon, setHasWon] = useState(false);
   const [gotCaught, setGotCaught] = useState(false);
@@ -83,6 +83,12 @@ export default function Digdug() {
 
       {hasWon ? (
         <View style={styles.winModal}>
+          <Pressable
+            style={{ padding: 2, borderColor: "red", borderWidth: 2 }}
+            onPress={updateState}
+          >
+            <Text>Continue</Text>
+          </Pressable>
           <Text>Congrats! You escaped</Text>
         </View>
       ) : null}
