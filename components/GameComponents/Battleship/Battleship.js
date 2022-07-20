@@ -1,11 +1,9 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
+import BattleShipBoard from "./BattleShipBoard";
 
-const BattleShip = ({ updateState }) => {
-  return (
-    <Text onTouchStart={updateState} style={styles.text}>
-      Battleship
-    </Text>
-  );
+const Battleship = ({ updateState }) => {
+  console.log("Battleship");
+  return <BattleShipBoard updateState={updateState} />;
 };
 
 const styles = StyleSheet.create({
@@ -15,4 +13,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BattleShip;
+export default Battleship;
