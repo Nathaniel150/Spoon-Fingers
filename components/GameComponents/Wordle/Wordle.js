@@ -1,6 +1,7 @@
-import { View, Text, StyleSheet, SafeAreaView, ScrollView, DatePickerAndroid, Alert} from "react-native";
+import { View, Text, } from "react-native";
 import { useState, useEffect } from "react";
 import Keyboard from "./Keyboard";
+import styles from './styles'
 import { CLEAR, ENTER, colors} from "./wordleConstants";
 import CountDown from 'react-native-countdown-component';
 
@@ -189,48 +190,6 @@ const Wordle = ({ setVisible, setWon, targetWord, timerOn, setTimerOn, timeLimit
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    backgroundColor: "pink",
 
-  },
-  title: {
-    paddingTop: 6,
-    fontSize: 32,
-    fontWeight: "bold",
-    letterSpacing: 7,
-
-  },
-  text: {
-    textAlign: "center",
-    marginTop: 200,
-  },
-  map: {
-    alignSelf: "stretch",
-    marginVertical: 10,
-  },
-  row: {
-    alignSelf: "stretch",
-    flexDirection: "row",
-    justifyContent: "center",
-  },
-  cell: {
-    borderColor: "white",
-    borderWidth: 2,
-    flex: 1,
-    aspectRatio: 1, //makes square
-    margin: 4,
-    maxWidth:70,
-    justifyContent: "center",
-    alignItems: "center"
-    
-  },
-  cellText: {
-    fontWeight: "bold",
-    fontSize: 30
-  }
-});
 
 export default Wordle;
