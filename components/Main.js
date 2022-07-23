@@ -1,5 +1,7 @@
 import { View, Text } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { ActivityIndicator } from "@react-native-material/core";
+
 
 import DialogueScene from "./SceneComponents/DialogueScene";
 import StoryScene from "./SceneComponents/StoryScene";
@@ -9,14 +11,52 @@ import Digdug from "./GameComponents/Digdug/Digdug";
 
 import { storyP1, storyP2, storyP3, storyP4 } from "../assets/StoryData/scenes";
 import Lockle from "./GameComponents/Wordle/Lockle";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Main = () => {
   //use to track what part ofe game we are currently in;
-  const [stateTracker, setStateTracker] = useState(5);
+  const [stateTracker, setStateTracker] = useState(1);
+  const updateState = () => {setStateTracker(stateTracker + 1); };
 
-  const updateState = () => {
-    setStateTracker(stateTracker + 1);
-  };
+
+  //SAVE GAME PROGRESS START
+
+  // AsyncStorage.removeItem("@state")
+  // const [loaded, setLoaded] = useState(false)
+
+
+  // useEffect(() => {
+  //   if(loaded) {
+  //     persistState()
+  //   }
+  // }, [stateTracker])
+
+  // useEffect(() => {readState()}, [])
+
+  // const persistState = async () => {
+  //   const data = {stateTracker
+  //   }
+  //   const dataString = JSON.stringify(data);
+  //   await AsyncStorage.setItem("@state", dataString);
+  // }
+
+  // const readState = async () => {
+  //   const dataString = await AsyncStorage.getItem("@state");
+
+  //   try {
+  //     const data = JSON.parse(dataString);
+  //     setStateTracker(data.stateTracker);
+  //   } catch {
+  //     console.log("Can't parse string")
+  //   }
+  //   setLoaded(true);
+  // }
+
+  // if(!loaded) {
+  //   return (<ActivityIndicator/>)
+  // }
+
+  //SAVE GAME PROGRESS END
 
   if (stateTracker == 1) {
     return <StoryScene updateState={updateState} story={storyP1}/>;

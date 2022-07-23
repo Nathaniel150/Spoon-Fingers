@@ -1,7 +1,10 @@
-import { View, Text, StyleSheet, SafeAreaView, ScrollView, DatePickerAndroid, Alert} from "react-native";
+import { View, Text, ActivityIndicator } from "react-native";
 import { useState, useEffect } from "react";
+
 import Keyboard from "./Keyboard";
+import styles from './styles'
 import { CLEAR, ENTER, colors} from "./wordleConstants";
+
 import CountDown from 'react-native-countdown-component';
 
 const NUM_TRIES = 5
@@ -10,8 +13,7 @@ const copyArray = (arr) => {
   return [...arr.map(rows => [...rows])]
 }
 
-const Wordle = ({ setVisible, setWon, targetWord, timerOn, setTimerOn, timeLimit, key }) => {
-  console.log(targetWord)
+const Wordle = ({ setVisible, setWon, targetWord, timerOn, setTimerOn, timeLimit, id }) => {
   const word = targetWord;
   const letters = word.split(''); // ['h', 'e', 'l', 'l', 'o']
 
@@ -28,6 +30,8 @@ const Wordle = ({ setVisible, setWon, targetWord, timerOn, setTimerOn, timeLimit
     }
 
   }, [currRow])
+
+
   
   const clearGame = () => {
     setRows(new Array(NUM_TRIES).fill(new Array(letters.length).fill("")))
@@ -47,14 +51,12 @@ const Wordle = ({ setVisible, setWon, targetWord, timerOn, setTimerOn, timeLimit
   const checkGameState = () => {
     if(checkIfWon()) {
       wait(500)
-      console.log("won")
       setWon(true)
       setVisible(true)
       clearGame()
 
     } else if(checkIfLost()) {
       wait(500)
-      console.log("lost")
       setWon(false)
       setVisible(true)
       clearGame()
@@ -141,11 +143,12 @@ const Wordle = ({ setVisible, setWon, targetWord, timerOn, setTimerOn, timeLimit
   const yellowCaps = getAllLetterWithColor(colors.yellow);
   const greyCaps = getAllLetterWithColor(colors.grey)
 
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>LOCKLE</Text>
       <CountDown
-          key={key}
+          key={id}
           until={timeLimit}
           size={25}
           onFinish={() => loseGame()}
@@ -189,48 +192,6 @@ const Wordle = ({ setVisible, setWon, targetWord, timerOn, setTimerOn, timeLimit
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    backgroundColor: "pink",
 
-  },
-  title: {
-    paddingTop: 6,
-    fontSize: 32,
-    fontWeight: "bold",
-    letterSpacing: 7,
-
-  },
-  text: {
-    textAlign: "center",
-    marginTop: 200,
-  },
-  map: {
-    alignSelf: "stretch",
-    marginVertical: 10,
-  },
-  row: {
-    alignSelf: "stretch",
-    flexDirection: "row",
-    justifyContent: "center",
-  },
-  cell: {
-    borderColor: "white",
-    borderWidth: 2,
-    flex: 1,
-    aspectRatio: 1, //makes square
-    margin: 4,
-    maxWidth:70,
-    justifyContent: "center",
-    alignItems: "center"
-    
-  },
-  cellText: {
-    fontWeight: "bold",
-    fontSize: 30
-  }
-});
 
 export default Wordle;
