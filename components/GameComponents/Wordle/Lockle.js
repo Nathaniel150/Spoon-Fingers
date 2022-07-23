@@ -74,7 +74,7 @@ function Lockle({updateState}) {
         
         
         <View style={styles.container}>
-            {console.log(wordleContent[level].key)}
+           
             <Wordle 
                 setVisible={setVisible} 
                 setWon={setWon} 
@@ -82,7 +82,7 @@ function Lockle({updateState}) {
                 timerOn={timerOn} 
                 setTimerOn={setTimerOn}
                 timeLimit={wordleContent[level].time}
-                key={wordleContent[level].key}/>
+                id={wordleContent[level].key}/>
 
             <Provider >
 
