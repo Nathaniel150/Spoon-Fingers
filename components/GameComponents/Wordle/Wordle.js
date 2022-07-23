@@ -1,8 +1,10 @@
-import { View, Text, } from "react-native";
+import { View, Text, ActivityIndicator } from "react-native";
 import { useState, useEffect } from "react";
+
 import Keyboard from "./Keyboard";
 import styles from './styles'
 import { CLEAR, ENTER, colors} from "./wordleConstants";
+
 import CountDown from 'react-native-countdown-component';
 
 const NUM_TRIES = 5
@@ -11,8 +13,7 @@ const copyArray = (arr) => {
   return [...arr.map(rows => [...rows])]
 }
 
-const Wordle = ({ setVisible, setWon, targetWord, timerOn, setTimerOn, timeLimit, key }) => {
-  console.log(targetWord)
+const Wordle = ({ setVisible, setWon, targetWord, timerOn, setTimerOn, timeLimit, id }) => {
   const word = targetWord;
   const letters = word.split(''); // ['h', 'e', 'l', 'l', 'o']
 
@@ -29,6 +30,8 @@ const Wordle = ({ setVisible, setWon, targetWord, timerOn, setTimerOn, timeLimit
     }
 
   }, [currRow])
+
+
   
   const clearGame = () => {
     setRows(new Array(NUM_TRIES).fill(new Array(letters.length).fill("")))
@@ -48,14 +51,12 @@ const Wordle = ({ setVisible, setWon, targetWord, timerOn, setTimerOn, timeLimit
   const checkGameState = () => {
     if(checkIfWon()) {
       wait(500)
-      console.log("won")
       setWon(true)
       setVisible(true)
       clearGame()
 
     } else if(checkIfLost()) {
       wait(500)
-      console.log("lost")
       setWon(false)
       setVisible(true)
       clearGame()
@@ -142,11 +143,12 @@ const Wordle = ({ setVisible, setWon, targetWord, timerOn, setTimerOn, timeLimit
   const yellowCaps = getAllLetterWithColor(colors.yellow);
   const greyCaps = getAllLetterWithColor(colors.grey)
 
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>LOCKLE</Text>
       <CountDown
-          key={key}
+          key={id}
           until={timeLimit}
           size={25}
           onFinish={() => loseGame()}
