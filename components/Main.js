@@ -12,18 +12,18 @@ import Lockle from "./GameComponents/Wordle/Lockle";
 
 const Main = () => {
   //use to track what part ofe game we are currently in;
-  const [stateTracker, setStateTracker] = useState(5);
+  const [stateTracker, setStateTracker] = useState(4);
 
   const updateState = () => {
     setStateTracker(stateTracker + 1);
   };
 
   if (stateTracker == 1) {
-    return <StoryScene updateState={updateState} story={storyP1}/>;
+    return <StoryScene updateState={updateState} story={storyP1} />;
   } else if (stateTracker == 2) {
     return <Lockle updateState={updateState} />;
-  } else if (stateTracker == 3 ) {
-    return <StoryScene updateState={updateState} story={storyP2}/>;
+  } else if (stateTracker == 3) {
+    return <StoryScene updateState={updateState} story={storyP2} />;
   } else if (stateTracker == 4) {
     return <BattleShip updateState={updateState} />;
   } else if (stateTracker == 5) {
@@ -33,12 +33,8 @@ const Main = () => {
   } else if (stateTracker == 7) {
     return <StoryScene updateState={updateState} story={storyP4} />;
   }
-  
 
   return <Text>Roll Credits</Text>;
 };
 
 export default Main;
-
-
-
