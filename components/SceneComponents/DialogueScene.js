@@ -39,8 +39,10 @@ function DialogueScene ({scene})  {
             flex: 2,
             paddingRight: 20,
             paddingTop: nameContainerHeight, 
+            
+
           }}> 
-            <Text style={{fontSize:18}}>{scene.text}</Text>
+            <Text style={{fontSize:18, fontFamily: 'PixeloidSans',}} >{scene.text}</Text>
           </View>
         <Text style={{ //name tag
           position: 'absolute',
@@ -51,6 +53,9 @@ function DialogueScene ({scene})  {
           textAlignVertical: "center",
           paddingHorizontal: 15,
           paddingVertical: nameHeightPadding,
+          fontFamily: 'PixeloidSans',
+
+
         }}> 
           {scene.character.name}
         </Text>
@@ -63,8 +68,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "flex-end",
-
-},
+  },
 
 
 });

@@ -31,6 +31,8 @@ const styles = StyleSheet.create({
     text: {
         padding: 15,
         fontSize: 20,
+        fontFamily: 'PixeloidSans',
+
         
     }
   });
