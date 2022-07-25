@@ -18,7 +18,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Main = () => {
   //use to track what part ofe game we are currently in;
-  const [stateTracker, setStateTracker] = useState(-1);
+  const [stateTracker, setStateTracker] = useState(0);
   const updateState = () => {setStateTracker(stateTracker + 1); };
 
 
