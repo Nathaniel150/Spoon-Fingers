@@ -16,7 +16,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Main = () => {
   //use to track what part ofe game we are currently in;
+
   const [stateTracker, setStateTracker] = useState(0);
+
   const updateState = () => {setStateTracker(stateTracker + 1); };
 
 
@@ -56,8 +58,9 @@ const Main = () => {
   // if(!loaded) {
   //   return (<ActivityIndicator/>)
   // }
-
+  
   //SAVE GAME PROGRESS END
+
 
   if(stateTracker == 0) {
     return <StartingScreen updateState={updateState} setStateTracker={setStateTracker} />
@@ -65,8 +68,8 @@ const Main = () => {
     return <StoryScene updateState={updateState} story={storyP1}/>;
   } else if (stateTracker == 2) {
     return <Lockle updateState={updateState} />;
-  } else if (stateTracker == 3 ) {
-    return <StoryScene updateState={updateState} story={storyP2}/>;
+  } else if (stateTracker == 3) {
+    return <StoryScene updateState={updateState} story={storyP2} />;
   } else if (stateTracker == 4) {
     return <BattleShip updateState={updateState} />;
   } else if (stateTracker == 5) {
@@ -76,12 +79,8 @@ const Main = () => {
   } else if (stateTracker == 7) {
     return <StoryScene updateState={updateState} story={storyP4} />;
   }
-  
 
   return <Text>Whoops</Text>;
 };
 
 export default Main;
-
-
-

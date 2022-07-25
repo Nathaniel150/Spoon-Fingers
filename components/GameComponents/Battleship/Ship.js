@@ -13,10 +13,6 @@ const Ship = ({
 }) => {
   const blockSize = Constants.MAX_WIDTH / Constants.BATTLESHIP_BOARD_DIMENSIONS;
 
-  const selectShipHelper = () => {
-    selectShip(i);
-  };
-
   if (ship.orientation === "horizontal") {
     return (
       <View
