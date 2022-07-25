@@ -10,28 +10,27 @@ export default function BattleshipSquare({
   placeShip,
   i,
   j,
+  enemy,
+  takeEnemyTurn,
+  checkIfSunk,
 }) {
-  const blockSize = Constants.MAX_WIDTH / Constants.BATTLESHIP_BOARD_DIMENSIONS;
+  const blockSize =
+    Constants.MAX_WIDTH / Constants.BATTLESHIP_BOARD_DIMENSIONS - 10;
 
   const gotHit = () => {
     let newBoard = [...board];
     newBoard[i][j].isHit = true;
+    if (newBoard[i][j].isShip) {
+      console.log("yee", newBoard[i][j].shipId);
+      checkIfSunk(newBoard[i][j].shipId, board, enemy);
+    }
     setBoard(newBoard);
+
+    if (takeEnemyTurn) {
+      takeEnemyTurn();
+    }
   };
 
-  const updateLocationInfoOnLayout = (e) => {
-    const layout = e.nativeEvent.layout;
-
-    let newBoard = [...board];
-    newBoard[i][j].height = layout.height;
-    newBoard[i][j].width = layout.width;
-    //for some reason this is always 0, so i am adding i * width to set in in the right location.
-    newBoard[i][j].x = layout.x + i * layout.width;
-    newBoard[i][j].y = layout.y;
-
-    setBoard(newBoard);
-    console.log("Setup", setup);
-  };
   if (setup) {
     if (square.isShip) {
       return (
@@ -56,7 +55,7 @@ export default function BattleshipSquare({
             height: blockSize,
             width: blockSize,
             borderColor: "black",
-            borderWidth: "1px",
+            borderWidth: 1,
           }}
         >
           <Text>
@@ -67,55 +66,125 @@ export default function BattleshipSquare({
     }
   }
 
-  if (square.isShip && square.isHit) {
-    return (
-      <View
-        style={{
-          backgroundColor: "red",
-          height: blockSize,
-          width: blockSize,
-        }}
-      />
-    );
-  } else if (!square.isShip && square.isHit) {
-    return (
-      <View
-        style={{
-          backgroundColor: "white",
-          height: blockSize,
-          width: blockSize,
-        }}
-      />
-    );
-  } else if (square.isShip) {
-    return (
-      <View
-        onTouchStart={gotHit}
-        style={{
-          backgroundColor: "grey",
-          height: blockSize,
-          width: blockSize,
-        }}
-      />
-    );
-  } else {
-    return (
-      <View
-        // I can use this to get info about where the square is on the screen.
-        onLayout={(e) => {
-          updateLocationInfoOnLayout(e);
-        }}
-        onTouchStart={gotHit}
-        style={{
-          backgroundColor: "blue",
-          height: blockSize,
-          width: blockSize,
-        }}
-      >
-        <Text>
-          {i} , {j}
-        </Text>
-      </View>
-    );
+  if (enemy) {
+    if (square.isSunk && square.isShip) {
+      return (
+        <View
+          style={{
+            backgroundColor: "#701414",
+            height: blockSize,
+            width: blockSize,
+          }}
+        />
+      );
+    } else if (square.isShip && square.isHit) {
+      return (
+        <View
+          style={{
+            backgroundColor: "red",
+            height: blockSize,
+            width: blockSize,
+          }}
+        />
+      );
+    } else if (!square.isShip && square.isHit) {
+      return (
+        <View
+          style={{
+            backgroundColor: "white",
+            height: blockSize,
+            width: blockSize,
+          }}
+        />
+      );
+    } else if (square.isShip) {
+      return (
+        <View
+          onTouchStart={gotHit}
+          style={{
+            backgroundColor: "grey",
+            height: blockSize,
+            width: blockSize,
+          }}
+        >
+          <Text>
+            {i} , {j}
+          </Text>
+        </View>
+      );
+    } else {
+      return (
+        <View
+          onTouchStart={gotHit}
+          style={{
+            backgroundColor: "green",
+            height: blockSize,
+            width: blockSize,
+          }}
+        >
+          <Text>
+            {i} , {j}
+          </Text>
+        </View>
+      );
+    }
+  }
+  //player's board. Basically the same except none of the onTouchStart functions trigger.
+  else {
+    if (square.isShip && square.isSunk) {
+      return (
+        <View
+          style={{
+            backgroundColor: "#701414",
+            height: blockSize,
+            width: blockSize,
+          }}
+        />
+      );
+    } else if (square.isShip && square.isHit) {
+      return (
+        <View
+          style={{
+            backgroundColor: "red",
+            height: blockSize,
+            width: blockSize,
+          }}
+        />
+      );
+    } else if (!square.isShip && square.isHit) {
+      return (
+        <View
+          style={{
+            backgroundColor: "white",
+            height: blockSize,
+            width: blockSize,
+          }}
+        />
+      );
+    } else if (square.isShip) {
+      return (
+        <View
+          style={{
+            backgroundColor: "grey",
+            height: blockSize,
+            width: blockSize,
+          }}
+        />
+      );
+    } else {
+      return (
+        <View
+          style={{
+            backgroundColor: "green",
+            height: blockSize,
+            width: blockSize,
+          }}
+        >
+          <Text>
+            {i} , {j}
+          </Text>
+        </View>
+      );
+    }
   }
 }
