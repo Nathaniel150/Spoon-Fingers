@@ -11,6 +11,8 @@ export default function BattleshipSquare({
   i,
   j,
   enemy,
+  takeEnemyTurn,
+  checkIfSunk,
 }) {
   const blockSize =
     Constants.MAX_WIDTH / Constants.BATTLESHIP_BOARD_DIMENSIONS - 10;
@@ -19,31 +21,14 @@ export default function BattleshipSquare({
     let newBoard = [...board];
     newBoard[i][j].isHit = true;
     if (newBoard[i][j].isShip) {
-      checkIfSunk(newBoard[i][j].shipId);
+      console.log("yee", newBoard[i][j].shipId);
+      checkIfSunk(newBoard[i][j].shipId, board, enemy);
     }
     setBoard(newBoard);
-  };
 
-  const checkIfSunk = (id) => {
-    console.log("Checking sunk", id);
-    for (let i = 0; i < Constants.BATTLESHIP_BOARD_DIMENSIONS; i++) {
-      for (let j = 0; j < Constants.BATTLESHIP_BOARD_DIMENSIONS; j++) {
-        if (board[i][j].shipId == id && !board[i][j].isHit) {
-          console.log("Not hit");
-          return;
-        }
-      }
+    if (takeEnemyTurn) {
+      takeEnemyTurn();
     }
-    let newBoard = [...board];
-    for (let i = 0; i < Constants.BATTLESHIP_BOARD_DIMENSIONS; i++) {
-      for (let j = 0; j < Constants.BATTLESHIP_BOARD_DIMENSIONS; j++) {
-        if (newBoard[i][j].shipId == id) {
-          newBoard[i][j].isSunk = true;
-        }
-      }
-    }
-
-    setBoard(newBoard);
   };
 
   if (setup) {
@@ -117,7 +102,7 @@ export default function BattleshipSquare({
         <View
           onTouchStart={gotHit}
           style={{
-            backgroundColor: "green",
+            backgroundColor: "grey",
             height: blockSize,
             width: blockSize,
           }}
@@ -146,7 +131,17 @@ export default function BattleshipSquare({
   }
   //player's board. Basically the same except none of the onTouchStart functions trigger.
   else {
-    if (square.isShip && square.isHit) {
+    if (square.isShip && square.isSunk) {
+      return (
+        <View
+          style={{
+            backgroundColor: "#701414",
+            height: blockSize,
+            width: blockSize,
+          }}
+        />
+      );
+    } else if (square.isShip && square.isHit) {
       return (
         <View
           style={{

@@ -107,7 +107,6 @@ export default function BattleShipBoard({ updateState }) {
 
   //returns true when all the enemy ships have been sunk.
   const hasWon = () => {
-    console.log("Checking win status");
     for (let i = 0; i < Constants.BATTLESHIP_BOARD_DIMENSIONS; i++) {
       for (let j = 0; j < Constants.BATTLESHIP_BOARD_DIMENSIONS; j++) {
         //make sure every square that is a ship is also sunk.
@@ -274,10 +273,12 @@ export default function BattleShipBoard({ updateState }) {
     if (ship.orientation == "vertical") {
       for (let k = 0; k < ship.size; k++) {
         newBoard[i][j + k].isShip = true;
+        newBoard[i][j + k].shipId = shipIndex;
       }
     } else if (ship.orientation == "horizontal") {
       for (let k = 0; k < ship.size; k++) {
         newBoard[i + k][j].isShip = true;
+        newBoard[i + k][j].shipId = shipIndex;
       }
     }
     ship.selected = false;
@@ -298,13 +299,56 @@ export default function BattleShipBoard({ updateState }) {
     setLost(false);
   };
 
+  const takeEnemyTurn = () => {
+    let newBoard = [...board];
+
+    let col = Math.floor(Math.random() * Constants.BATTLESHIP_BOARD_DIMENSIONS);
+    let row = Math.floor(Math.random() * Constants.BATTLESHIP_BOARD_DIMENSIONS);
+
+    //make sure the computer doesn't go after a square that it already chose.
+    while (newBoard[col][row].isHit) {
+      col = Math.floor(Math.random() * Constants.BATTLESHIP_BOARD_DIMENSIONS);
+      row = Math.floor(Math.random() * Constants.BATTLESHIP_BOARD_DIMENSIONS);
+    }
+
+    newBoard[col][row].isHit = true;
+    if (newBoard[col][row].isShip) {
+      console.log("Checking sunk on enemy turn");
+      checkIfSunk(newBoard[col][row].shipId, newBoard, false);
+    }
+    setBoard(newBoard);
+  };
+
+  const checkIfSunk = (id, boardToUse, enemyBoard) => {
+    console.log("Checking sunk", id);
+    for (let i = 0; i < Constants.BATTLESHIP_BOARD_DIMENSIONS; i++) {
+      for (let j = 0; j < Constants.BATTLESHIP_BOARD_DIMENSIONS; j++) {
+        if (boardToUse[i][j].shipId == id && !boardToUse[i][j].isHit) {
+          console.log("Not Sunk", i, j);
+          return;
+        }
+      }
+    }
+    let newBoard = [...boardToUse];
+    for (let i = 0; i < Constants.BATTLESHIP_BOARD_DIMENSIONS; i++) {
+      for (let j = 0; j < Constants.BATTLESHIP_BOARD_DIMENSIONS; j++) {
+        if (newBoard[i][j].shipId == id) {
+          newBoard[i][j].isSunk = true;
+        }
+      }
+    }
+    if (enemyBoard) {
+      setEnemyBoard(newBoard);
+    } else {
+      setBoard(newBoard);
+    }
+  };
+
   //an array of booleans that tracks which ships have been hit.
   const [board, setBoard] = useState(() => createBoard());
 
   const [enemyBoard, setEnemyBoard] = useState(() => createBoard());
-  const [enemyShipInfoTracker, setEnemyShipInfoTracker] = useState(() =>
-    initShips()
-  );
+
   //To keep track of which ships (draggable elements) have been placed, so I can remove them from the screen when they have been placed.
   const [shipInfoTracker, setShipInfoTracker] = useState(() => initShips());
   //keeping track of if the player is still setting up their board or if they are playing the game.
@@ -315,6 +359,10 @@ export default function BattleShipBoard({ updateState }) {
   const [won, setWon] = useState(false);
   //keep track of when the player loses
   const [lost, setLost] = useState(false);
+
+  //used to try and make
+  const [tempI, setTempI] = new useState(0);
+  const [tempJ, setTempJ] = new useState(0);
 
   return (
     <SafeAreaView>
@@ -343,6 +391,8 @@ export default function BattleShipBoard({ updateState }) {
                       i={i}
                       j={j}
                       enemy={true}
+                      takeEnemyTurn={() => takeEnemyTurn()}
+                      checkIfSunk={checkIfSunk}
                     />
                   );
                 })}
@@ -375,6 +425,7 @@ export default function BattleShipBoard({ updateState }) {
                     i={i}
                     j={j}
                     enemy={false}
+                    checkIfSunk={checkIfSunk}
                   />
                 );
               })}
@@ -460,6 +511,27 @@ export default function BattleShipBoard({ updateState }) {
               compact
               variant="text"
               onPress={() => updateState()}
+            />
+          </DialogActions>
+        </Dialog>
+      </Provider>
+      <Provider>
+        <Dialog visible={lost}>
+          <DialogContent>
+            <Text>Sorry!</Text>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              title="Try Again"
+              compact
+              variant="text"
+              onPress={() => resetBoard()}
+            />
+            <Button
+              title="GO HOME (This won't work yet)"
+              compact
+              variant="text"
+              // onPress={() => updateState()}
             />
           </DialogActions>
         </Dialog>
