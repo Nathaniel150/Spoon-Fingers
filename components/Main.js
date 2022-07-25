@@ -9,14 +9,16 @@ import Wordle from "./GameComponents/Wordle/Wordle";
 import BattleShip from "./GameComponents/Battleship/Battleship";
 import Digdug from "./GameComponents/Digdug/Digdug";
 import StartingScreen from "./StartingScreen";
+import LevelSelect from "./LevelSelect";
 
 import { storyP1, storyP2, storyP3, storyP4 } from "../assets/StoryData/scenes";
 import Lockle from "./GameComponents/Wordle/Lockle";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+
 const Main = () => {
   //use to track what part ofe game we are currently in;
-  const [stateTracker, setStateTracker] = useState(0);
+  const [stateTracker, setStateTracker] = useState(-1);
   const updateState = () => {setStateTracker(stateTracker + 1); };
 
 
@@ -78,7 +80,7 @@ const Main = () => {
   }
   
 
-  return <Text>Whoops</Text>;
+  return <LevelSelect></LevelSelect>;
 };
 
 export default Main;
