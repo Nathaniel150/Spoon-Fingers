@@ -8,6 +8,7 @@ import StoryScene from "./SceneComponents/StoryScene";
 import Wordle from "./GameComponents/Wordle/Wordle";
 import BattleShip from "./GameComponents/Battleship/Battleship";
 import Digdug from "./GameComponents/Digdug/Digdug";
+import StartingScreen from "./StartingScreen";
 
 import { storyP1, storyP2, storyP3, storyP4 } from "../assets/StoryData/scenes";
 import Lockle from "./GameComponents/Wordle/Lockle";
@@ -15,7 +16,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Main = () => {
   //use to track what part ofe game we are currently in;
-  const [stateTracker, setStateTracker] = useState(1);
+
+  const [stateTracker, setStateTracker] = useState(0);
 
   const updateState = () => {setStateTracker(stateTracker + 1); };
 
@@ -59,8 +61,11 @@ const Main = () => {
   
   //SAVE GAME PROGRESS END
 
-  if (stateTracker == 1) {
-    return <StoryScene updateState={updateState} story={storyP1} />;
+
+  if(stateTracker == 0) {
+    return <StartingScreen updateState={updateState} setStateTracker={setStateTracker} />
+  } else if (stateTracker == 1) {
+    return <StoryScene updateState={updateState} story={storyP1}/>;
   } else if (stateTracker == 2) {
     return <Lockle updateState={updateState} />;
   } else if (stateTracker == 3) {
@@ -75,7 +80,7 @@ const Main = () => {
     return <StoryScene updateState={updateState} story={storyP4} />;
   }
 
-  return <Text>Roll Credits</Text>;
+  return <Text>Whoops</Text>;
 };
 
 export default Main;
