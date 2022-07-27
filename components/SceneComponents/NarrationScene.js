@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, Pressable } from "react-native";
+import { fontStyles } from '../../App';
 
 
 function NarrationScene({scene}) {
@@ -8,7 +9,7 @@ function NarrationScene({scene}) {
         
         <View style={styles.container}>
             <View style={styles.content}>
-                <Text style={styles.text}>{scene.text}</Text>
+                <Text style={[styles.text, fontStyles.pixelFont ]}>{scene.text}</Text>
             </View>
         </View>
     );
@@ -31,9 +32,6 @@ const styles = StyleSheet.create({
     text: {
         padding: 15,
         fontSize: 20,
-        fontFamily: 'PixeloidSans',
-
-        
     }
   });
 

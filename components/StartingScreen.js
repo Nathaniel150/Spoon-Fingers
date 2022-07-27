@@ -1,5 +1,7 @@
 import React from 'react';
 import { View, ImageBackground, Text, StyleSheet} from'react-native'
+import { fontStyles } from '../App';
+
 
 function StartingScreen({updateState, setStateTracker}) {
     return (
@@ -12,19 +14,15 @@ function StartingScreen({updateState, setStateTracker}) {
                 resizeMode="cover"
                 style= {styles.background}
             >
-            <View style={styles.content}>  
-                <Text style={styles.title}>
-                    Spoon{"\n"}Fingers
-                </Text>
-                <Text style={styles.helpText} >
-                    Press anywhere to continue
-                </Text>
-            </View>
-
-           
-
-            </ImageBackground>
-            
+                <View style={styles.content}>  
+                    <Text style={[styles.title, fontStyles.pixelBoldFont]}>
+                        Spoon{"\n"}Fingers
+                    </Text>
+                    <Text style={[styles.helpText, fontStyles.pixelFont]} >
+                        Press anywhere to continue
+                    </Text>
+                </View>
+            </ImageBackground>  
         </View>
     );
 }
@@ -42,8 +40,6 @@ const styles = StyleSheet.create({
         fontSize: 70, 
         textAlign: "center",
         color: "black",
-        fontFamily: 'PixeloidSans-Bold',
-
         
     },
     content: {
@@ -55,9 +51,7 @@ const styles = StyleSheet.create({
     helpText: {
         marginTop: 50,
         padding: 8,
-        backgroundColor: "rgba(0, 0, 0, 0.6)",
-        fontFamily: 'PixeloidSans-Bold',
-     
+        backgroundColor: "rgba(0, 0, 0, 0.6)",     
         color: "white"
     }
 

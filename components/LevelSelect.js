@@ -85,12 +85,12 @@ const styles = StyleSheet.create({
        
     },
     right: {
-        justifyContent: "right"
+        justifyContent: "flex-end"
     },
     photo: {
         height: 125,
         width: 125,
-        borderRadius: '50%',
+        borderRadius: 63,
     },
     title: {
         width: "100%",
