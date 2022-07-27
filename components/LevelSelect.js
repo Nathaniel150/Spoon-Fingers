@@ -1,50 +1,56 @@
 import React from 'react';
-import { ScrollView, View, Text, StyleSheet,Image } from 'react-native';
+import { ScrollView, View, Text, StyleSheet,Image, Pressable } from 'react-native';
+import { fontStyles } from '../App';
+import Constants from './Constants';
 
-function LevelSelect(props) {
+function LevelSelect({updateState}) {
     return (
         <ScrollView style={styles.container}>
-            <Text style={[styles.title, styles.titleBottomBorder]}>Levels</Text>
+            <Text style={[styles.title, styles.titleBottomBorder, fontStyles.pixelBoldFont]}>Levels</Text>
             <View style={styles.row}>
-                <Image
-                    source={require("../assets/BackgroundImages/prison.png")}
-                    style={styles.photo}
-                />
-                <Text style={styles.lvlName}>1. The Cell</Text>
+                <Pressable  onPress={() => {updateState(Constants.STORY_P1)}}>
+                    <Image
+                        source={require("../assets/BackgroundImages/prison.png")}
+                        style={styles.photo}
+                    />
+                </Pressable>
+                <Text style={[styles.lvlName, fontStyles.pixelFont]}>1. The Cell</Text>
             </View>
             <View style={[styles.row, styles.right]}>
-                <Text style={styles.lvlName}>2. Locked In</Text>
-                <Image
-                    source={require("../assets/BackgroundImages/prison.png")}
-                    style={styles.photo}
-                />
+                <Text style={[styles.lvlName, fontStyles.pixelFont]}>2. Locked In</Text>
+                <Pressable  onPress={() => {updateState(Constants.LOCKLE)}} disabled={true}>
+                    <Image
+                        source={require("../assets/BackgroundImages/prison.png")}
+                        style={styles.photo}
+                    />
+                </Pressable>
             </View>
             <View style={styles.row}>
                 <Image
                     source={require("../assets/BackgroundImages/prison.png")}
                     style={styles.photo}
                 />
-                <Text style={styles.lvlName}>3. Cafeteria</Text>
-
-            </View>
-            <View style={[styles.row, styles.right]}>
-                <Text style={styles.lvlName}>4. Spoon vs Fork</Text>
-                <Image
-                    source={require("../assets/BackgroundImages/prison.png")}
-                    style={styles.photo}
-                />
-
-            </View>
-            <View style={styles.row}>
-                <Image
-                    source={require("../assets/BackgroundImages/prison.png")}
-                    style={styles.photo}
-                />
-                <Text style={styles.lvlName}>5. Run</Text>
+                <Text style={[styles.lvlName, fontStyles.pixelFont]}>3. Cafeteria</Text>
 
             </View>
             <View style={[styles.row, styles.right]}>
-                <Text style={styles.lvlName}>6. Dig</Text>
+                <Text style={[styles.lvlName, fontStyles.pixelFont]}>4. Spoon vs Fork</Text>
+                <Image
+                    source={require("../assets/BackgroundImages/prison.png")}
+                    style={styles.photo}
+                />
+
+            </View>
+            <View style={styles.row}>
+                <Image
+                    source={require("../assets/BackgroundImages/prison.png")}
+                    style={styles.photo}
+                />
+                <Text style={[styles.lvlName, fontStyles.pixelFont]}>5. Run</Text>
+
+            </View>
+            <View style={[styles.row, styles.right]}>
+                <Text style={[styles.lvlName, fontStyles.pixelFont]}>6. Dig</Text>
 
                 <Image
                     source={require("../assets/BackgroundImages/prison.png")}
@@ -56,10 +62,10 @@ function LevelSelect(props) {
                     source={require("../assets/BackgroundImages/prison.png")}
                     style={styles.photo}
                 />
-                <Text style={styles.lvlName}>7. Freedom?</Text>
+                <Text style={[styles.lvlName, fontStyles.pixelFont]}>7. Freedom?</Text>
 
             </View>
-            <Text style={styles.title}>Levels</Text>
+            <Text style={[styles.title, fontStyles.pixelBoldFont]}>Levels</Text>
 
 
             
@@ -95,7 +101,6 @@ const styles = StyleSheet.create({
     title: {
         width: "100%",
         fontSize: 65,
-        fontFamily: 'PixeloidSans-Bold',
         color: "white",
         alignSelf: "center",
         paddingVertical: 20,
@@ -112,7 +117,6 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: "white",
         justifyContent: "flex-start",
-        fontFamily: 'PixeloidSans',
         
     }
 

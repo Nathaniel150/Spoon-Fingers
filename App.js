@@ -1,6 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import Main from "./components/Main";
+import Main2 from "./components/Main2.0";
 
 import { useState } from 'react';
 import * as Font from "expo-font";
@@ -16,7 +17,7 @@ export default function App() {
         });    
 
   if (fontsloaded) {
-    return <Main />;
+    return <Main2 />;
   } else {
       return (
         <AppLoading

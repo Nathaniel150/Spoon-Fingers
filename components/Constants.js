@@ -11,15 +11,15 @@ export default {
   BATTLESHIP_SIZES: [4, 3, 2],
 
 
-  START_SCREEN:1,
-  LEVEL_SELECT: 2,
-  STORY_P1: 3,
-  WORDLE: 4,
-  STORY_P2: 5,
-  BATTLESHIP: 6,
-  STORY_P3: 7,
-  DIG_DUG: 8,
-  STORY_P4: 9,
+  START_SCREEN: 0,
+  LEVEL_SELECT: 1,
+  STORY_P1: 2,
+  LOCKLE: 3,
+  STORY_P2: 4,
+  BATTLESHIP: 5,
+  STORY_P3: 6,
+  DIG_DUG: 7,
+  STORY_P4: 8,
 
 
 };
