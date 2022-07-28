@@ -6,6 +6,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import StartingScreen from "./StartingScreen";
 import LevelSelect from "./LevelSelect";
+import LevelSelect2 from "./LevelSelect2";
 import StoryScene from "./SceneComponents/StoryScene";
 import Lockle from "./GameComponents/Wordle/Lockle";
 import BattleShip from "./GameComponents/Battleship/Battleship";
@@ -67,7 +68,7 @@ const Main2 = () => {
     return <StartingScreen updateState={updateState}/>
   } 
   else if (stateTracker == Constants.LEVEL_SELECT)  {
-      return <LevelSelect updateState={updateState}></LevelSelect>
+    return <LevelSelect2 updateState={updateState}></LevelSelect2>
   } 
   else if (stateTracker == Constants.STORY_P1) {
     return <StoryScene updateState={updateState} story={storyP1}/>;

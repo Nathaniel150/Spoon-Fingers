@@ -4,6 +4,51 @@ import { fontStyles } from '../App';
 import Constants from './Constants';
 
 function LevelSelect({updateState}) {
+    // const level = [
+    //     {
+    //         lvlName: "1. The Cell",
+    //         img: require("../assets/BackgroundImages/prison.png"),
+    //         onPress: updateState(Constants.STORY_P1),
+    //         unlocked: true,
+    //     },
+    //     {
+    //         lvlName: "2. Locked In",
+    //         img: require("../assets/BackgroundImages/prison.png"),
+    //         onPress: updateState(Constants.LOCKLE),
+    //         unlocked: false,
+    //     },
+    //     {
+    //         lvlName: "3. Cafeteria",
+    //         img: require("../assets/BackgroundImages/prison.png"),
+    //         onPress: updateState(Constants.STORY_P2),
+    //         unlocked: false,
+    //     },
+    //     {
+    //         lvlName: "4. Spoon vs Fork",
+    //         img: require("../assets/BackgroundImages/prison.png"),
+    //         onPress: updateState(Constants.BATTLESHIP),
+    //         unlocked: false,
+    //     },
+    //     {
+    //         lvlName: "5. Run",
+    //         img: require("../assets/BackgroundImages/prison.png"),
+    //         onPress: updateState(Constants.STORY_P3),
+    //         unlocked: false,
+    //     },
+    //     {
+    //         lvlName: "6. Dig",
+    //         img: require("../assets/BackgroundImages/prison.png"),
+    //         onPress: updateState(Constants.DIG_DUG),
+    //         unlocked: false,
+    //     },
+    //     {
+    //         lvlName: "7. Freedom",
+    //         img: require("../assets/BackgroundImages/prison.png"),
+    //         onPress: updateState(Constants.STORY_P4),
+    //         unlocked: false,
+    //     },
+
+    // ]
     return (
         <ScrollView style={styles.container}>
             <Text style={[styles.title, styles.titleBottomBorder, fontStyles.pixelBoldFont]}>Levels</Text>
