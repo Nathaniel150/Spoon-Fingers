@@ -536,21 +536,15 @@ export default function BattleShipBoard({ updateState }) {
       <Provider>
         <Dialog visible={lost}>
           <DialogContent>
-            <Text>Sorry!</Text>
+            <Text>The Guards Have Defeated you!</Text>
           </DialogContent>
           <DialogActions>
             {/* TODO Once I have the new updateState function, this button will return the player to the levels page */}
-            {/* <Button
-              title="Try Again"
-              compact
-              variant="text"
-              onPress={() => resetBoard()}
-            /> */}
             <Button
-              title="GO HOME (This won't work yet)"
+              title="Continue"
               compact
               variant="text"
-              // onPress={() => updateState()}
+              onPress={() => updateState(Constants.STORY_P2)}
             />
           </DialogActions>
         </Dialog>
