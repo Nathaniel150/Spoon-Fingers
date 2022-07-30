@@ -86,6 +86,7 @@ export default function Digdug({ updateState }) {
           <Pressable
             style={{ padding: 2, Color: "red", borderWidth: 2 }}
             onPress={updateState}
+
           >
             <Text>Continue</Text>
           </Pressable>

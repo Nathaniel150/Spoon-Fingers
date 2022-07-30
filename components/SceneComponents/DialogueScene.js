@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, Image } from "react-native";
 
 import Constants from "../Constants";
+import { fontStyles } from "../../App";
 
 function DialogueScene({ scene }) {
   var textBoxWidth = Constants.MAX_WIDTH * 0.9;
@@ -48,32 +49,23 @@ function DialogueScene({ scene }) {
             //text container
             flex: 2,
             paddingRight: 20,
-            paddingTop: nameContainerHeight,
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 18,
-              // fontFamily: 'PixeloidSans',
-            }}
-          >
-            {scene.text}
-          </Text>
-        </View>
-        <Text
-          style={{
-            //name tag
-            position: "absolute",
-            top: -(nameContainerHeight / 2),
-            left: -15,
-            backgroundColor: "#ffffff",
-            fontSize: nameFontSize,
-            textAlignVertical: "center",
-            paddingHorizontal: 15,
-            paddingVertical: nameHeightPadding,
-            // fontFamily: "PixeloidSans",
-          }}
-        >
+            paddingTop: nameContainerHeight, 
+            
+
+          }}> 
+            <Text style={[{fontSize:18}, fontStyles.pixelFont]} >{scene.text}</Text>
+          </View>
+        <Text style={[{ //name tag
+          position: 'absolute',
+          top: -(nameContainerHeight/2),
+          left: -15,
+          backgroundColor: "#ffffff",
+          fontSize: nameFontSize,
+          textAlignVertical: "center",
+          paddingHorizontal: 15,
+          paddingVertical: nameHeightPadding,
+
+        }, fontStyles.pixelFont ]}> 
           {scene.character.name}
         </Text>
       </View>

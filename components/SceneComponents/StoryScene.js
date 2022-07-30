@@ -5,7 +5,7 @@ import { ImageBackground, Text, View, StyleSheet, TouchableHighlight } from 'rea
 import DialogueScene from './DialogueScene';
 import NarrationScene from './NarrationScene';
 
-function StoryScene({updateState, story}) {
+function StoryScene({updateState, story, nextLevel}) {
      // index of the scene information to be displayed.
     const [sceneIndex, setSceneIndex] = useState(0);
 
@@ -16,7 +16,7 @@ function StoryScene({updateState, story}) {
         } 
          
         else {
-             updateState()
+             updateState(nextLevel)
         }
     }
 
