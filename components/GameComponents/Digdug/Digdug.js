@@ -7,6 +7,13 @@ import {
   View,
   Button,
 } from "react-native";
+import {
+  Dialog,
+  DialogHeader,
+  DialogContent,
+  DialogActions,
+  Provider,
+} from "@react-native-material/core";
 import { GameEngine } from "react-native-game-engine";
 import { MoveAvatar } from "./systems";
 import { DirtArray } from "./entities";
@@ -81,23 +88,38 @@ export default function Digdug({ updateState }) {
         <StatusBar hidden={true} />
       </GameEngine>
 
-      {hasWon ? (
-        <View style={styles.winModal}>
-          <Pressable
-            style={{ padding: 2, Color: "red", borderWidth: 2 }}
-            onPress={updateState}
-            
-          >
-            <Text>Continue</Text>
-          </Pressable>
-          <Text>Congrats! You escaped</Text>
-        </View>
-      ) : null}
-      {gotCaught ? (
-        <View style={styles.winModal}>
-          <Text>OH NO the guard caught you!</Text>
-        </View>
-      ) : null}
+      <Provider>
+        <Dialog visible={hasWon}>
+          <DialogContent>
+            <Text>Congrats You Escaped!</Text>
+          </DialogContent>
+          <DialogActions>
+            {/* TODO Once I have the new updateState function, this button will return the player to the levels page */}
+            <Button
+              title="Escape"
+              compact
+              variant="text"
+              onPress={() => updateState(Constants.STORY_P4)}
+            />
+          </DialogActions>
+        </Dialog>
+      </Provider>
+      <Provider>
+        <Dialog visible={gotCaught}>
+          <DialogContent>
+            <Text>The Guards Have Defeated you!</Text>
+          </DialogContent>
+          <DialogActions>
+            {/* TODO Once I have the new updateState function, this button will return the player to the levels page */}
+            <Button
+              title="Continue"
+              compact
+              variant="text"
+              onPress={() => updateState(Constants.STORY_P3)}
+            />
+          </DialogActions>
+        </Dialog>
+      </Provider>
       <View>
         <Text>Spoon Count: {spoonCount}</Text>
       </View>
