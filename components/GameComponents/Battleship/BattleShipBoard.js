@@ -1,5 +1,16 @@
 import { useState, useEffect } from "react";
-import { View, Text, Pressable, SafeAreaView, Button } from "react-native";
+import {
+  View,
+  Text,
+  Pressable,
+  SafeAreaView,
+  Button,
+  Image,
+  StyleSheet,
+  StatusBar,
+  Dimensions,
+  Header,
+} from "react-native";
 import Constants from "../../Constants";
 import BattleshipSquare from "./BattleshipSquare";
 import Draggable from "react-native-draggable";
@@ -33,10 +44,10 @@ export default function BattleShipBoard({ updateState }) {
     };
 
     let board = [];
-    for (let i = 0; i < Constants.BATTLESHIP_BOARD_DIMENSIONS; i++) {
+    for (let i = 0; i < Constants.BATTLESHIP_BOARD_WIDTH; i++) {
       let row = [];
 
-      for (let j = 0; j < Constants.BATTLESHIP_BOARD_DIMENSIONS; j++) {
+      for (let j = 0; j < Constants.BATTLESHIP_BOARD_HEIGHT; j++) {
         row.push({ ...defaultSquare });
       }
       board.push(row);
@@ -58,18 +69,16 @@ export default function BattleShipBoard({ updateState }) {
     return ships;
   };
 
+  const initEnemyBoard = () => {};
   //once the enemy board has been initialized, randomly place the
   // ships on it.
   useEffect(() => {
+    console.log("Initializing enemy board");
     if (enemyBoard && isSetup) {
       for (let i = 0; i < Constants.NUM_BATTLESHIPS; i++) {
         //place the battle ship at random location
-        let col = Math.floor(
-          Math.random() * Constants.BATTLESHIP_BOARD_DIMENSIONS
-        );
-        let row = Math.floor(
-          Math.random() * Constants.BATTLESHIP_BOARD_DIMENSIONS
-        );
+        let col = Math.floor(Math.random() * Constants.BATTLESHIP_BOARD_WIDTH);
+        let row = Math.floor(Math.random() * Constants.BATTLESHIP_BOARD_HEIGHT);
 
         let orientations = ["vertical", "horizontal"];
         let index = Math.floor(Math.random() * 2);
@@ -81,12 +90,8 @@ export default function BattleShipBoard({ updateState }) {
             Constants.BATTLESHIP_SIZES[i]
           )
         ) {
-          col = Math.floor(
-            Math.random() * Constants.BATTLESHIP_BOARD_DIMENSIONS
-          );
-          row = Math.floor(
-            Math.random() * Constants.BATTLESHIP_BOARD_DIMENSIONS
-          );
+          col = Math.floor(Math.random() * Constants.BATTLESHIP_BOARD_WIDTH);
+          row = Math.floor(Math.random() * Constants.BATTLESHIP_BOARD_HEIGHT);
           index = Math.floor(Math.random() * 2);
         }
         placeEnemyShip(
@@ -107,8 +112,9 @@ export default function BattleShipBoard({ updateState }) {
 
   //returns true when all the enemy ships have been sunk.
   const hasWon = () => {
-    for (let i = 0; i < Constants.BATTLESHIP_BOARD_DIMENSIONS; i++) {
-      for (let j = 0; j < Constants.BATTLESHIP_BOARD_DIMENSIONS; j++) {
+    //the player can't win during setup
+    for (let i = 0; i < Constants.BATTLESHIP_BOARD_WIDTH; i++) {
+      for (let j = 0; j < Constants.BATTLESHIP_BOARD_HEIGHT; j++) {
         //make sure every square that is a ship is also sunk.
         if (enemyBoard[i][j].isShip && !enemyBoard[i][j].isSunk) {
           return false;
@@ -121,8 +127,11 @@ export default function BattleShipBoard({ updateState }) {
 
   //return true if all the player's ships have bee sunk.
   const hasLost = () => {
-    for (let i = 0; i < Constants.BATTLESHIP_BOARD_DIMENSIONS; i++) {
-      for (let j = 0; j < Constants.BATTLESHIP_BOARD_DIMENSIONS; j++) {
+    //the player can't lose during setup
+
+    for (let i = 0; i < Constants.BATTLESHIP_BOARD_WIDTH; i++) {
+      for (let j = 0; j < Constants.BATTLESHIP_BOARD_HEIGHT; j++) {
+        console.log(board[i][j].isSunk);
         if (board[i][j].isShip && !board[i][j].isSunk) {
           return false;
         }
@@ -134,7 +143,7 @@ export default function BattleShipBoard({ updateState }) {
   //check that it is allowed to place the ship at the location i,j
   const canPlaceEnemyShip = (i, j, orientation, size) => {
     if (orientation == "vertical") {
-      if (j + size > Constants.BATTLESHIP_BOARD_DIMENSIONS) {
+      if (j + size > Constants.BATTLESHIP_BOARD_HEIGHT) {
         return false;
       }
 
@@ -146,7 +155,7 @@ export default function BattleShipBoard({ updateState }) {
     }
 
     if (orientation == "horizontal") {
-      if (i + size > Constants.BATTLESHIP_BOARD_DIMENSIONS) {
+      if (i + size > Constants.BATTLESHIP_BOARD_WIDTH) {
         return false;
       }
 
@@ -226,7 +235,7 @@ export default function BattleShipBoard({ updateState }) {
 
   const canPlaceShip = (i, j, orientation, size) => {
     if (orientation == "vertical") {
-      if (j + size > Constants.BATTLESHIP_BOARD_DIMENSIONS) {
+      if (j + size > Constants.BATTLESHIP_BOARD_HEIGHT) {
         return false;
       }
 
@@ -238,7 +247,7 @@ export default function BattleShipBoard({ updateState }) {
     }
 
     if (orientation == "horizontal") {
-      if (i + size > Constants.BATTLESHIP_BOARD_DIMENSIONS) {
+      if (i + size > Constants.BATTLESHIP_BOARD_WIDTH) {
         return false;
       }
 
@@ -292,23 +301,25 @@ export default function BattleShipBoard({ updateState }) {
 
   const resetBoard = () => {
     setReady(false);
-    setBoard(createBoard);
-    setShipInfoTracker(initShips);
-    setIsSetup(true);
     setWon(false);
     setLost(false);
+    setBoard(createBoard);
+    setShipInfoTracker(initShips);
+    initEnemyBoard();
+    // setEnemyBoard(createBoard);
+    setIsSetup(true);
   };
 
   const takeEnemyTurn = () => {
     let newBoard = [...board];
 
-    let col = Math.floor(Math.random() * Constants.BATTLESHIP_BOARD_DIMENSIONS);
-    let row = Math.floor(Math.random() * Constants.BATTLESHIP_BOARD_DIMENSIONS);
+    let col = Math.floor(Math.random() * Constants.BATTLESHIP_BOARD_WIDTH);
+    let row = Math.floor(Math.random() * Constants.BATTLESHIP_BOARD_HEIGHT);
 
     //make sure the computer doesn't go after a square that it already chose.
     while (newBoard[col][row].isHit) {
-      col = Math.floor(Math.random() * Constants.BATTLESHIP_BOARD_DIMENSIONS);
-      row = Math.floor(Math.random() * Constants.BATTLESHIP_BOARD_DIMENSIONS);
+      col = Math.floor(Math.random() * Constants.BATTLESHIP_BOARD_WIDTH);
+      row = Math.floor(Math.random() * Constants.BATTLESHIP_BOARD_HEIGHT);
     }
 
     newBoard[col][row].isHit = true;
@@ -321,8 +332,8 @@ export default function BattleShipBoard({ updateState }) {
 
   const checkIfSunk = (id, boardToUse, enemyBoard) => {
     console.log("Checking sunk", id);
-    for (let i = 0; i < Constants.BATTLESHIP_BOARD_DIMENSIONS; i++) {
-      for (let j = 0; j < Constants.BATTLESHIP_BOARD_DIMENSIONS; j++) {
+    for (let i = 0; i < Constants.BATTLESHIP_BOARD_WIDTH; i++) {
+      for (let j = 0; j < Constants.BATTLESHIP_BOARD_HEIGHT; j++) {
         if (boardToUse[i][j].shipId == id && !boardToUse[i][j].isHit) {
           console.log("Not Sunk", i, j);
           return;
@@ -330,8 +341,8 @@ export default function BattleShipBoard({ updateState }) {
       }
     }
     let newBoard = [...boardToUse];
-    for (let i = 0; i < Constants.BATTLESHIP_BOARD_DIMENSIONS; i++) {
-      for (let j = 0; j < Constants.BATTLESHIP_BOARD_DIMENSIONS; j++) {
+    for (let i = 0; i < Constants.BATTLESHIP_BOARD_WIDTH; i++) {
+      for (let j = 0; j < Constants.BATTLESHIP_BOARD_HEIGHT; j++) {
         if (newBoard[i][j].shipId == id) {
           newBoard[i][j].isSunk = true;
         }
@@ -360,23 +371,13 @@ export default function BattleShipBoard({ updateState }) {
   //keep track of when the player loses
   const [lost, setLost] = useState(false);
 
-  //used to try and make
-  const [tempI, setTempI] = new useState(0);
-  const [tempJ, setTempJ] = new useState(0);
-
   return (
-    <SafeAreaView>
-      <View
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-        }}
-      >
-        {isSetup ? (
-          <></>
-        ) : (
-          enemyBoard.map((row, i) => {
+    <SafeAreaView style={styles.battleship_container}>
+      {isSetup ? (
+        <></>
+      ) : (
+        <View style={styles.board}>
+          {enemyBoard.map((row, i) => {
             return (
               <View key={`row+${i}`}>
                 {row.map((square, j) => {
@@ -398,18 +399,30 @@ export default function BattleShipBoard({ updateState }) {
                 })}
               </View>
             );
-          })
-        )}
-      </View>
+          })}
+        </View>
+      )}
+
       {/* Spacer will eventually have fight animation */}
-      <View style={{ height: 50 }}></View>
-      <View
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-        }}
-      >
+      {isSetup ? (
+        <></>
+      ) : (
+        <View
+          style={{
+            flexDirection: "row",
+          }}
+        >
+          <Image
+            style={{
+              backgroundColor: "#663801",
+              width: "100%",
+              resizeMode: "contain",
+            }}
+            source={require("../../../assets/200.gif")}
+          />
+        </View>
+      )}
+      <View style={styles.board}>
         {board.map((row, i) => {
           return (
             <View key={`row+${i}`}>
@@ -434,7 +447,7 @@ export default function BattleShipBoard({ updateState }) {
         })}
       </View>
 
-      <Pressable
+      {/* <Pressable
         onPress={() => {
           resetBoard();
         }}
@@ -448,28 +461,39 @@ export default function BattleShipBoard({ updateState }) {
         color={"red"}
       >
         <Text>Reset</Text>
-      </Pressable>
+      </Pressable> */}
 
-      {/* I want the draggable to dissapear after it is realeased. */}
-      {shipInfoTracker.map((ship, i) => {
-        if (ship.placed) {
-          return;
-        }
+      {isSetup ? (
+        shipInfoTracker.map((ship, i) => {
+          if (ship.placed) {
+            return;
+          }
+          const screenWidth = Dimensions.get("window").width;
 
-        return (
-          <Ship
-            key={`ship${i}`}
-            selectShip={() => selectShip(i)}
-            changeOrientation={() => changeOrientation(i)}
-            battleShipSize={Constants.BATTLESHIP_SIZES[i]}
-            ship={ship}
-            orientation={ship.orientation}
-            x={50 + i * 100}
-            y={500}
-            i={i}
-          />
-        );
-      })}
+          let x = 50 + i * 100;
+
+          let y =
+            (screenWidth / Constants.BATTLESHIP_BOARD_WIDTH - 5) *
+              Constants.BATTLESHIP_BOARD_HEIGHT +
+            100;
+
+          return (
+            <Ship
+              key={`ship${i}`}
+              selectShip={() => selectShip(i)}
+              changeOrientation={() => changeOrientation(i)}
+              battleShipSize={Constants.BATTLESHIP_SIZES[i]}
+              ship={ship}
+              orientation={ship.orientation}
+              x={x}
+              y={y}
+              i={i}
+            />
+          );
+        })
+      ) : (
+        <></>
+      )}
 
       <Provider>
         <Dialog visible={ready}>
@@ -501,12 +525,6 @@ export default function BattleShipBoard({ updateState }) {
           </DialogContent>
           <DialogActions>
             <Button
-              title="Play Again"
-              compact
-              variant="text"
-              onPress={() => resetBoard()}
-            />
-            <Button
               title="Escape Cafeteria"
               compact
               variant="text"
@@ -521,12 +539,13 @@ export default function BattleShipBoard({ updateState }) {
             <Text>Sorry!</Text>
           </DialogContent>
           <DialogActions>
-            <Button
+            {/* TODO Once I have the new updateState function, this button will return the player to the levels page */}
+            {/* <Button
               title="Try Again"
               compact
               variant="text"
               onPress={() => resetBoard()}
-            />
+            /> */}
             <Button
               title="GO HOME (This won't work yet)"
               compact
@@ -539,5 +558,28 @@ export default function BattleShipBoard({ updateState }) {
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  battleship_container: {
+    flex: 1,
+    justifyContent: "space-between",
+    alignItems: "center",
+    // backgroundColor: "red",
+  },
+
+  board: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    // marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+    // marginBottom: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+  },
+  ship_container: {
+    display: "flex",
+    // backgroundColor: "red",
+    borderWidth: 4,
+    borderColor: "red",
+  },
+});
 
 //Todo if I place a ship, it should auto select a new one

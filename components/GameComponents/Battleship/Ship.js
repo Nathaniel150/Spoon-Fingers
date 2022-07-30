@@ -11,7 +11,7 @@ const Ship = ({
   y,
   i,
 }) => {
-  const blockSize = Constants.MAX_WIDTH / Constants.BATTLESHIP_BOARD_DIMENSIONS;
+  const blockSize = Constants.MAX_WIDTH / Constants.BATTLESHIP_BOARD_WIDTH - 5;
 
   if (ship.orientation === "horizontal") {
     return (
