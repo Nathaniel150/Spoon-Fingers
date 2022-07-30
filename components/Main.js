@@ -2,7 +2,6 @@ import { View, Text } from "react-native";
 import { useEffect, useState } from "react";
 import { ActivityIndicator } from "@react-native-material/core";
 
-
 import DialogueScene from "./SceneComponents/DialogueScene";
 import StoryScene from "./SceneComponents/StoryScene";
 import Wordle from "./GameComponents/Wordle/Wordle";
@@ -19,17 +18,18 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const Main = () => {
   //use to track what part ofe game we are currently in;
 
-
   const [stateTracker, setStateTracker] = useState(0);
 
   const updateState = () => {setStateTracker(stateTracker + 1); };
 
+  const updateState = () => {
+    setStateTracker(stateTracker + 1);
+  };
 
   //SAVE GAME PROGRESS START
 
   // AsyncStorage.removeItem("@state")
   // const [loaded, setLoaded] = useState(false)
-
 
   // useEffect(() => {
   //   if(loaded) {
@@ -61,14 +61,18 @@ const Main = () => {
   // if(!loaded) {
   //   return (<ActivityIndicator/>)
   // }
-  
+
   //SAVE GAME PROGRESS END
 
-
-  if(stateTracker == 0) {
-    return <StartingScreen updateState={updateState} setStateTracker={setStateTracker} />
+  if (stateTracker == 0) {
+    return (
+      <StartingScreen
+        updateState={updateState}
+        setStateTracker={setStateTracker}
+      />
+    );
   } else if (stateTracker == 1) {
-    return <StoryScene updateState={updateState} story={storyP1}/>;
+    return <StoryScene updateState={updateState} story={storyP1} />;
   } else if (stateTracker == 2) {
     return <Lockle updateState={updateState} />;
   } else if (stateTracker == 3) {

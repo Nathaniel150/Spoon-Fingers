@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import { fontStyles } from '../../App';
 

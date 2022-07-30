@@ -5,11 +5,11 @@ export default {
   MAX_HEIGHT: Dimensions.get("screen").height,
   AVATAR_RADIUS: 50,
   BLOCK_RADIUS: 50,
-  BATTLESHIP_BOARD_DIMENSIONS: 8,
+  BATTLESHIP_BOARD_WIDTH: 8,
+  BATTLESHIP_BOARD_HEIGHT: 6,
   NUM_BATTLESHIPS: 3,
 
   BATTLESHIP_SIZES: [4, 3, 2],
-
 
   START_SCREEN: 0,
   LEVEL_SELECT: 1,
@@ -20,6 +20,4 @@ export default {
   STORY_P3: 6,
   DIG_DUG: 7,
   STORY_P4: 8,
-
-
 };

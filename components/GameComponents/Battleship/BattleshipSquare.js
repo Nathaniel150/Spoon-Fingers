@@ -1,6 +1,8 @@
 import { useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import Constants from "../../Constants";
+
+const blockSize = Constants.MAX_WIDTH / Constants.BATTLESHIP_BOARD_WIDTH - 5;
 
 export default function BattleshipSquare({
   square,
@@ -14,9 +16,6 @@ export default function BattleshipSquare({
   takeEnemyTurn,
   checkIfSunk,
 }) {
-  const blockSize =
-    Constants.MAX_WIDTH / Constants.BATTLESHIP_BOARD_DIMENSIONS - 10;
-
   const gotHit = () => {
     let newBoard = [...board];
     newBoard[i][j].isHit = true;
@@ -68,123 +67,67 @@ export default function BattleshipSquare({
 
   if (enemy) {
     if (square.isSunk && square.isShip) {
-      return (
-        <View
-          style={{
-            backgroundColor: "#701414",
-            height: blockSize,
-            width: blockSize,
-          }}
-        />
-      );
+      return <View style={styles.darkRed} />;
     } else if (square.isShip && square.isHit) {
-      return (
-        <View
-          style={{
-            backgroundColor: "red",
-            height: blockSize,
-            width: blockSize,
-          }}
-        />
-      );
+      return <View style={styles.red} />;
     } else if (!square.isShip && square.isHit) {
-      return (
-        <View
-          style={{
-            backgroundColor: "white",
-            height: blockSize,
-            width: blockSize,
-          }}
-        />
-      );
+      return <View style={styles.white} />;
     } else if (square.isShip) {
-      return (
-        <View
-          onTouchStart={gotHit}
-          style={{
-            backgroundColor: "grey",
-            height: blockSize,
-            width: blockSize,
-          }}
-        >
-          <Text>
-            {i} , {j}
-          </Text>
-        </View>
-      );
+      return <View onTouchStart={gotHit} style={styles.blue}></View>;
     } else {
-      return (
-        <View
-          onTouchStart={gotHit}
-          style={{
-            backgroundColor: "green",
-            height: blockSize,
-            width: blockSize,
-          }}
-        >
-          <Text>
-            {i} , {j}
-          </Text>
-        </View>
-      );
+      return <View onTouchStart={gotHit} style={styles.blue}></View>;
     }
   }
   //player's board. Basically the same except none of the onTouchStart functions trigger.
   else {
     if (square.isShip && square.isSunk) {
-      return (
-        <View
-          style={{
-            backgroundColor: "#701414",
-            height: blockSize,
-            width: blockSize,
-          }}
-        />
-      );
+      return <View style={styles.darkRed} />;
     } else if (square.isShip && square.isHit) {
-      return (
-        <View
-          style={{
-            backgroundColor: "red",
-            height: blockSize,
-            width: blockSize,
-          }}
-        />
-      );
+      return <View style={styles.red} />;
     } else if (!square.isShip && square.isHit) {
-      return (
-        <View
-          style={{
-            backgroundColor: "white",
-            height: blockSize,
-            width: blockSize,
-          }}
-        />
-      );
+      return <View style={styles.white} />;
     } else if (square.isShip) {
-      return (
-        <View
-          style={{
-            backgroundColor: "grey",
-            height: blockSize,
-            width: blockSize,
-          }}
-        />
-      );
+      return <View style={styles.grey} />;
     } else {
-      return (
-        <View
-          style={{
-            backgroundColor: "green",
-            height: blockSize,
-            width: blockSize,
-          }}
-        >
-          <Text>
-            {i} , {j}
-          </Text>
-        </View>
-      );
+      return <View style={styles.blue}></View>;
     }
   }
 }
+
+const styles = new StyleSheet.create({
+  blue: {
+    backgroundColor: "blue",
+    height: blockSize,
+    width: blockSize,
+    borderColor: "black",
+    borderWidth: 1,
+  },
+  white: {
+    backgroundColor: "white",
+    height: blockSize,
+    width: blockSize,
+    borderColor: "black",
+    borderWidth: 1,
+  },
+  red: {
+    backgroundColor: "red",
+    height: blockSize,
+    width: blockSize,
+    borderColor: "black",
+    borderWidth: 1,
+  },
+  darkRed: {
+    backgroundColor: "#850900",
+    height: blockSize,
+    width: blockSize,
+    borderColor: "black",
+    borderWidth: 1,
+  },
+  grey: {
+    backgroundColor: "grey",
+    height: blockSize,
+    width: blockSize,
+    borderColor: "black",
+    borderWidth: 1,
+  },
+});

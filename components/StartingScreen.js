@@ -25,7 +25,7 @@ function StartingScreen({updateState}) {
                 </View>
             </ImageBackground>  
         </View>
-    );
+  );
 }
 
 const styles = StyleSheet.create({
