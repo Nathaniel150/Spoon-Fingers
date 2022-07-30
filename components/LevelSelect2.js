@@ -4,48 +4,49 @@ import { fontStyles } from '../App';
 import Constants from './Constants';
 
 function LevelSelect2({updateState}) {
+    const lvlsUnlocked = [true, true, true, true, true, true, true];
     const levels = [
         {
             lvlName: "1. The Cell",
             img: require("../assets/BackgroundImages/prison.png"),
             onPress: () => {updateState(Constants.STORY_P1)},
-            unlocked: true,
+            unlocked: lvlsUnlocked[0]
         },
         {
             lvlName: "2. Locked In",
             img: require("../assets/BackgroundImages/prison.png"),
             onPress: () => {updateState(Constants.LOCKLE)},
-            unlocked: false,
+            unlocked: lvlsUnlocked[1],
         },
         {
             lvlName: "3. Cafeteria",
             img: require("../assets/BackgroundImages/prison.png"),
             onPress: () => {updateState(Constants.STORY_P2)},
-            unlocked: false,
+            unlocked: lvlsUnlocked[2],
         },
         {
             lvlName: "4. Spoon vs Fork",
             img: require("../assets/BackgroundImages/prison.png"),
             onPress: () => {updateState(Constants.BATTLESHIP)},
-            unlocked: false,
+            unlocked: lvlsUnlocked[3],
         },
         {
             lvlName: "5. Run",
             img: require("../assets/BackgroundImages/prison.png"),
             onPress: () => {updateState(Constants.STORY_P3)},
-            unlocked: false,
+            unlocked: lvlsUnlocked[4],
         },
         {
             lvlName: "6. Dig",
             img: require("../assets/BackgroundImages/prison.png"),
             onPress: () => {updateState(Constants.DIG_DUG)},
-            unlocked: false,
+            unlocked: lvlsUnlocked[5],
         },
         {
             lvlName: "7. Freedom",
             img: require("../assets/BackgroundImages/prison.png"),
             onPress: () => {updateState(Constants.STORY_P4)},
-            unlocked: false,
+            unlocked: lvlsUnlocked[6],
         },
 
     ]
@@ -57,24 +58,24 @@ function LevelSelect2({updateState}) {
                     {console.log(level.lvlName)}
                     {i % 2 === 0 ? 
                         <View style={styles.row}>
-                            <Pressable onPress={level.onPress}>
+                            <Pressable onPress={level.onPress} disabled={!level.unlocked}>
                                 <Image
                                     source={level.img}
-                                    style={styles.photo}
+                                    style={level.unlocked? styles.photo: [styles.photo, styles.blackTint ]}
                                 />
-
                             </Pressable>
-                            <Text style={[styles.lvlName, fontStyles.pixelFont]}>{level.lvlName}</Text>
+                            <Text style={[styles.lvlName, fontStyles.pixelFont]}>{level.unlocked ? level.lvlName:"?"}</Text>
 
                         </View>
                     :   <View style={[styles.row, styles.right]}>
-                            <Text style={[styles.lvlName, fontStyles.pixelFont]}>{level.lvlName}</Text>
+                            <Text style={[styles.lvlName, fontStyles.pixelFont]}>{level.unlocked ? level.lvlName:"?"}</Text>
 
-                            <Pressable onPress={level.onPress}> 
+                            <Pressable onPress={level.onPress} disabled={!level.unlocked}> 
 
                                 <Image
                                     source={level.img}
-                                    style={styles.photo}
+                                    style={level.unlocked? styles.photo: [styles.photo, styles.blackTint ]}
+
                                 />
                             </Pressable>
 
@@ -131,9 +132,14 @@ const styles = StyleSheet.create({
     lvlName: {
         marginHorizontal: 10,
         fontSize: 18,
+        textAlign: 'center', 
         color: "white",
         justifyContent: "flex-start",
         
+        
+    },
+    blackTint: {
+        opacity: 0.3
     }
 
 })

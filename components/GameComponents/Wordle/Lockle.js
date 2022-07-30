@@ -3,7 +3,10 @@ import Wordle from './Wordle';
 import { StyleSheet, View, Button, Text  } from 'react-native';
 import { Dialog, DialogHeader, DialogContent, DialogActions, Provider} from "@react-native-material/core";
 import { useState, useEffect } from 'react';
+
 import { colors } from "./wordleConstants";
+import Constants from '../../Constants';
+
 import { set } from 'react-native-reanimated';
 import uuid from "react-native-uuid"
 
@@ -51,7 +54,7 @@ function Lockle({updateState}) {
             if(level < wordleContent.length - 1) {
                 setLevel(level + 1)
             } else {
-                updateState()
+                updateState(Constants.STORY_P2)
             }
 
         } else {

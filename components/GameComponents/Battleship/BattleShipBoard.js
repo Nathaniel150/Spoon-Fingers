@@ -510,7 +510,7 @@ export default function BattleShipBoard({ updateState }) {
               title="Escape Cafeteria"
               compact
               variant="text"
-              onPress={() => updateState()}
+              onPress={() => updateState(Constants.STORY_P3)}
             />
           </DialogActions>
         </Dialog>

@@ -85,7 +85,7 @@ export default function Digdug({ updateState }) {
         <View style={styles.winModal}>
           <Pressable
             style={{ padding: 2, Color: "red", borderWidth: border2 }}
-            onPress={updateState}
+            onPress={updateState(Constants.STORY_P4)}
           >
             <Text>Continue</Text>
           </Pressable>

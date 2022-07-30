@@ -68,28 +68,28 @@ const Main2 = () => {
     return <StartingScreen updateState={updateState}/>
   } 
   else if (stateTracker == Constants.LEVEL_SELECT)  {
-    return <LevelSelect2 updateState={updateState}></LevelSelect2>
+    return <LevelSelect2 updateState={updateState}></LevelSelect2> 
   } 
   else if (stateTracker == Constants.STORY_P1) {
-    return <StoryScene updateState={updateState} story={storyP1}/>;
+    return <StoryScene updateState={updateState} story={storyP1} nextLevel={Constants.LOCKLE}/>; //prop: the constant of the next component to go to 
   } 
   else if (stateTracker == Constants.LOCKLE) {
     return <Lockle updateState={updateState} />;
   } 
   else if (stateTracker == Constants.STORY_P2) {
-    return <StoryScene updateState={updateState} story={storyP2} />;
+    return <StoryScene updateState={updateState} story={storyP2} nextLevel={Constants.BATTLESHIP}/>;
   } 
   else if (stateTracker == Constants.BATTLESHIP) {
     return <BattleShip updateState={updateState} />;
   } 
   else if (stateTracker == Constants.STORY_P3) {
-    return <StoryScene updateState={updateState} story={storyP3} />;
+    return <StoryScene updateState={updateState} story={storyP3} nextLevel={Constants.DIG_DUG} />;
   } 
   else if (stateTracker == Constants.DIG_DUG) {
     return <Digdug updateState={updateState} />;
   } 
   else if (stateTracker == Constants.STORY_P4) {
-    return <StoryScene updateState={updateState} story={storyP4} />;
+    return <StoryScene updateState={updateState} story={storyP4} nextLevel={Constants.START_SCREEN}/>;
   }
 
   return <Text>Whoops....</Text>;
