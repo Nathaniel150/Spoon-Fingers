@@ -14,13 +14,10 @@ import { storyP1, storyP2, storyP3, storyP4 } from "../assets/StoryData/scenes";
 import Lockle from "./GameComponents/Wordle/Lockle";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-
 const Main = () => {
   //use to track what part ofe game we are currently in;
 
   const [stateTracker, setStateTracker] = useState(0);
-
-  const updateState = () => {setStateTracker(stateTracker + 1); };
 
   const updateState = () => {
     setStateTracker(stateTracker + 1);
