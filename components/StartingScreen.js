@@ -1,13 +1,14 @@
 import React from 'react';
 import { View, ImageBackground, Text, StyleSheet} from'react-native'
 import { fontStyles } from '../App';
+import Constants from './Constants';
 
 
-function StartingScreen({updateState, setStateTracker}) {
+function StartingScreen({updateState}) {
     return (
         <View 
             style={styles.container}
-            onTouchStart={() => {setStateTracker(1)}}
+            onTouchStart={() => {updateState(Constants.LEVEL_SELECT)}}
         >
             <ImageBackground
                 source={require("../assets/BackgroundImages/prison.png")}
