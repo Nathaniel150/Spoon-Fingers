@@ -10,6 +10,7 @@ import {
   StatusBar,
   Dimensions,
   Header,
+  ImageBackground,
 } from "react-native";
 import Constants from "../../Constants";
 import BattleshipSquare from "./BattleshipSquare";
@@ -106,8 +107,10 @@ export default function BattleShipBoard({ updateState }) {
   }, [enemyBoard]);
 
   useEffect(() => {
-    setWon(hasWon);
-    setLost(hasLost);
+    if (!isSetup) {
+      setWon(hasWon);
+      setLost(hasLost);
+    }
   });
 
   //returns true when all the enemy ships have been sunk.
@@ -301,31 +304,161 @@ export default function BattleShipBoard({ updateState }) {
 
   const resetBoard = () => {
     setReady(false);
-    setWon(false);
-    setLost(false);
     setBoard(createBoard);
     setShipInfoTracker(initShips);
-    initEnemyBoard();
+    // initEnemyBoard();
     // setEnemyBoard(createBoard);
-    setIsSetup(true);
+    // setIsSetup(true);
   };
+
+  const [enemyFound, setEnemyFound] = useState(false); //if the enemy has hit a ship.
+  //used to search in all direction.
+  const [nextFoundI, setNextFoundI] = useState(null);
+  const [nextFoundJ, setNextFoundJ] = useState(null);
+  //used keep track of starting point and search after nextFoundI and J have reached a dead end;
+  const [foundI, setFoundI] = useState(null);
+  const [foundJ, setFoundJ] = useState(null);
+  const [direction, setDirection] = useState("vertical");
 
   const takeEnemyTurn = () => {
     let newBoard = [...board];
+    console.log("DIRECTION: ", direction);
+    if (!enemyFound) {
+      let col = Math.floor(Math.random() * Constants.BATTLESHIP_BOARD_WIDTH);
+      let row = Math.floor(Math.random() * Constants.BATTLESHIP_BOARD_HEIGHT);
 
-    let col = Math.floor(Math.random() * Constants.BATTLESHIP_BOARD_WIDTH);
-    let row = Math.floor(Math.random() * Constants.BATTLESHIP_BOARD_HEIGHT);
+      //make sure the computer doesn't go after a square that it already chose.
+      while (newBoard[col][row].isHit) {
+        col = Math.floor(Math.random() * Constants.BATTLESHIP_BOARD_WIDTH);
+        row = Math.floor(Math.random() * Constants.BATTLESHIP_BOARD_HEIGHT);
+      }
 
-    //make sure the computer doesn't go after a square that it already chose.
-    while (newBoard[col][row].isHit) {
-      col = Math.floor(Math.random() * Constants.BATTLESHIP_BOARD_WIDTH);
-      row = Math.floor(Math.random() * Constants.BATTLESHIP_BOARD_HEIGHT);
-    }
+      newBoard[col][row].isHit = true;
+      if (newBoard[col][row].isShip) {
+        console.log("Checking sunk on enemy turn");
+        setEnemyFound(true);
+        setFoundI(col);
+        setFoundJ(row);
+        setNextFoundI(col);
+        setNextFoundJ(row);
+        checkIfSunk(newBoard[col][row].shipId, newBoard, false);
+      }
+    } else {
+      //try in each of the 4 direction surrounding the square where the computer founda a ship;
+      if (nextFoundJ - 1 >= 0 && !newBoard[nextFoundI][nextFoundJ - 1].isHit) {
+        newBoard[nextFoundI][nextFoundJ - 1].isHit = true;
+        if (newBoard[nextFoundI][nextFoundJ - 1].isShip) {
+          setEnemyFound(
+            !checkIfSunk(
+              newBoard[nextFoundI][nextFoundJ - 1].shipId,
+              newBoard,
+              false
+            )
+          );
+          setNextFoundJ(nextFoundJ - 1);
+          setDirection("vertical");
+        }
+      } else if (
+        nextFoundJ + 1 < Constants.BATTLESHIP_BOARD_HEIGHT &&
+        !newBoard[nextFoundI][nextFoundJ + 1].isHit
+      ) {
+        newBoard[nextFoundI][nextFoundJ + 1].isHit = true;
 
-    newBoard[col][row].isHit = true;
-    if (newBoard[col][row].isShip) {
-      console.log("Checking sunk on enemy turn");
-      checkIfSunk(newBoard[col][row].shipId, newBoard, false);
+        if (newBoard[nextFoundI][nextFoundJ + 1].isShip) {
+          setEnemyFound(
+            !checkIfSunk(
+              newBoard[nextFoundI][nextFoundJ + 1].shipId,
+              newBoard,
+              false
+            )
+          );
+          setNextFoundJ(nextFoundJ + 1);
+          setDirection("vertical");
+        }
+      } else if (
+        nextFoundI - 1 >= 0 &&
+        !newBoard[nextFoundI - 1][nextFoundJ].isHit
+      ) {
+        newBoard[nextFoundI - 1][nextFoundJ].isHit = true;
+
+        if (newBoard[nextFoundI - 1][nextFoundJ].isShip) {
+          setEnemyFound(
+            !checkIfSunk(
+              newBoard[nextFoundI - 1][nextFoundJ].shipId,
+              newBoard,
+              false
+            )
+          );
+          setNextFoundI(nextFoundI - 1);
+          setDirection("horizontal");
+        }
+      } else if (
+        nextFoundI + 1 < Constants.BATTLESHIP_BOARD_WIDTH &&
+        !newBoard[nextFoundI + 1][nextFoundJ].isHit
+      ) {
+        newBoard[nextFoundI + 1][nextFoundJ].isHit = true;
+        if (newBoard[nextFoundI + 1][nextFoundJ].isShip) {
+          setEnemyFound(
+            !checkIfSunk(
+              newBoard[nextFoundI + 1][nextFoundJ].shipId,
+              newBoard,
+              false
+            )
+          );
+          setNextFoundI(nextFoundI + 1);
+          setDirection("horizontal");
+        }
+      }
+      //once nextFoundI and J have reached a dead end, revert to
+      else {
+        if (foundJ - 1 >= 0 && !newBoard[foundI][foundJ - 1].isHit) {
+          newBoard[foundI][foundJ - 1].isHit = true;
+          if (newBoard[foundI][foundJ - 1].isShip) {
+            setEnemyFound(
+              !checkIfSunk(newBoard[foundI][foundJ - 1].shipId, newBoard, false)
+            );
+            setNextFoundJ(foundJ - 1);
+            setDirection("vertical");
+          }
+        } else if (
+          foundJ + 1 < Constants.BATTLESHIP_BOARD_HEIGHT &&
+          !newBoard[foundI][foundJ + 1].isHit
+        ) {
+          newBoard[foundI][foundJ + 1].isHit = true;
+
+          if (newBoard[foundI][foundJ + 1].isShip) {
+            setEnemyFound(
+              !checkIfSunk(newBoard[foundI][foundJ + 1].shipId, newBoard, false)
+            );
+            setNextFoundJ(foundJ + 1);
+            setDirection("vertical");
+          }
+        } else if (foundI - 1 >= 0 && !newBoard[foundI - 1][foundJ].isHit) {
+          newBoard[foundI - 1][foundJ].isHit = true;
+
+          if (newBoard[foundI - 1][nextFoundJ].isShip) {
+            setEnemyFound(
+              !checkIfSunk(newBoard[foundI - 1][foundJ].shipId, newBoard, false)
+            );
+            setNextFoundI(foundI - 1);
+            setDirection("horizontal");
+          }
+        } else if (
+          foundI + 1 < Constants.BATTLESHIP_BOARD_WIDTH &&
+          !newBoard[foundI + 1][foundJ].isHit
+        ) {
+          newBoard[foundI + 1][foundJ].isHit = true;
+          if (newBoard[foundI + 1][foundJ].isShip) {
+            setEnemyFound(
+              !checkIfSunk(newBoard[foundI + 1][foundJ].shipId, newBoard, false)
+            );
+            setNextFoundI(foundI + 1);
+            setDirection("horizontal");
+          }
+        } else {
+          setEnemyFound(false);
+        }
+      }
     }
     setBoard(newBoard);
   };
@@ -336,7 +469,7 @@ export default function BattleShipBoard({ updateState }) {
       for (let j = 0; j < Constants.BATTLESHIP_BOARD_HEIGHT; j++) {
         if (boardToUse[i][j].shipId == id && !boardToUse[i][j].isHit) {
           console.log("Not Sunk", i, j);
-          return;
+          return false;
         }
       }
     }
@@ -353,6 +486,7 @@ export default function BattleShipBoard({ updateState }) {
     } else {
       setBoard(newBoard);
     }
+    return true;
   };
 
   //an array of booleans that tracks which ships have been hit.
@@ -372,12 +506,14 @@ export default function BattleShipBoard({ updateState }) {
   const [lost, setLost] = useState(false);
 
   return (
-    <SafeAreaView style={styles.battleship_container}>
-      {isSetup ? (
-        <></>
-      ) : (
+    <ImageBackground
+      source={require("../../../assets/grey-background.jpeg")}
+      resizeMode="cover"
+      style={styles.background}
+    >
+      <SafeAreaView style={styles.battleship_container}>
         <View style={styles.board}>
-          {enemyBoard.map((row, i) => {
+          {board.map((row, i) => {
             return (
               <View key={`row+${i}`}>
                 {row.map((square, j) => {
@@ -385,14 +521,13 @@ export default function BattleShipBoard({ updateState }) {
                     <BattleshipSquare
                       key={`square+${i}+${j}`}
                       setup={isSetup}
-                      placeShip={() => {}}
+                      placeShip={() => placeShip(i, j)}
                       square={square}
-                      board={enemyBoard}
-                      setBoard={setEnemyBoard}
+                      board={board}
+                      setBoard={setBoard}
                       i={i}
                       j={j}
-                      enemy={true}
-                      takeEnemyTurn={() => takeEnemyTurn()}
+                      enemy={false}
                       checkIfSunk={checkIfSunk}
                     />
                   );
@@ -401,155 +536,144 @@ export default function BattleShipBoard({ updateState }) {
             );
           })}
         </View>
-      )}
 
-      {/* Spacer will eventually have fight animation */}
-      {isSetup ? (
-        <></>
-      ) : (
-        <View
-          style={{
-            flexDirection: "row",
-          }}
-        >
-          <Image
+        {/* Spacer will eventually have fight animation */}
+        {isSetup ? (
+          <></>
+        ) : (
+          <View
             style={{
-              backgroundColor: "#663801",
-              width: "100%",
-              resizeMode: "contain",
+              flexDirection: "row",
             }}
-            source={require("../../../assets/200.gif")}
-          />
-        </View>
-      )}
-      <View style={styles.board}>
-        {board.map((row, i) => {
-          return (
-            <View key={`row+${i}`}>
-              {row.map((square, j) => {
-                return (
-                  <BattleshipSquare
-                    key={`square+${i}+${j}`}
-                    setup={isSetup}
-                    placeShip={() => placeShip(i, j)}
-                    square={square}
-                    board={board}
-                    setBoard={setBoard}
-                    i={i}
-                    j={j}
-                    enemy={false}
-                    checkIfSunk={checkIfSunk}
-                  />
-                );
-              })}
-            </View>
-          );
-        })}
-      </View>
-
-      {/* <Pressable
-        onPress={() => {
-          resetBoard();
-        }}
-        style={{
-          top: 700,
-          zIndex: 2010,
-          backgroundColor: "grey",
-          height: "20%",
-          width: "30%",
-        }}
-        color={"red"}
-      >
-        <Text>Reset</Text>
-      </Pressable> */}
-
-      {isSetup ? (
-        shipInfoTracker.map((ship, i) => {
-          if (ship.placed) {
-            return;
-          }
-          const screenWidth = Dimensions.get("window").width;
-
-          let x = 50 + i * 100;
-
-          let y =
-            (screenWidth / Constants.BATTLESHIP_BOARD_WIDTH - 5) *
-              Constants.BATTLESHIP_BOARD_HEIGHT +
-            100;
-
-          return (
-            <Ship
-              key={`ship${i}`}
-              selectShip={() => selectShip(i)}
-              changeOrientation={() => changeOrientation(i)}
-              battleShipSize={Constants.BATTLESHIP_SIZES[i]}
-              ship={ship}
-              orientation={ship.orientation}
-              x={x}
-              y={y}
-              i={i}
+          >
+            <Image
+              style={{
+                backgroundColor: "#663801",
+                width: "100%",
+                resizeMode: "contain",
+              }}
+              source={require("../../../assets/200.gif")}
             />
-          );
-        })
-      ) : (
-        <></>
-      )}
+          </View>
+        )}
+        {isSetup ? (
+          <></>
+        ) : (
+          <View style={styles.board}>
+            {enemyBoard.map((row, i) => {
+              return (
+                <View key={`row+${i}`}>
+                  {row.map((square, j) => {
+                    return (
+                      <BattleshipSquare
+                        key={`square+${i}+${j}`}
+                        setup={isSetup}
+                        placeShip={() => {}}
+                        square={square}
+                        board={enemyBoard}
+                        setBoard={setEnemyBoard}
+                        i={i}
+                        j={j}
+                        enemy={true}
+                        takeEnemyTurn={() => takeEnemyTurn()}
+                        checkIfSunk={checkIfSunk}
+                      />
+                    );
+                  })}
+                </View>
+              );
+            })}
+          </View>
+        )}
 
-      <Provider>
-        <Dialog visible={ready}>
-          {/* <DialogHeader title={won === true ? "WON" : "LOST"} /> */}
-          <DialogContent>
-            <Text>Content</Text>
-          </DialogContent>
-          <DialogActions>
-            <Button
-              title="Reset"
-              compact
-              variant="text"
-              onPress={() => resetBoard()}
-            />
-            <Button
-              title="Start"
-              compact
-              variant="text"
-              onPress={() => startGame()}
-            />
-          </DialogActions>
-        </Dialog>
-      </Provider>
-      {/* Popup menu when the player wins */}
-      <Provider>
-        <Dialog visible={won}>
-          <DialogContent>
-            <Text>Congrats!</Text>
-          </DialogContent>
-          <DialogActions>
-            <Button
-              title="Escape Cafeteria"
-              compact
-              variant="text"
-              onPress={() => updateState(Constants.STORY_P3)}
-            />
-          </DialogActions>
-        </Dialog>
-      </Provider>
-      <Provider>
-        <Dialog visible={lost}>
-          <DialogContent>
-            <Text>The Guards Have Defeated you!</Text>
-          </DialogContent>
-          <DialogActions>
-            {/* TODO Once I have the new updateState function, this button will return the player to the levels page */}
-            <Button
-              title="Continue"
-              compact
-              variant="text"
-              onPress={() => updateState(Constants.STORY_P2)}
-            />
-          </DialogActions>
-        </Dialog>
-      </Provider>
-    </SafeAreaView>
+        {isSetup ? (
+          shipInfoTracker.map((ship, i) => {
+            if (ship.placed) {
+              return;
+            }
+            const screenWidth = Dimensions.get("window").width;
+
+            let x = 50 + i * 100;
+
+            let y =
+              (screenWidth / Constants.BATTLESHIP_BOARD_WIDTH - 5) *
+                Constants.BATTLESHIP_BOARD_HEIGHT +
+              100;
+
+            return (
+              <Ship
+                key={`ship${i}`}
+                selectShip={() => selectShip(i)}
+                changeOrientation={() => changeOrientation(i)}
+                battleShipSize={Constants.BATTLESHIP_SIZES[i]}
+                ship={ship}
+                orientation={ship.orientation}
+                x={x}
+                y={y}
+                i={i}
+              />
+            );
+          })
+        ) : (
+          <></>
+        )}
+
+        <Provider>
+          <Dialog visible={ready}>
+            {/* <DialogHeader title={won === true ? "WON" : "LOST"} /> */}
+            <DialogContent>
+              <Text>Content</Text>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                title="Reset"
+                compact
+                variant="text"
+                onPress={() => resetBoard()}
+              />
+              <Button
+                title="Start"
+                compact
+                variant="text"
+                onPress={() => startGame()}
+              />
+            </DialogActions>
+          </Dialog>
+        </Provider>
+        {/* Popup menu when the player wins */}
+        <Provider>
+          <Dialog visible={won}>
+            <DialogContent>
+              <Text>Congrats!</Text>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                title="Escape Cafeteria"
+                compact
+                variant="text"
+                onPress={() => updateState(Constants.STORY_P3)}
+              />
+            </DialogActions>
+          </Dialog>
+        </Provider>
+        <Provider>
+          <Dialog visible={lost}>
+            <DialogContent>
+              <Text>The Guards Have Defeated you!</Text>
+            </DialogContent>
+            <DialogActions>
+              {/* TODO Once I have the new updateState function, this button will return the player to the levels page */}
+              <Button
+                title="Continue"
+                compact
+                variant="text"
+                onPress={() => updateState(Constants.STORY_P2)}
+              />
+            </DialogActions>
+          </Dialog>
+        </Provider>
+      </SafeAreaView>
+    </ImageBackground>
   );
 }
 
@@ -560,7 +684,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     // backgroundColor: "red",
   },
-
+  background: {
+    flex: 1,
+    justifyContent: "flex-end",
+  },
   board: {
     display: "flex",
     flexDirection: "row",
@@ -568,6 +695,7 @@ const styles = StyleSheet.create({
     // marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
     // marginBottom: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
+
   ship_container: {
     display: "flex",
     // backgroundColor: "red",

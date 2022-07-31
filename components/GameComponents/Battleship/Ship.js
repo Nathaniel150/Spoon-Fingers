@@ -22,7 +22,7 @@ const Ship = ({
             position: "absolute",
             left: x,
             top: y,
-            backgroundColor: "grey",
+            backgroundColor: "white",
             height: blockSize,
             width: blockSize * battleShipSize,
           },
@@ -30,8 +30,8 @@ const Ship = ({
         ]}
       >
         <Image
-          style={{ height: blockSize, width: blockSize }}
-          source={require("../../../assets/star.png")}
+          style={{ height: blockSize, width: blockSize, resizeMode: "contain" }}
+          source={require("../../../assets/prisonerEyepatch.png")}
         />
       </View>
     );
@@ -44,7 +44,7 @@ const Ship = ({
             position: "absolute",
             left: x,
             top: y,
-            backgroundColor: "grey",
+            backgroundColor: "white",
             height: blockSize * battleShipSize,
             width: blockSize,
           },
@@ -52,8 +52,8 @@ const Ship = ({
         ]}
       >
         <Image
-          style={{ height: blockSize, width: blockSize }}
-          source={require("../../../assets/star.png")}
+          style={{ height: blockSize, width: blockSize, resizeMode: "contain" }}
+          source={require("../../../assets/prisonerEyepatch.png")}
         />
       </View>
     );
@@ -61,14 +61,12 @@ const Ship = ({
 };
 
 const styles = StyleSheet.create({
-  text: {
-    textAlign: "center",
-    marginTop: 200,
-  },
+  shipHorizontal: {},
+  shipVertical: {},
   zBorder: {
     zIndex: 100,
     borderColor: "red",
-    borderWidth: 3,
+    borderWidth: 2,
   },
 });
 
