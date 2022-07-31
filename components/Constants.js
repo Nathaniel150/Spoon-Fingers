@@ -11,13 +11,13 @@ export default {
 
   BATTLESHIP_SIZES: [4, 3, 2],
 
-  START_SCREEN: 0,
-  LEVEL_SELECT: 1,
-  STORY_P1: 2,
-  LOCKLE: 3,
-  STORY_P2: 4,
-  BATTLESHIP: 5,
-  STORY_P3: 6,
-  DIG_DUG: 7,
-  STORY_P4: 8,
+  START_SCREEN: "StartingScreen",
+  LEVEL_SELECT: "LevelSelect",
+  STORY_P1: "StoryP1",
+  LOCKLE: "Lockle",
+  STORY_P2: "StoryP2",
+  BATTLESHIP: "Battleship",
+  STORY_P3: "StoryP3",
+  DIG_DUG: "DigDug",
+  STORY_P4: "StoryP4",
 };

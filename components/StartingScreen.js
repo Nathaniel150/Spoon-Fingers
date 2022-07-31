@@ -4,11 +4,11 @@ import { fontStyles } from '../App';
 import Constants from './Constants';
 
 
-function StartingScreen({updateState}) {
+function StartingScreen({navigation,updateState}) {
     return (
         <View 
             style={styles.container}
-            onTouchStart={() => {updateState(Constants.LEVEL_SELECT)}}
+            onTouchStart={() => {navigation.navigate(Constants.LEVEL_SELECT)}}
         >
             <ImageBackground
                 source={require("../assets/BackgroundImages/prison.png")}
