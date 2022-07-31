@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, SafeAreaView } from "react-native";
+import { StyleSheet } from "react-native";
 import Main2 from "./components/Main2.0";
 
 import { useState } from 'react';

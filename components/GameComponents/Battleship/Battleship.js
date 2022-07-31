@@ -1,8 +1,8 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import BattleShipBoard from "./BattleShipBoard";
 
-const Battleship = ({ updateState }) => {
-  return <BattleShipBoard updateState={updateState} />;
+const Battleship = ({ navigation}) => {
+  return <BattleShipBoard navigation={navigation} />;
 };
 
 const styles = StyleSheet.create({

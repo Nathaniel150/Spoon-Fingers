@@ -4,7 +4,7 @@ import { fontStyles } from '../App';
 import Constants from './Constants';
 
 
-function StartingScreen({navigation,updateState}) {
+function StartingScreen({navigation}) {
     return (
         <View 
             style={styles.container}

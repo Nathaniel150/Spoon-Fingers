@@ -13,7 +13,7 @@ import { DirtArray } from "./entities";
 import Controller from "./Controller";
 import Constants from "../../Constants";
 
-export default function Digdug({ updateState }) {
+export default function Digdug({ navigation }) {
   const [running, setRunning] = useState(true);
   const [hasWon, setHasWon] = useState(false);
   const [gotCaught, setGotCaught] = useState(false);
@@ -85,7 +85,7 @@ export default function Digdug({ updateState }) {
         <View style={styles.winModal}>
           <Pressable
             style={{ padding: 2, Color: "red", borderWidth: 2 }}
-            onPress={updateState}
+            onPress={navigation.navigate(Constants.STORY_P4)}
             
           >
             <Text>Continue</Text>
