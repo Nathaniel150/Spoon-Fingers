@@ -2,20 +2,20 @@ import React from 'react';
 import { View, StyleSheet, Text, Platform, StatusBar, SafeAreaView } from 'react-native';
 import { Icon } from '@rneui/base';
 import Constants from './Constants';
+import { useNavigation } from '@react-navigation/core';
 
 
-function BackButton(props) {
+function BackButton({back}) {
+    const navigation = useNavigation();
     return (
         <View style={styles.bar}>
             <Icon
                 name='chevron-left'
                 type='font-awesome'
                 color='black'
-                onPress={() => console.log('hello')} 
+                onPress={() => navigation.navigate(back)} 
             />
         </View>
-        
- 
     );
 }
 

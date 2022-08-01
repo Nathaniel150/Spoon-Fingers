@@ -3,6 +3,8 @@ import { ScrollView, View, Text, StyleSheet,Image, Pressable } from 'react-nativ
 import { fontStyles } from '../App';
 import Constants from './Constants';
 
+
+
 function LevelSelect2({navigation}) {
     const lvlsUnlocked = [true, true, true, true, true, true, true];
     const levels = [
