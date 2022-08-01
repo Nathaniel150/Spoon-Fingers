@@ -24,7 +24,7 @@ import {
   Provider,
 } from "@react-native-material/core";
 
-export default function BattleShipBoard({ updateState }) {
+export default function BattleShipBoard({ navigation }) {
   //TODO I think this should have a dependence on shipInfoTracker, but it wasn't working for some reason.
   useEffect(() => {
     if (checkFinishedSetup()) {
@@ -554,6 +554,7 @@ export default function BattleShipBoard({ updateState }) {
               }}
               source={require("../../../assets/200.gif")}
             />
+
           </View>
         )}
         {isSetup ? (
@@ -651,7 +652,7 @@ export default function BattleShipBoard({ updateState }) {
                 title="Escape Cafeteria"
                 compact
                 variant="text"
-                onPress={() => updateState(Constants.STORY_P3)}
+                onPress={() => navigation.navigate(Constants.STORY_P3)}
               />
             </DialogActions>
           </Dialog>
@@ -667,13 +668,14 @@ export default function BattleShipBoard({ updateState }) {
                 title="Continue"
                 compact
                 variant="text"
-                onPress={() => updateState(Constants.STORY_P2)}
+                onPress={() => navigation.navigate(Constants.STORY_P2)}
               />
             </DialogActions>
           </Dialog>
         </Provider>
       </SafeAreaView>
     </ImageBackground>
+
   );
 }
 

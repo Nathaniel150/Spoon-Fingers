@@ -20,7 +20,7 @@ import { DirtArray } from "./entities";
 import Controller from "./Controller";
 import Constants from "../../Constants";
 
-export default function Digdug({ updateState }) {
+export default function Digdug({ navigation }) {
   const [running, setRunning] = useState(true);
   const [hasWon, setHasWon] = useState(false);
   const [gotCaught, setGotCaught] = useState(false);
@@ -99,7 +99,7 @@ export default function Digdug({ updateState }) {
               title="Escape"
               compact
               variant="text"
-              onPress={() => updateState(Constants.STORY_P4)}
+              onPress={navigation.navigate(Constants.STORY_P4)}
             />
           </DialogActions>
         </Dialog>
@@ -115,11 +115,12 @@ export default function Digdug({ updateState }) {
               title="Continue"
               compact
               variant="text"
-              onPress={() => updateState(Constants.STORY_P3)}
+              onPress={navigation.navigate(Constants.STORY_P3)}
             />
           </DialogActions>
         </Dialog>
       </Provider>
+
       <View>
         <Text>Spoon Count: {spoonCount}</Text>
       </View>

@@ -5,7 +5,9 @@ import { ImageBackground, Text, View, StyleSheet, TouchableHighlight } from 'rea
 import DialogueScene from './DialogueScene';
 import NarrationScene from './NarrationScene';
 
-function StoryScene({updateState, story, nextLevel}) {
+function StoryScene({navigation, route}) {
+    const story = route.params.story
+    const nextLevel = route.params.nextLevel
      // index of the scene information to be displayed.
     const [sceneIndex, setSceneIndex] = useState(0);
 
@@ -16,7 +18,7 @@ function StoryScene({updateState, story, nextLevel}) {
         } 
          
         else {
-             updateState(nextLevel)
+              navigation.navigate(nextLevel)
         }
     }
 

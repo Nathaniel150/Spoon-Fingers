@@ -1,11 +1,14 @@
-import { View, Text } from "react-native";
+import { View, Text,} from "react-native";
 import { useEffect, useState } from "react";
 import { ActivityIndicator } from "@react-native-material/core";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator, } from "@react-navigation/native-stack";
+import { Icon } from '@rneui/base';
+import { useNavigation } from "@react-navigation/core";
 
 
 import StartingScreen from "./StartingScreen";
-import LevelSelect from "./LevelSelect";
 import LevelSelect2 from "./LevelSelect2";
 import StoryScene from "./SceneComponents/StoryScene";
 import Lockle from "./GameComponents/Wordle/Lockle";
@@ -13,14 +16,18 @@ import BattleShip from "./GameComponents/Battleship/Battleship";
 import Digdug from "./GameComponents/Digdug/Digdug";
 import { storyP1, storyP2, storyP3, storyP4 } from "../assets/StoryData/scenes";
 import Constants from "./Constants.js";
+import BackButton from "./BackButton";
+
+
+
+
+const Stack = createNativeStackNavigator();
 
 
 const Main2 = () => {
-  //use to track what part ofe game we are currently in;
-
+  //use to track what part ofe game we are currently in
 
   const [stateTracker, setStateTracker] = useState(Constants.START_SCREEN);
-
   const updateState = (part) => {setStateTracker(part); };
 
 
@@ -63,36 +70,85 @@ const Main2 = () => {
   
   //SAVE GAME PROGRESS END
 
+  
+  const levels= [
+    {
+      name: Constants.START_SCREEN,
+      component: StartingScreen,
+    },
+    {
+      name: Constants.LEVEL_SELECT,
+      component: LevelSelect2,
+      back: Constants.START_SCREEN,
+    },
+    { 
+      name: Constants.STORY_P1,
+      component: StoryScene,
+      params: {story:storyP1, nextLevel:Constants.LOCKLE},
+      back: Constants.LEVEL_SELECT,
 
-  if(stateTracker == Constants.START_SCREEN) {
-    return <StartingScreen updateState={updateState}/>
-  } 
-  else if (stateTracker == Constants.LEVEL_SELECT)  {
-    return <LevelSelect2 updateState={updateState}></LevelSelect2> 
-  } 
-  else if (stateTracker == Constants.STORY_P1) {
-    return <StoryScene updateState={updateState} story={storyP1} nextLevel={Constants.LOCKLE}/>; //prop: the constant of the next component to go to 
-  } 
-  else if (stateTracker == Constants.LOCKLE) {
-    return <Lockle updateState={updateState} />;
-  } 
-  else if (stateTracker == Constants.STORY_P2) {
-    return <StoryScene updateState={updateState} story={storyP2} nextLevel={Constants.BATTLESHIP}/>;
-  } 
-  else if (stateTracker == Constants.BATTLESHIP) {
-    return <BattleShip updateState={updateState} />;
-  } 
-  else if (stateTracker == Constants.STORY_P3) {
-    return <StoryScene updateState={updateState} story={storyP3} nextLevel={Constants.DIG_DUG} />;
-  } 
-  else if (stateTracker == Constants.DIG_DUG) {
-    return <Digdug updateState={updateState} />;
-  } 
-  else if (stateTracker == Constants.STORY_P4) {
-    return <StoryScene updateState={updateState} story={storyP4} nextLevel={Constants.START_SCREEN}/>;
-  }
+    },
+    {
+      name: Constants.LOCKLE,
+      component: Lockle,
+      back: Constants.LEVEL_SELECT,
+    },
+    {
+      name: Constants.STORY_P2,
+      component: StoryScene,
+      params: {story:storyP2, nextLevel:Constants.BATTLESHIP},
+      back: Constants.LEVEL_SELECT,
+    },
+    {
+      name: Constants.BATTLESHIP,
+      component: BattleShip,
+      back: Constants.LEVEL_SELECT,
+    },
+    {
+      name: Constants.STORY_P3,
+      component: StoryScene,
+      params: {story:storyP3, nextLevel:Constants.DIG_DUG},
+      back: Constants.LEVEL_SELECT,
+    },
+    {
+      name: Constants.DIG_DUG,
+      component: Digdug,
+      back: Constants.LEVEL_SELECT,
+    },
+    {
+      name: Constants.STORY_P4,
+      component: StoryScene,
+      params: {story:storyP4, nextLevel:Constants.START_SCREEN},
+      back: Constants.LEVEL_SELECT,
+    }
 
-  return <Text>Whoops....</Text>;
+  ]
+
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        {levels.map((level, i) => {
+          return (
+          <Stack.Screen 
+            key={i}
+            name={level.name} 
+            component={level.component} 
+            initialParams={level.params}
+            options={{  
+              headerTransparent: true, 
+              headerTitle: level.back ? (props) => <BackButton {...props} back={level.back}/>  : "",
+              headerBackVisible: false, 
+            }}
+            />);
+        })}
+        
+        </Stack.Navigator>
+    </NavigationContainer>
+  );
+
+
+
 };
+
 
 export default Main2;

@@ -3,49 +3,51 @@ import { ScrollView, View, Text, StyleSheet,Image, Pressable } from 'react-nativ
 import { fontStyles } from '../App';
 import Constants from './Constants';
 
-function LevelSelect2({updateState}) {
+
+
+function LevelSelect2({navigation}) {
     const lvlsUnlocked = [true, true, true, true, true, true, true];
     const levels = [
         {
             lvlName: "1. The Cell",
             img: require("../assets/BackgroundImages/prison.png"),
-            onPress: () => {updateState(Constants.STORY_P1)},
+            onPress: () => {navigation.navigate(Constants.STORY_P1)},
             unlocked: lvlsUnlocked[0]
         },
         {
             lvlName: "2. Locked In",
             img: require("../assets/BackgroundImages/prison.png"),
-            onPress: () => {updateState(Constants.LOCKLE)},
+            onPress: () => {navigation.navigate(Constants.LOCKLE)},
             unlocked: lvlsUnlocked[1],
         },
         {
             lvlName: "3. Cafeteria",
             img: require("../assets/BackgroundImages/prison.png"),
-            onPress: () => {updateState(Constants.STORY_P2)},
+            onPress: () => {navigation.navigate(Constants.STORY_P2)},
             unlocked: lvlsUnlocked[2],
         },
         {
             lvlName: "4. Spoon vs Fork",
             img: require("../assets/BackgroundImages/prison.png"),
-            onPress: () => {updateState(Constants.BATTLESHIP)},
+            onPress: () => {navigation.navigate(Constants.BATTLESHIP)},
             unlocked: lvlsUnlocked[3],
         },
         {
             lvlName: "5. Run",
             img: require("../assets/BackgroundImages/prison.png"),
-            onPress: () => {updateState(Constants.STORY_P3)},
+            onPress: () => {navigation.navigate(Constants.STORY_P3)},
             unlocked: lvlsUnlocked[4],
         },
         {
             lvlName: "6. Dig",
             img: require("../assets/BackgroundImages/prison.png"),
-            onPress: () => {updateState(Constants.DIG_DUG)},
+            onPress: () => {navigation.navigate(Constants.DIG_DUG)},
             unlocked: lvlsUnlocked[5],
         },
         {
             lvlName: "7. Freedom",
             img: require("../assets/BackgroundImages/prison.png"),
-            onPress: () => {updateState(Constants.STORY_P4)},
+            onPress: () => {navigation.navigate(Constants.STORY_P4)},
             unlocked: lvlsUnlocked[6],
         },
 
