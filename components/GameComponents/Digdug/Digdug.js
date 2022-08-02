@@ -99,7 +99,7 @@ export default function Digdug({ navigation }) {
               title="Escape"
               compact
               variant="text"
-              onPress={navigation.navigate(Constants.STORY_P4)}
+              onPress={() => navigation.navigate(Constants.STORY_P4)}
             />
           </DialogActions>
         </Dialog>
@@ -115,7 +115,7 @@ export default function Digdug({ navigation }) {
               title="Continue"
               compact
               variant="text"
-              onPress={navigation.navigate(Constants.STORY_P3)}
+              onPress={() =>navigation.navigate(Constants.STORY_P3)}
             />
           </DialogActions>
         </Dialog>

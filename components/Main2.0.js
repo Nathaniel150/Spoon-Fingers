@@ -17,6 +17,7 @@ import Digdug from "./GameComponents/Digdug/Digdug";
 import { storyP1, storyP2, storyP3, storyP4 } from "../assets/StoryData/scenes";
 import Constants from "./Constants.js";
 import BackButton from "./BackButton";
+import { unmountComponentAtNode } from "react-dom";
 
 
 
