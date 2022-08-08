@@ -24,7 +24,6 @@ export default function Digdug({ updateState }) {
   const [running, setRunning] = useState(true);
   const [hasWon, setHasWon] = useState(false);
   const [gotCaught, setGotCaught] = useState(false);
-  const [spoonCount, setSpoonCount] = useState(10);
 
   const engine = useRef(null);
 
@@ -51,21 +50,6 @@ export default function Digdug({ updateState }) {
       renderer: <DirtArray />,
     },
   });
-
-  //these can be the same function I think decrementSpoonCount
-  const handleThrowSpoon = () => {
-    if (spoonCount <= 0) {
-      setRunning(false);
-    }
-    setSpoonCount(spoonCount - 1);
-  };
-
-  const handleBreakRock = () => {
-    if (spoonCount <= 0) {
-      setRunning(false);
-    }
-    setSpoonCount(spoonCount - 1);
-  };
 
   return (
     <>
@@ -120,25 +104,12 @@ export default function Digdug({ updateState }) {
           </DialogActions>
         </Dialog>
       </Provider>
-      <View>
-        <Text>Spoon Count: {spoonCount}</Text>
-      </View>
 
-      <View style={styles.controller}>
-        <Controller
-          engine={engine}
-          type="throw-spoon"
-          handleThrowSpoon={handleThrowSpoon}
-          spoonCount={spoonCount}
-        />
-        <Controller
-          engine={engine}
-          type="break-rock"
-          handleBreakRock={handleBreakRock}
-          spoonCount={spoonCount}
-        />
-      </View>
-      <Controller engine={engine} type="move" spoonCount={spoonCount} />
+      {!(hasWon || gotCaught) ? (
+        <View style={styles.controllerContainer}>
+          <Controller engine={engine} type="move" />
+        </View>
+      ) : null}
 
       <View style={styles.spacer}></View>
     </>
@@ -155,6 +126,13 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     flexDirection: "row",
   },
+  controllerContainer: {
+    // backgroundColor: "grey",
+    height: "100%",
+    alignItems: "flex-end",
+    justifyContent: "flex-end",
+    marginBottom: 40,
+  },
   text: {
     textAlign: "center",
   },
@@ -170,9 +148,6 @@ const styles = StyleSheet.create({
     padding: 20,
   },
 });
-
-// Todo I need to check for out of bounds in the array, to avoid crashing.
-//   right now I just have rocks on all the edges, so it's impossible to go out of bounds.
 
 // Ideas: maybe you have ten spoons and can throw your spoon to stun guard,
 //  or use 1 to break a rock. If you get to 0 spoons, you can't dig anymore.
