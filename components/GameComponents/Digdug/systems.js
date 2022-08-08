@@ -115,7 +115,6 @@ const moveGuard = (playerPosition, guardPositions) => {
   //   return;
   // }
   for (let i = 0; i < guardPositions.length; i++) {
-    console.log(guardPositions[i]);
     //skip the guards that are stunned
     if (guardPositions[i].stunned) {
       continue;
