@@ -78,7 +78,6 @@ export default function BattleShipBoard({ navigation, route }) {
   //once the enemy board has been initialized, randomly place the
   // ships on it.
   useEffect(() => {
-    console.log("Initializing enemy board");
     if (enemyBoard && isSetup) {
       for (let i = 0; i < Constants.NUM_BATTLESHIPS; i++) {
         //place the battle ship at random location
@@ -128,7 +127,6 @@ export default function BattleShipBoard({ navigation, route }) {
         }
       }
     }
-    console.log("YOU WON!");
     return true;
   };
 
@@ -138,7 +136,6 @@ export default function BattleShipBoard({ navigation, route }) {
 
     for (let i = 0; i < Constants.BATTLESHIP_BOARD_WIDTH; i++) {
       for (let j = 0; j < Constants.BATTLESHIP_BOARD_HEIGHT; j++) {
-        console.log(board[i][j].isSunk);
         if (board[i][j].isShip && !board[i][j].isSunk) {
           return false;
         }
@@ -326,7 +323,6 @@ export default function BattleShipBoard({ navigation, route }) {
 
   const takeEnemyTurn = () => {
     let newBoard = [...board];
-    console.log("DIRECTION: ", direction);
     if (!enemyFound) {
       let col = Math.floor(Math.random() * Constants.BATTLESHIP_BOARD_WIDTH);
       let row = Math.floor(Math.random() * Constants.BATTLESHIP_BOARD_HEIGHT);
@@ -339,7 +335,6 @@ export default function BattleShipBoard({ navigation, route }) {
 
       newBoard[col][row].isHit = true;
       if (newBoard[col][row].isShip) {
-        console.log("Checking sunk on enemy turn");
         setEnemyFound(true);
         setFoundI(col);
         setFoundJ(row);
@@ -468,11 +463,9 @@ export default function BattleShipBoard({ navigation, route }) {
   };
 
   const checkIfSunk = (id, boardToUse, enemyBoard) => {
-    console.log("Checking sunk", id);
     for (let i = 0; i < Constants.BATTLESHIP_BOARD_WIDTH; i++) {
       for (let j = 0; j < Constants.BATTLESHIP_BOARD_HEIGHT; j++) {
         if (boardToUse[i][j].shipId == id && !boardToUse[i][j].isHit) {
-          console.log("Not Sunk", i, j);
           return false;
         }
       }
@@ -558,7 +551,6 @@ export default function BattleShipBoard({ navigation, route }) {
               }}
               source={require("../../../assets/200.gif")}
             />
-
           </View>
         )}
         {isSetup ? (
@@ -679,7 +671,6 @@ export default function BattleShipBoard({ navigation, route }) {
         </Provider>
       </SafeAreaView>
     </ImageBackground>
-
   );
 }
 

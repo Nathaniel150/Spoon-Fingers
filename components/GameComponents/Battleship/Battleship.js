@@ -1,8 +1,23 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import BattleShipBoard from "./BattleShipBoard";
+import Instructions from "../Instructions";
 
-const Battleship = ({ navigation, route}) => {
-  return <BattleShipBoard navigation={navigation} route={route} />;
+import {
+  battleshipHelpSlides,
+  battleshipInstructions,
+} from "./battleshipInstructions";
+
+const Battleship = ({ navigation }) => {
+  return (
+    <>
+      <Instructions
+        title="Spoon vs Fork!"
+        textInstructions={battleshipInstructions}
+        helpSlides={battleshipHelpSlides}
+      />
+      <BattleShipBoard navigation={navigation} />
+    </>
+  );
 };
 
 const styles = StyleSheet.create({
