@@ -13,7 +13,7 @@ function LevelSelect2({navigation}) {
     const [lvlsUnlocked, setLvlsUnlocked] = useState(null)
 
 
-    useEffect(() => {readState()}, [])
+    useEffect(() => {readState()}, [lvlsUnlocked])
 
     const readState = async () => {
         const dataString = await AsyncStorage.getItem("@lvlsUnlocked");

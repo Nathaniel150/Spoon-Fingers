@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useLayoutEffect } from 'react';
 import { ImageBackground, Text, View, StyleSheet, TouchableHighlight } from 'react-native';
 
 import DialogueScene from './DialogueScene';
@@ -8,12 +8,13 @@ import { StackActions } from '@react-navigation/routers';
 
 
 function StoryScene({navigation, route}) {
-    const popAction = StackActions.pop(2);
+    const popAction = StackActions.pop(1);
 
     const story = route.params.story;
     const nextLevel = route.params.nextLevel;
     const lvlUnlock = route.params.lvlUnlock;
 
+  
      // index of the scene information to be displayed.
     const [sceneIndex, setSceneIndex] = useState(0);
 

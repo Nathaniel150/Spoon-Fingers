@@ -23,7 +23,7 @@ import { StackActions } from '@react-navigation/native';
 
 
 export default function Digdug({ navigation, route }) {
-  const popAction = StackActions.pop(2);
+  const popAction = StackActions.pop(1);
   const lvlUnlock = route.params.lvlUnlock;
 
 
@@ -89,7 +89,7 @@ export default function Digdug({ navigation, route }) {
               title="Escape"
               compact
               variant="text"
-              onPress={() => {lvlUnlock(); navigation.navigate(Constants.STORY_P4)}}
+              onPress={() => {lvlUnlock(); navigation.dispatch(popAction); navigation.navigate(Constants.STORY_P4)}}
             />
           </DialogActions>
         </Dialog>
@@ -105,7 +105,7 @@ export default function Digdug({ navigation, route }) {
               title="Continue"
               compact
               variant="text"
-              onPress={() =>navigation.navigate(Constants.STORY_P3) }
+              onPress={() => {navigation.dispatch(popAction); navigation.navigate(Constants.STORY_P3)} }
             />
           </DialogActions>
         </Dialog>

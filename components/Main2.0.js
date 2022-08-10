@@ -22,46 +22,8 @@ import { unmountComponentAtNode } from "react-dom";
 const Stack = createNativeStackNavigator();
 
 const Main2 = () => {
-  //use to track what part ofe game we are currently in
-  // const [stateTracker, setStateTracker] = useState(Constants.START_SCREEN);
-  // const updateState = (part) => {setStateTracker(part); };
 
-
-  //SAVE GAME PROGRESS START
-
-   //AsyncStorage.removeItem("@lvlsUnlocked")
-  // const [loaded, setLoaded] = useState(false)
-
-  // useEffect(() => {
-  //   if(loaded) {
-  //     persistState()
-  //   }
-  // }, [stateTracker])
-
-  // useEffect(() => {readState()}, [])
-
-  // const persistState = async () => {
-  //   const data = {stateTracker
-  //   }
-  //   const dataString = JSON.stringify(data);
-  //   await AsyncStorage.setItem("@state", dataString);
-  // }
-
-  // const readState = async () => {
-  //   const dataString = await AsyncStorage.getItem("@state");
-
-  //   try {
-  //     const data = JSON.parse(dataString);
-  //     setStateTracker(data.stateTracker);
-  //   } catch {
-  //     console.log("Can't parse string")
-  //   }
-  //   setLoaded(true);
-  // }
-
-  // if(!loaded) {
-  //   return (<ActivityIndicator/>)
-  // }
+  //AsyncStorage.removeItem("@lvlsUnlocked")
 
   //if lvls unlocked is null, set it to inital state (just the first unlocked)
   const initalState = async () => {
@@ -71,6 +33,7 @@ const Main2 = () => {
       await AsyncStorage.setItem("@lvlsUnlocked", lvlsUnlockedString)
     }
   }
+
   initalState();
 
   const unlockLevel = async (lvl) => {
