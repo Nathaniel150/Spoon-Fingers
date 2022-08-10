@@ -20,7 +20,10 @@ import { wordleHelpSlides, wordleInstructions } from "./wordleInstructions";
 //Game 2(2minutes): pop up, gameplay, pop-up if won or lost and transition to last game
 //Game 3 (1minute):pop up (last one, the guards are approaching), gameplay, pop up,
 //Test comment
-function Lockle({ navigation }) {
+function Lockle({ navigation, route }) {
+  const lvlUnlock = route.params.lvlUnlock;
+  const popAction = StackActions.pop(1);
+
   const words = [
     "spoon",
     "knife",
@@ -68,10 +71,13 @@ function Lockle({ navigation }) {
       if (level < wordleContent.length - 1) {
         setLevel(level + 1);
       } else {
-        navigation.navigate(Constants.STORY_P2);
+        lvlUnlock();
+        navigation.dispatch(popAction)
+        navigation.navigate(Constants.STORY_P2)
       }
     } else {
-      setLevel(0);
+      navigation.dispatch(popAction)
+      navigation.navigate(Constants.STORY_P1)
     }
 
     setVisible(false);
