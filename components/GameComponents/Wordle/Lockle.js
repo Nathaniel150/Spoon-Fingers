@@ -7,12 +7,15 @@ import { useState, useEffect } from 'react';
 import { colors } from "./wordleConstants";
 import Constants from '../../Constants';
 import uuid from "react-native-uuid"
+import { StackActions } from '@react-navigation/routers';
 
 //Game 1(3minutes): Pop up(introducing the game and how to play), gameplay, pop-up if won or lost and trasinition to next game,
 //Game 2(2minutes): pop up, gameplay, pop-up if won or lost and transition to last game
 //Game 3 (1minute):pop up (last one, the guards are approaching), gameplay, pop up,
 //Test comment
-function Lockle({navigation}) {
+function Lockle({navigation, route}) {
+    const lvlUnlock = route.params.lvlUnlock;
+    const popAction = StackActions.pop(1)
 
     const words = ["spoon", "knife", "guard", "loser", "fight", "under", "brick", "pixel", "mouse"]
 
@@ -52,11 +55,15 @@ function Lockle({navigation}) {
             if(level < wordleContent.length - 1) {
                 setLevel(level + 1)
             } else {
+                lvlUnlock();
+                navigation.dispatch(popAction)
                 navigation.navigate(Constants.STORY_P2)
+
             }
 
         } else {
-            setLevel(0)
+            navigation.dispatch(popAction)
+            navigation.navigate(Constants.STORY_P1)
         }
 
        setVisible(false);

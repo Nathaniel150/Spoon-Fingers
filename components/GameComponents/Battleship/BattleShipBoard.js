@@ -23,8 +23,12 @@ import {
   DialogActions,
   Provider,
 } from "@react-native-material/core";
+import { StackActions } from "@react-navigation/routers";
 
-export default function BattleShipBoard({ navigation }) {
+export default function BattleShipBoard({ navigation, route }) {
+  const lvlUnlock = route.params.lvlUnlock;
+  const popAction = StackActions.pop(1)
+
   //TODO I think this should have a dependence on shipInfoTracker, but it wasn't working for some reason.
   useEffect(() => {
     if (checkFinishedSetup()) {
@@ -652,7 +656,7 @@ export default function BattleShipBoard({ navigation }) {
                 title="Escape Cafeteria"
                 compact
                 variant="text"
-                onPress={() => navigation.navigate(Constants.STORY_P3)}
+                onPress={() => {lvlUnlock(); navigation.dispatch(popAction); navigation.navigate(Constants.STORY_P3)}}
               />
             </DialogActions>
           </Dialog>
@@ -668,7 +672,7 @@ export default function BattleShipBoard({ navigation }) {
                 title="Continue"
                 compact
                 variant="text"
-                onPress={() => navigation.navigate(Constants.STORY_P2)}
+                onPress={() => {navigation.dispatch(popAction); navigation.navigate(Constants.STORY_P2)} }
               />
             </DialogActions>
           </Dialog>

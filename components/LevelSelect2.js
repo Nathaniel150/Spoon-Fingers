@@ -1,82 +1,101 @@
-import React from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ActivityIndicator } from "@react-native-material/core";
+import { StackActions } from '@react-navigation/routers';
+
+import React, { useEffect, useState } from 'react';
 import { ScrollView, View, Text, StyleSheet,Image, Pressable } from 'react-native';
 import { fontStyles } from '../App';
 import Constants from './Constants';
 
 
-
 function LevelSelect2({navigation}) {
-    const lvlsUnlocked = [true, true, true, true, true, true, true];
+    const [loaded, setLoaded] = useState(false)
+    const [lvlsUnlocked, setLvlsUnlocked] = useState(null)
+
+
+    useEffect(() => {readState()}, [lvlsUnlocked])
+
+    const readState = async () => {
+        const dataString = await AsyncStorage.getItem("@lvlsUnlocked");
+
+        try {
+            const data = JSON.parse(dataString);
+           // console.log("data", data)
+            setLvlsUnlocked(data) ;
+        } catch {
+            console.log("can't parse string")
+        }
+        setLoaded(true)
+    }
+    
+
+
     const levels = [
         {
             lvlName: "1. The Cell",
             img: require("../assets/BackgroundImages/prison.png"),
             onPress: () => {navigation.navigate(Constants.STORY_P1)},
-            unlocked: lvlsUnlocked[0]
         },
         {
             lvlName: "2. Locked In",
             img: require("../assets/BackgroundImages/prison.png"),
             onPress: () => {navigation.navigate(Constants.LOCKLE)},
-            unlocked: lvlsUnlocked[1],
         },
         {
             lvlName: "3. Cafeteria",
             img: require("../assets/BackgroundImages/prison.png"),
             onPress: () => {navigation.navigate(Constants.STORY_P2)},
-            unlocked: lvlsUnlocked[2],
         },
         {
             lvlName: "4. Spoon vs Fork",
             img: require("../assets/BackgroundImages/prison.png"),
             onPress: () => {navigation.navigate(Constants.BATTLESHIP)},
-            unlocked: lvlsUnlocked[3],
         },
         {
             lvlName: "5. Run",
             img: require("../assets/BackgroundImages/prison.png"),
             onPress: () => {navigation.navigate(Constants.STORY_P3)},
-            unlocked: lvlsUnlocked[4],
         },
         {
             lvlName: "6. Dig",
             img: require("../assets/BackgroundImages/prison.png"),
             onPress: () => {navigation.navigate(Constants.DIG_DUG)},
-            unlocked: lvlsUnlocked[5],
         },
         {
             lvlName: "7. Freedom",
             img: require("../assets/BackgroundImages/prison.png"),
             onPress: () => {navigation.navigate(Constants.STORY_P4)},
-            unlocked: lvlsUnlocked[6],
         },
-
+    
     ]
+
+    if(!loaded){
+        return (<ActivityIndicator/>);
+    }
     return (
         <ScrollView style={styles.container}>
             <Text style={[styles.title, styles.titleBottomBorder, fontStyles.pixelBoldFont]}>Levels</Text>
             {levels.map((level, i) => (
                 <View style={styles.row} key={i}>
-                    {console.log(level.lvlName)}
                     {i % 2 === 0 ? 
                         <View style={styles.row}>
-                            <Pressable onPress={level.onPress} disabled={!level.unlocked}>
+                            <Pressable onPress={level.onPress} disabled={!lvlsUnlocked[i]}>
                                 <Image
                                     source={level.img}
-                                    style={level.unlocked? styles.photo: [styles.photo, styles.blackTint ]}
+                                    style={lvlsUnlocked[i] ? styles.photo: [styles.photo, styles.blackTint ]}
                                 />
                             </Pressable>
-                            <Text style={[styles.lvlName, fontStyles.pixelFont]}>{level.unlocked ? level.lvlName:"?"}</Text>
+                            <Text style={[styles.lvlName, fontStyles.pixelFont]}>{lvlsUnlocked[i]? level.lvlName:"?"}</Text>
 
                         </View>
                     :   <View style={[styles.row, styles.right]}>
-                            <Text style={[styles.lvlName, fontStyles.pixelFont]}>{level.unlocked ? level.lvlName:"?"}</Text>
+                            <Text style={[styles.lvlName, fontStyles.pixelFont]}>{lvlsUnlocked[i] ? level.lvlName:"?"}</Text>
 
-                            <Pressable onPress={level.onPress} disabled={!level.unlocked}> 
+                            <Pressable onPress={level.onPress} disabled={!lvlsUnlocked[i]}> 
 
                                 <Image
                                     source={level.img}
-                                    style={level.unlocked? styles.photo: [styles.photo, styles.blackTint ]}
+                                    style={lvlsUnlocked[i] ? styles.photo: [styles.photo, styles.blackTint ]}
 
                                 />
                             </Pressable>
@@ -91,6 +110,7 @@ function LevelSelect2({navigation}) {
         </ScrollView>
     );
 }
+
 
 const styles = StyleSheet.create({
     container: {
