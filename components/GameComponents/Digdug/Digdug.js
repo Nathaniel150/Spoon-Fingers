@@ -1,4 +1,4 @@
-import React, { PureComponent, useState, useRef } from "react";
+import React, { PureComponent, useState, useRef, useEffect } from "react";
 import {
   StyleSheet,
   StatusBar,
@@ -18,44 +18,51 @@ import { GameEngine } from "react-native-game-engine";
 import { MoveAvatar } from "./systems";
 import { DirtArray } from "./entities";
 import Controller from "./Controller";
+import { levels } from "./levels.js/level1";
+import { levelEntities } from "./levels.js/levelEntities";
 import Constants from "../../Constants";
-import { StackActions } from '@react-navigation/native';
+import { StackActions } from "@react-navigation/native";
 
+import Instructions from "../Instructions";
+import { digdugHelpSlides, digdugInstructions } from "./digdugInstructions";
 
 export default function Digdug({ navigation, route }) {
   const popAction = StackActions.pop(1);
   const lvlUnlock = route.params.lvlUnlock;
 
-
   const [running, setRunning] = useState(true);
   const [hasWon, setHasWon] = useState(false);
   const [gotCaught, setGotCaught] = useState(false);
 
+  const [currLevel, setCurrLevel] = useState(0);
+
   const engine = useRef(null);
 
-  const [entities, setEntities] = useState({
-    dirtArray: {
-      playerPosition: [1, 1],
-      guardPositions: [
-        {
-          xPos: 3,
-          yPos: 6,
-          stunned: false,
-          stunnedTimer: 0,
-        },
-        {
-          xPos: 5,
-          yPos: 0,
-          stunned: false,
-          stunnedTimer: 0,
-        },
-        // [3, 6],
-        // [5, 0],
-        // [9, 3],
-      ],
-      renderer: <DirtArray />,
-    },
-  });
+  const updateLevel = () => {
+    //if you are on the last level, move on with the story.
+    if (currLevel >= levels.length - 1) {
+      navigation.navigate(Constants.STORY_P4);
+    } else {
+      setHasWon(false);
+      setGotCaught(false);
+      engine.current.swap(levelEntities[currLevel + 1]);
+      setCurrLevel(currLevel + 1);
+      setRunning(true);
+    }
+  };
+
+  const loseLevel = () => {
+    resetLevel();
+    navigation.navigate(Constants.STORY_P3);
+    //if you are on the first level, go back to the story
+    if (currLevel == 0) {
+    } else {
+      setGotCaught(false);
+      engine.current.swap(levelEntities[currLevel - 1]);
+      setCurrLevel(currLevel - 1);
+      setRunning(true);
+    }
+  };
 
   return (
     <>
@@ -64,7 +71,7 @@ export default function Digdug({ navigation, route }) {
         style={styles.container}
         running={running}
         systems={[MoveAvatar]}
-        entities={entities}
+        entities={levelEntities[currLevel]}
         onEvent={(e) => {
           if (e === "winner") {
             setRunning(false);
@@ -78,6 +85,12 @@ export default function Digdug({ navigation, route }) {
         <StatusBar hidden={true} />
       </GameEngine>
 
+      <Instructions
+        title="Final Escape!"
+        textInstructions={digdugInstructions}
+        helpSlides={digdugHelpSlides}
+      />
+
       <Provider>
         <Dialog visible={hasWon}>
           <DialogContent>
@@ -89,7 +102,11 @@ export default function Digdug({ navigation, route }) {
               title="Escape"
               compact
               variant="text"
-              onPress={() => {lvlUnlock(); navigation.dispatch(popAction); navigation.navigate(Constants.STORY_P4)}}
+              onPress={() => {
+                lvlUnlock();
+                navigation.dispatch(popAction);
+                navigation.navigate(Constants.STORY_P4);
+              }}
             />
           </DialogActions>
         </Dialog>
@@ -105,7 +122,10 @@ export default function Digdug({ navigation, route }) {
               title="Continue"
               compact
               variant="text"
-              onPress={() => {navigation.dispatch(popAction); navigation.navigate(Constants.STORY_P3)} }
+              onPress={() => {
+                navigation.dispatch(popAction);
+                navigation.navigate(Constants.STORY_P3);
+              }}
             />
           </DialogActions>
         </Dialog>
