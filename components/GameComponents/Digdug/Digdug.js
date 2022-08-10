@@ -41,6 +41,8 @@ export default function Digdug({ navigation, route }) {
   const updateLevel = () => {
     //if you are on the last level, move on with the story.
     if (currLevel >= levels.length - 1) {
+      lvlUnlock();
+      navigation.dispatch(popAction);
       navigation.navigate(Constants.STORY_P4);
     } else {
       setHasWon(false);
@@ -52,7 +54,7 @@ export default function Digdug({ navigation, route }) {
   };
 
   const loseLevel = () => {
-    resetLevel();
+    navigation.dispatch(popAction);
     navigation.navigate(Constants.STORY_P3);
     //if you are on the first level, go back to the story
     if (currLevel == 0) {
@@ -103,9 +105,7 @@ export default function Digdug({ navigation, route }) {
               compact
               variant="text"
               onPress={() => {
-                lvlUnlock();
-                navigation.dispatch(popAction);
-                navigation.navigate(Constants.STORY_P4);
+                updateLevel();
               }}
             />
           </DialogActions>
@@ -123,8 +123,7 @@ export default function Digdug({ navigation, route }) {
               compact
               variant="text"
               onPress={() => {
-                navigation.dispatch(popAction);
-                navigation.navigate(Constants.STORY_P3);
+                loseLevel();
               }}
             />
           </DialogActions>
