@@ -1,16 +1,19 @@
-import { level1 } from "./levels.js/level1";
+import { levels } from "./levels.js/level1";
 
 var TIMER_LENGTH = 50;
+// var currLevel = 0;
 
 const MoveAvatar = (entities, { events, dispatch }) => {
+  // console.log("Entites: ", entities);
   let { dirtArray } = entities; //get the dirt entity
+
+  currLevel = dirtArray.levelNum;
   let x = dirtArray.playerPosition[0];
   let y = dirtArray.playerPosition[1];
 
   //if the guard and player on on the same square, and the guard is not stunned.
   // I dispatch "caught" event so the game engine ends the game.
   if (gotCaught(x, y, dirtArray.guardPositions)) {
-    console.log("caught");
     dispatch("caught");
   }
 
@@ -45,7 +48,6 @@ const MoveAvatar = (entities, { events, dispatch }) => {
           moveGuard(dirtArray.playerPosition, dirtArray.guardPositions);
           return;
         case "break-rock-down":
-          console.log("Break rock down");
           breakRock(
             dirtArray.playerPosition[0],
             dirtArray.playerPosition[1],
@@ -102,7 +104,7 @@ const MoveAvatar = (entities, { events, dispatch }) => {
   }
 
   //when the player reaches the winning square, dispatch a "winner" event to tell the game engine they won
-  if (level1[x][y].win) {
+  if (levels[currLevel][x][y].win) {
     dispatch("winner");
   }
 
@@ -128,18 +130,34 @@ const moveGuard = (playerPosition, guardPositions) => {
     let diffX = pX - gX;
     let diffY = pY - gY;
     //player is to the right;
-    if (diffX > 0 && canMove(gX + 1, gY) && level1[gX + 1][gY].visited) {
+    if (
+      diffX > 0 &&
+      canMove(gX + 1, gY) &&
+      levels[currLevel][gX + 1][gY].visited
+    ) {
       guardPositions[i].xPos += 1;
     }
     //player is below
-    else if (diffY > 0 && canMove(gX, gY + 1) && level1[gX][gY + 1].visited) {
+    else if (
+      diffY > 0 &&
+      canMove(gX, gY + 1) &&
+      levels[currLevel][gX][gY + 1].visited
+    ) {
       guardPositions[i].yPos += 1;
     }
     //move the guard left if the player is to the left, and the square to the left is not a rock
-    else if (diffX < 0 && canMove(gX - 1, gY) && level1[gX - 1][gY].visited) {
+    else if (
+      diffX < 0 &&
+      canMove(gX - 1, gY) &&
+      levels[currLevel][gX - 1][gY].visited
+    ) {
       //move left
       guardPositions[i].xPos -= 1;
-    } else if (diffY < 0 && canMove(gX, gY - 1) && level1[gX][gY - 1].visited) {
+    } else if (
+      diffY < 0 &&
+      canMove(gX, gY - 1) &&
+      levels[currLevel][gX][gY - 1].visited
+    ) {
       guardPositions[i].yPos -= 1;
     }
   }
@@ -169,7 +187,7 @@ const throwSpoon = async (playerPosition, guardPositions, xDir, yDir) => {
   while (!stunnedAGuard && canThrowSpoon(spoonPosX, spoonPosY)) {
     //TODO Make the spoon appeard on the screen
     //reset the current square to not have a spoon
-    level1[spoonPosX][spoonPosY].isSpoon = false;
+    levels[currLevel][spoonPosX][spoonPosY].isSpoon = false;
     spoonPosX += xDir;
     spoonPosY += yDir;
 
@@ -187,7 +205,7 @@ const throwSpoon = async (playerPosition, guardPositions, xDir, yDir) => {
         //only one guard should be stunned
         stunnedAGuard = true;
         //set the square in the level to stunned so it can render correctly.
-        level1[guardPositions[i].xPos][
+        levels[currLevel][guardPositions[i].xPos][
           guardPositions[i].yPos
         ].guardStunned = true;
         break;
@@ -195,7 +213,7 @@ const throwSpoon = async (playerPosition, guardPositions, xDir, yDir) => {
     }
 
     //reset the current square to not have a spoon
-    level1[spoonPosX][spoonPosY].isSpoon = false;
+    levels[currLevel][spoonPosX][spoonPosY].isSpoon = false;
   }
 };
 
@@ -203,7 +221,7 @@ const breakRock = (i, j, dirX, dirY) => {
   //if the rock they want to break is in bounds, break it;
   if (canBreakRock(i + dirX, j + dirY)) {
     //set the status of rock to false to indicate that the rock has been broken/ removed
-    level1[i + dirX][j + dirY].isRock = false;
+    levels[currLevel][i + dirX][j + dirY].isRock = false;
     return;
   }
 };
@@ -212,26 +230,31 @@ const breakRock = (i, j, dirX, dirY) => {
 const canMove = (i, j) => {
   return (
     i >= 0 &&
-    i < level1.length &&
+    i < levels[currLevel].length &&
     j >= 0 &&
-    j < level1[0].length &&
-    !level1[i][j].isRock
+    j < levels[currLevel][0].length &&
+    !levels[currLevel][i][j].isRock
   );
 };
 
 const canThrowSpoon = (i, j) => {
   return (
     i >= 0 &&
-    i < level1.length &&
+    i < levels[currLevel].length &&
     j >= 0 &&
-    j < level1[0].length &&
-    level1[i][j].visited &&
-    !level1[i][j].isRock
+    j < levels[currLevel][0].length &&
+    levels[currLevel][i][j].visited &&
+    !levels[currLevel][i][j].isRock
   );
 };
 
 const canBreakRock = (i, j) => {
-  return i >= 0 && i < level1.length && j >= 0 && j < level1[0].length;
+  return (
+    i >= 0 &&
+    i < levels[currLevel].length &&
+    j >= 0 &&
+    j < levels[currLevel][0].length
+  );
 };
 
 const handleStun = (guardPositions) => {
@@ -240,7 +263,7 @@ const handleStun = (guardPositions) => {
       guardPositions[i].stunnedTimer--;
     } else {
       guardPositions[i].stunned = false;
-      level1[guardPositions[i].xPos][
+      levels[currLevel][guardPositions[i].xPos][
         guardPositions[i].yPos
       ].guardStunned = false;
     }

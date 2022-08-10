@@ -26,7 +26,6 @@ export default function Controller({ engine }) {
 
   //records the starting coordinate of a swipe (the onTouchStart for the View containing the controller.)
   const setSwipePosition = (e) => {
-    console.log("onTouchStart");
     let startPos = [...swipeStart];
     startPos[0] = e.nativeEvent.pageX;
     startPos[1] = e.nativeEvent.pageY;
@@ -36,7 +35,6 @@ export default function Controller({ engine }) {
 
   //this calculate which direction the player swiped, and will throw a spoon in that direction.
   const calculateSwipe = (e) => {
-    console.log("Calc Swipe");
     let endX = e.nativeEvent.pageX;
     let endY = e.nativeEvent.pageY;
 
@@ -55,7 +53,6 @@ export default function Controller({ engine }) {
         engine.current.dispatch("throw-spoon-left");
       } else {
         engine.current.dispatch("throw-spoon-right");
-        console.log("Swipe right");
       }
     }
     //if the y coordinate changed more than the x coordinate, register only an up or down swipe.
