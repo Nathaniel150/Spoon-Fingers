@@ -24,7 +24,8 @@ import {
   Provider,
 } from "@react-native-material/core";
 
-export default function BattleShipBoard({ navigation }) {
+export default function BattleShipBoard({ navigation, route }) {
+  const lvlUnlock = route.params.lvlUnlock;
   //TODO I think this should have a dependence on shipInfoTracker, but it wasn't working for some reason.
   useEffect(() => {
     if (checkFinishedSetup()) {
@@ -652,7 +653,7 @@ export default function BattleShipBoard({ navigation }) {
                 title="Escape Cafeteria"
                 compact
                 variant="text"
-                onPress={() => navigation.navigate(Constants.STORY_P3)}
+                onPress={() => {lvlUnlock(); navigation.navigate(Constants.STORY_P3)}}
               />
             </DialogActions>
           </Dialog>

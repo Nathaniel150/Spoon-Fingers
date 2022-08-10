@@ -4,21 +4,29 @@ import { ImageBackground, Text, View, StyleSheet, TouchableHighlight } from 'rea
 
 import DialogueScene from './DialogueScene';
 import NarrationScene from './NarrationScene';
+import { StackActions } from '@react-navigation/routers';
+
 
 function StoryScene({navigation, route}) {
-    const story = route.params.story
-    const nextLevel = route.params.nextLevel
+    const popAction = StackActions.pop(2);
+
+    const story = route.params.story;
+    const nextLevel = route.params.nextLevel;
+    const lvlUnlock = route.params.lvlUnlock;
+
      // index of the scene information to be displayed.
     const [sceneIndex, setSceneIndex] = useState(0);
 
     const nextScene = () => {
-        console.log(sceneIndex)
         if(sceneIndex < story.length - 1) {
             setSceneIndex(sceneIndex + 1);
         } 
          
         else {
-              navigation.navigate(nextLevel)
+            lvlUnlock();
+            navigation.dispatch(popAction)
+            navigation.navigate(nextLevel)
+            
         }
     }
 

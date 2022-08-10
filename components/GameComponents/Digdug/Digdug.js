@@ -19,8 +19,14 @@ import { MoveAvatar } from "./systems";
 import { DirtArray } from "./entities";
 import Controller from "./Controller";
 import Constants from "../../Constants";
+import { StackActions } from '@react-navigation/native';
 
-export default function Digdug({ navigation }) {
+
+export default function Digdug({ navigation, route }) {
+  const popAction = StackActions.pop(2);
+  const lvlUnlock = route.params.lvlUnlock;
+
+
   const [running, setRunning] = useState(true);
   const [hasWon, setHasWon] = useState(false);
   const [gotCaught, setGotCaught] = useState(false);
@@ -83,7 +89,7 @@ export default function Digdug({ navigation }) {
               title="Escape"
               compact
               variant="text"
-              onPress={() => navigation.navigate(Constants.STORY_P4)}
+              onPress={() => {lvlUnlock(); navigation.navigate(Constants.STORY_P4)}}
             />
           </DialogActions>
         </Dialog>
@@ -99,7 +105,7 @@ export default function Digdug({ navigation }) {
               title="Continue"
               compact
               variant="text"
-              onPress={() => navigation.navigate(Constants.STORY_P3)}
+              onPress={() =>navigation.navigate(Constants.STORY_P3) }
             />
           </DialogActions>
         </Dialog>
