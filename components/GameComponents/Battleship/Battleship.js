@@ -7,7 +7,7 @@ import {
   battleshipInstructions,
 } from "./battleshipInstructions";
 
-const Battleship = ({ navigation }) => {
+const Battleship = ({ navigation, route }) => {
   return (
     <>
       <Instructions
@@ -15,7 +15,7 @@ const Battleship = ({ navigation }) => {
         textInstructions={battleshipInstructions}
         helpSlides={battleshipHelpSlides}
       />
-      <BattleShipBoard navigation={navigation} />
+      <BattleShipBoard navigation={navigation} route={route} />
     </>
   );
 };
