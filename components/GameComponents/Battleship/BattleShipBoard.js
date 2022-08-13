@@ -27,7 +27,7 @@ import { StackActions } from "@react-navigation/routers";
 
 export default function BattleShipBoard({ navigation, route }) {
   const lvlUnlock = route.params.lvlUnlock;
-  const popAction = StackActions.pop(1)
+  const popAction = StackActions.pop(1);
 
   //TODO I think this should have a dependence on shipInfoTracker, but it wasn't working for some reason.
   useEffect(() => {
@@ -74,7 +74,6 @@ export default function BattleShipBoard({ navigation, route }) {
     return ships;
   };
 
-  const initEnemyBoard = () => {};
   //once the enemy board has been initialized, randomly place the
   // ships on it.
   useEffect(() => {
@@ -111,8 +110,8 @@ export default function BattleShipBoard({ navigation, route }) {
 
   useEffect(() => {
     if (!isSetup) {
-      setWon(hasWon);
       setLost(hasLost);
+      setWon(hasWon);
     }
   });
 
@@ -307,13 +306,10 @@ export default function BattleShipBoard({ navigation, route }) {
     setReady(false);
     setBoard(createBoard);
     setShipInfoTracker(initShips);
-    // initEnemyBoard();
-    // setEnemyBoard(createBoard);
-    // setIsSetup(true);
   };
 
   const [enemyFound, setEnemyFound] = useState(false); //if the enemy has hit a ship.
-  //used to search in all direction.
+  //used to search in all directions.
   const [nextFoundI, setNextFoundI] = useState(null);
   const [nextFoundJ, setNextFoundJ] = useState(null);
   //used keep track of starting point and search after nextFoundI and J have reached a dead end;
@@ -343,8 +339,12 @@ export default function BattleShipBoard({ navigation, route }) {
         checkIfSunk(newBoard[col][row].shipId, newBoard, false);
       }
     } else {
-      //try in each of the 4 direction surrounding the square where the computer founda a ship;
-      if (nextFoundJ - 1 >= 0 && !newBoard[nextFoundI][nextFoundJ - 1].isHit) {
+      //try in each of the 4 directions surrounding the square where the computer found a ship;
+      if (
+        nextFoundJ - 1 >= 0 &&
+        !newBoard[nextFoundI][nextFoundJ - 1].isHit &&
+        direction != "horizontal" // this condition make the computer a little better at not wasting turns when if finds a ship that is facing horizoltally
+      ) {
         newBoard[nextFoundI][nextFoundJ - 1].isHit = true;
         if (newBoard[nextFoundI][nextFoundJ - 1].isShip) {
           setEnemyFound(
@@ -359,7 +359,8 @@ export default function BattleShipBoard({ navigation, route }) {
         }
       } else if (
         nextFoundJ + 1 < Constants.BATTLESHIP_BOARD_HEIGHT &&
-        !newBoard[nextFoundI][nextFoundJ + 1].isHit
+        !newBoard[nextFoundI][nextFoundJ + 1].isHit &&
+        direction != "horizontal" // this condition make the computer a little better at not wasting turns when if finds a ship that is facing horizoltally
       ) {
         newBoard[nextFoundI][nextFoundJ + 1].isHit = true;
 
@@ -408,7 +409,7 @@ export default function BattleShipBoard({ navigation, route }) {
           setDirection("horizontal");
         }
       }
-      //once nextFoundI and J have reached a dead end, revert to
+      //once nextFoundI and J have reached a dead end, revert to foundI and J
       else {
         if (foundJ - 1 >= 0 && !newBoard[foundI][foundJ - 1].isHit) {
           newBoard[foundI][foundJ - 1].isHit = true;
@@ -617,7 +618,6 @@ export default function BattleShipBoard({ navigation, route }) {
 
         <Provider>
           <Dialog visible={ready}>
-            {/* <DialogHeader title={won === true ? "WON" : "LOST"} /> */}
             <DialogContent>
               <Text>Content</Text>
             </DialogContent>
@@ -648,7 +648,11 @@ export default function BattleShipBoard({ navigation, route }) {
                 title="Escape Cafeteria"
                 compact
                 variant="text"
-                onPress={() => {lvlUnlock(); navigation.dispatch(popAction); navigation.navigate(Constants.STORY_P3)}}
+                onPress={() => {
+                  lvlUnlock();
+                  navigation.dispatch(popAction);
+                  navigation.navigate(Constants.STORY_P3);
+                }}
               />
             </DialogActions>
           </Dialog>
@@ -664,7 +668,10 @@ export default function BattleShipBoard({ navigation, route }) {
                 title="Continue"
                 compact
                 variant="text"
-                onPress={() => {navigation.dispatch(popAction); navigation.navigate(Constants.STORY_P2)} }
+                onPress={() => {
+                  navigation.dispatch(popAction);
+                  navigation.navigate(Constants.STORY_P2);
+                }}
               />
             </DialogActions>
           </Dialog>
@@ -689,16 +696,11 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
-    // marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-    // marginBottom: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
 
   ship_container: {
     display: "flex",
-    // backgroundColor: "red",
     borderWidth: 4,
     borderColor: "red",
   },
 });
-
-//Todo if I place a ship, it should auto select a new one
