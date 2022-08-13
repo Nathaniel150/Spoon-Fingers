@@ -1,15 +1,7 @@
-import React, { PureComponent, useState, useRef, useEffect } from "react";
-import {
-  StyleSheet,
-  StatusBar,
-  Pressable,
-  Text,
-  View,
-  Button,
-} from "react-native";
+import React, { useState, useRef } from "react";
+import { StyleSheet, StatusBar, Text, View, Button } from "react-native";
 import {
   Dialog,
-  DialogHeader,
   DialogContent,
   DialogActions,
   Provider,
@@ -18,8 +10,6 @@ import { GameEngine } from "react-native-game-engine";
 import { MoveAvatar } from "./systems";
 import { DirtArray } from "./entities";
 import Controller from "./Controller";
-import { levels } from "./levels.js/level1";
-import { levelEntities } from "./levels.js/levelEntities";
 import Constants from "../../Constants";
 import { StackActions } from "@react-navigation/native";
 
@@ -36,34 +26,348 @@ export default function Digdug({ navigation, route }) {
 
   const [currLevel, setCurrLevel] = useState(0);
 
+  //provide entities to the GameEngine based on the current level the player is on.
+  //If you want to add a new level, just add another entry of the same format to this array.
+  const [entities, setEntities] = useState([
+    {
+      dirtArray: {
+        playerPosition: [1, 1],
+        guardPositions: [
+          {
+            xPos: 5,
+            yPos: 1,
+            stunned: false,
+            stunnedTimer: 0,
+          },
+          {
+            xPos: 0,
+            yPos: 1,
+            stunned: false,
+            stunnedTimer: 0,
+          },
+        ],
+        levelNum: 0, //what level this is
+        level: [
+          [
+            { ...rock },
+            { ...hole },
+            { ...rock },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+          ],
+          [
+            { ...rock },
+            { ...hole },
+            { ...rock },
+            { ...win },
+            { ...ground },
+            { ...ground },
+          ],
+          [
+            { ...ground },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+          ],
+          [
+            { ...rock },
+            { ...rock },
+            { ...rock },
+            { ...rock },
+            { ...rock },
+            { ...ground },
+          ],
+          [
+            { ...rock },
+            { ...hole },
+            { ...hole },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+          ],
+          [
+            { ...win },
+            { ...hole },
+            { ...rock },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+          ],
+        ], // pass a copy of levels, so I don't modify the actual data file
+        renderer: <DirtArray />,
+      },
+    },
+    {
+      dirtArray: {
+        playerPosition: [1, 1],
+        guardPositions: [
+          {
+            xPos: 3,
+            yPos: 6,
+            stunned: false,
+            stunnedTimer: 0,
+          },
+          {
+            xPos: 5,
+            yPos: 0,
+            stunned: false,
+            stunnedTimer: 0,
+          },
+        ],
+        levelNum: 1,
+        level: [
+          [
+            { ...rock },
+            { ...rock },
+            { ...ground },
+            { ...rock },
+            { ...rock },
+            { ...rock },
+            { ...ground },
+            { ...rock },
+            { ...rock },
+            { ...rock },
+            { ...rock },
+            { ...rock },
+          ],
+          [
+            { ...rock },
+            { ...ground },
+            { ...win },
+            { ...hole },
+            { ...ground },
+            { ...ground },
+            { ...rock },
+            { ...rock },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+            { ...rock },
+          ],
+          [
+            { ...rock },
+            { ...ground },
+            { ...rock },
+            { ...hole },
+            { ...hole },
+            { ...rock },
+            { ...ground },
+            { ...rock },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+            { ...rock },
+          ],
+          [
+            { ...rock },
+            { ...hole },
+            { ...hole },
+            { ...hole },
+            { ...hole },
+            { ...hole },
+            { ...ground },
+            { ...rock },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+            { ...rock },
+          ],
+          [
+            { ...rock },
+            { ...hole },
+            { ...rock },
+            { ...hole },
+            { ...rock },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+            { ...rock },
+          ],
+          [
+            { ...hole },
+            { ...hole },
+            { ...rock },
+            { ...hole },
+            { ...rock },
+            { ...ground },
+            { ...ground },
+            { ...rock },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+          ],
+          [
+            { ...rock },
+            { ...ground },
+            { ...ground },
+            { ...hole },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+            { ...rock },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+            { ...rock },
+          ],
+          [
+            { ...rock },
+            { ...ground },
+            { ...rock },
+            { ...hole },
+            { ...ground },
+            { ...ground },
+            { ...rock },
+            { ...rock },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+            { ...rock },
+          ],
+          [
+            { ...rock },
+            { ...ground },
+            { ...rock },
+            { ...hole },
+            { ...ground },
+            { ...rock },
+            { ...ground },
+            { ...rock },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+            { ...rock },
+          ],
+          [
+            { ...rock },
+            { ...ground },
+            { ...ground },
+            { ...hole },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+            { ...rock },
+            { ...ground },
+            { ...ground },
+            { ...win },
+            { ...rock },
+          ],
+
+          [
+            { ...rock },
+            { ...rock },
+            { ...ground },
+            { ...rock },
+            { ...rock },
+            { ...ground },
+            { ...rock },
+            { ...rock },
+            { ...rock },
+            { ...rock },
+            { ...rock },
+            { ...rock },
+          ],
+        ],
+
+        renderer: <DirtArray />,
+      },
+    },
+    {
+      dirtArray: {
+        playerPosition: [1, 1],
+        guardPositions: [
+          {
+            xPos: 5,
+            yPos: 0,
+            stunned: false,
+            stunnedTimer: 0,
+          },
+        ],
+        levelNum: 0, //what level this is
+        level: [
+          [
+            { ...rock },
+            { ...hole },
+            { ...rock },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+          ],
+          [
+            { ...rock },
+            { ...hole },
+            { ...rock },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+          ],
+          [
+            { ...ground },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+          ],
+          [
+            { ...rock },
+            { ...rock },
+            { ...rock },
+            { ...rock },
+            { ...rock },
+            { ...ground },
+          ],
+          [
+            { ...rock },
+            { ...hole },
+            { ...hole },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+          ],
+          [
+            { ...win },
+            { ...hole },
+            { ...rock },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+          ],
+        ],
+        renderer: <DirtArray />,
+      },
+    },
+  ]);
+
   const engine = useRef(null);
 
   const updateLevel = () => {
+    console.log();
     //if you are on the last level, move on with the story.
-    if (currLevel >= levels.length - 1) {
+    if (currLevel >= entities.length - 1) {
       lvlUnlock();
       navigation.dispatch(popAction);
       navigation.navigate(Constants.STORY_P4);
     } else {
       setHasWon(false);
       setGotCaught(false);
-      engine.current.swap(levelEntities[currLevel + 1]);
+      engine.current.swap(entities[currLevel + 1]);
       setCurrLevel(currLevel + 1);
       setRunning(true);
     }
   };
 
   const loseLevel = () => {
+    engine.current.swap(entities[0]);
     navigation.dispatch(popAction);
     navigation.navigate(Constants.STORY_P3);
-    //if you are on the first level, go back to the story
-    if (currLevel == 0) {
-    } else {
-      setGotCaught(false);
-      engine.current.swap(levelEntities[currLevel - 1]);
-      setCurrLevel(currLevel - 1);
-      setRunning(true);
-    }
   };
 
   return (
@@ -73,7 +377,7 @@ export default function Digdug({ navigation, route }) {
         style={styles.container}
         running={running}
         systems={[MoveAvatar]}
-        entities={levelEntities[currLevel]}
+        entities={entities[currLevel]}
         onEvent={(e) => {
           if (e === "winner") {
             setRunning(false);
@@ -119,7 +423,7 @@ export default function Digdug({ navigation, route }) {
           <DialogActions>
             {/* TODO Once I have the new updateState function, this button will return the player to the levels page */}
             <Button
-              title="Continue"
+              title="Try again"
               compact
               variant="text"
               onPress={() => {
@@ -176,3 +480,32 @@ const styles = StyleSheet.create({
 
 // Ideas: maybe you have ten spoons and can throw your spoon to stun guard,
 //  or use 1 to break a rock. If you get to 0 spoons, you can't dig anymore.
+
+let hole = {
+  isRock: false,
+  visited: true,
+  win: false,
+  guardStunned: false,
+  isSpoon: false,
+};
+let rock = {
+  isRock: true,
+  visited: false,
+  win: false,
+  guardStunned: false,
+  isSpoon: false,
+};
+let ground = {
+  isRock: false,
+  visited: false,
+  win: false,
+  guardStunned: false,
+  isSpoon: false,
+};
+let win = {
+  isRock: false,
+  visited: false,
+  win: true,
+  guardStunned: false,
+  isSpoon: false,
+};
