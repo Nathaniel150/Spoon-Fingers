@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 
-import { View, Image, Text, Button } from "react-native";
+import { View, Image } from "react-native";
 import Constants from "../../../Constants";
-import { levels } from "../levels.js/level1";
 
-const DirtArray = ({ playerPosition, guardPositions, levelNum }) => {
+const DirtArray = ({ playerPosition, guardPositions, levelNum, level }) => {
   const [dirt, setDirt] = useState([]);
 
   useEffect(() => {
-    setDirt(levels[levelNum]);
+    setDirt(level);
   }, [levelNum]);
 
   return (
@@ -19,7 +18,7 @@ const DirtArray = ({ playerPosition, guardPositions, levelNum }) => {
           display: "flex",
           flexDirection: "row",
           position: "absolute",
-          top: 50,
+          top: 100,
         }}
       >
         {dirt.map((row, i) => {
@@ -34,7 +33,7 @@ const DirtArray = ({ playerPosition, guardPositions, levelNum }) => {
                     i={i}
                     j={j}
                     square={square}
-                    level={levels[levelNum]}
+                    dimensions={level.length}
                   />
                 );
               })}
@@ -52,10 +51,8 @@ const DirtSquare = ({
   i,
   j,
   square,
-  level,
+  dimensions,
 }) => {
-  let dimensions = level.length;
-
   const blockSize = Constants.MAX_WIDTH / dimensions;
 
   const hasGuard = (i, j) => {
