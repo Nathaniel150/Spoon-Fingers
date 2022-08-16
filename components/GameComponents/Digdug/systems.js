@@ -1,5 +1,6 @@
-var TIMER_LENGTH = 50;
+var TIMER_LENGTH = 25;
 var levels = 0;
+var guardMovementClock = 50; //every 50 ticks, the guards will move automatically even if the player hasn't moved
 
 const MoveAvatar = (entities, { events, dispatch }) => {
   let { dirtArray } = entities; //get the dirt entity
@@ -14,6 +15,10 @@ const MoveAvatar = (entities, { events, dispatch }) => {
     dispatch("caught");
   }
 
+  handleDefaultGuardMovement(
+    dirtArray.playerPosition,
+    dirtArray.guardPositions
+  );
   handleStun(dirtArray.guardPositions);
 
   if (events.length) {
@@ -123,18 +128,18 @@ const moveGuard = (playerPosition, guardPositions) => {
     let diffX = pX - gX;
     let diffY = pY - gY;
     //player is to the right;
-    if (diffX > 0 && canMove(gX + 1, gY) && levels[gX + 1][gY].visited) {
+    if (diffX > 0 && canMove(gX + 1, gY)) {
       guardPositions[i].xPos += 1;
     }
     //player is below
-    else if (diffY > 0 && canMove(gX, gY + 1) && levels[gX][gY + 1].visited) {
+    else if (diffY > 0 && canMove(gX, gY + 1)) {
       guardPositions[i].yPos += 1;
     }
     //move the guard left if the player is to the left, and the square to the left is not a rock
-    else if (diffX < 0 && canMove(gX - 1, gY) && levels[gX - 1][gY].visited) {
+    else if (diffX < 0 && canMove(gX - 1, gY)) {
       //move left
       guardPositions[i].xPos -= 1;
-    } else if (diffY < 0 && canMove(gX, gY - 1) && levels[gX][gY - 1].visited) {
+    } else if (diffY < 0 && canMove(gX, gY - 1)) {
       guardPositions[i].yPos -= 1;
     }
   }
@@ -239,6 +244,14 @@ const handleStun = (guardPositions) => {
         guardPositions[i].yPos
       ].guardStunned = false;
     }
+  }
+};
+const handleDefaultGuardMovement = (playerPosition, guardPositions) => {
+  if (guardMovementClock == 1) {
+    moveGuard(playerPosition, guardPositions);
+    guardMovementClock = 25;
+  } else {
+    guardMovementClock--;
   }
 };
 

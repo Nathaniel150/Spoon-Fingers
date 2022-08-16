@@ -14,7 +14,8 @@ import {
 import Swiper from "react-native-swiper";
 
 //this will need to take title,intructions(array of strings), and helpSlides(see current format below) as props.
-const Instructions = ({ title, helpSlides, textInstructions }) => {
+//onClose is an optional prop.
+const Instructions = ({ title, helpSlides, textInstructions, onClose }) => {
   const [modalVisible, setModalVisible] = useState(true);
 
   //this function will build the slides needed for the Swiper Component.
@@ -73,7 +74,7 @@ const Instructions = ({ title, helpSlides, textInstructions }) => {
             <Swiper
               loop={false}
               paginationStyle={{
-                // position: "absolute",
+                position: "absolute",
                 bottom: 1,
               }}
             >
@@ -94,6 +95,9 @@ const Instructions = ({ title, helpSlides, textInstructions }) => {
                 )}
                 onPress={() => {
                   setModalVisible(!modalVisible);
+                  if (onClose) {
+                    onClose();
+                  }
                 }}
               ></Pressable>
             </View>
