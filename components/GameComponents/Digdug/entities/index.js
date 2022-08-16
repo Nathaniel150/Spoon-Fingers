@@ -84,6 +84,7 @@ const DirtSquare = ({
   }
   //the guard is currently in this square
   else if (hasGuard(i, j)) {
+    square.visited = true;
     //the guard is stunned
     if (square.guardStunned) {
       return (
