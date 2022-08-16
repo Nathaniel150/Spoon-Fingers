@@ -1,6 +1,6 @@
 import React, { useState } from "react";
+import { fontStyles } from "../../App";
 import {
-  Alert,
   Image,
   Modal,
   Pressable,
@@ -24,11 +24,15 @@ const Instructions = ({ title, helpSlides, textInstructions }) => {
     //add the initial instructions slide
     helpSlideViews.push(
       <View key="start" style={styles.slide}>
-        <Text style={styles.instructionHeader}>{title}</Text>
+        <Text style={[styles.instructionHeader, fontStyles.pixelBoldFont]}>
+          {title}
+        </Text>
         <FlatList
           data={textInstructions}
           renderItem={({ item }) => (
-            <Text style={styles.instructionListItem}>{item}</Text>
+            <Text style={[styles.instructionListItem, fontStyles.pixelFont]}>
+              {item}
+            </Text>
           )}
         />
       </View>
@@ -38,9 +42,13 @@ const Instructions = ({ title, helpSlides, textInstructions }) => {
     for (let helpSlide of helpSlides) {
       helpSlideViews.push(
         <View key={helpSlide.header} style={styles.slide}>
-          <Text style={styles.modalTextHeader}>{helpSlide.header}</Text>
+          <Text style={[styles.modalTextHeader, fontStyles.pixelBoldFont]}>
+            {helpSlide.header}
+          </Text>
           <Image style={styles.helpImage} source={helpSlide.image} />
-          <Text style={styles.modalTextDescription}>{helpSlide.text}</Text>
+          <Text style={[styles.modalTextDescription, fontStyles.pixelFont]}>
+            {helpSlide.text}
+          </Text>
         </View>
       );
     }
@@ -65,8 +73,8 @@ const Instructions = ({ title, helpSlides, textInstructions }) => {
             <Swiper
               loop={false}
               paginationStyle={{
-                position: "absolute",
-                bottom: 2,
+                // position: "absolute",
+                bottom: 1,
               }}
             >
               {getSlides()}
@@ -79,7 +87,9 @@ const Instructions = ({ title, helpSlides, textInstructions }) => {
                       pressed ? styles.closeButtonPressed : styles.closeButton
                     }
                   >
-                    <Text style={styles.text}>Close</Text>
+                    <Text style={[styles.text, fontStyles.pixelBoldFont]}>
+                      Close
+                    </Text>
                   </View>
                 )}
                 onPress={() => {
@@ -109,7 +119,6 @@ const styles = StyleSheet.create({
   instructionHeader: {
     fontSize: 34,
     fontWeight: "bold",
-    textAlign: "center",
   },
   modalTextHeader: {
     flex: 0.5,
@@ -117,19 +126,19 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   helpImage: {
-    flex: 5,
+    flex: 1.5,
     resizeMode: "contain",
     width: "100%",
   },
   modalTextDescription: {
     flex: 1,
-    textAlign: "center",
+    textAlign: "left",
+    marginTop: 20,
   },
   closeButtonView: {
     alignSelf: "stretch",
   },
   closeButton: {
-    borderRadius: 8,
     elevation: 2,
     backgroundColor: "grey",
     alignItems: "center",
@@ -137,7 +146,6 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   closeButtonPressed: {
-    borderRadius: 8,
     elevation: 2,
     backgroundColor: "#6e2e09",
     alignItems: "center",
@@ -149,15 +157,16 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   modalView: {
-    margin: 20,
+    marginHorizontal: 20,
+    marginVertical: 100,
+
     backgroundColor: "white",
-    borderRadius: 20,
     padding: 35,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 3,
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
