@@ -1,25 +1,24 @@
 export var wordleInstructions = [
-  "THIS IS JUST A COPY OF DIGDUG INSTRUCTIONS, AND WE ACTUALLY NEED TO WRITE THEM",
-  "Testing how this looks",
-  "You have almost escaped the prison, but you still have one final obstacle to overcome",
-  "Dig your way out of the prison using the spoons you collected in the cafeteria!",
-  "Avoid getting caught by the guards and reach the star square to win",
+  "The first step to escaping prison is breaking out of your cell", 
+  "Figure out the three passwords to the prison cell locks to escape.",
+  
+  "Be careful! The guards are out protrolling so you don't have a lot of time to escape",
 ];
 
 export var wordleHelpSlides = [
   {
-    header: "Movement",
+    header: "Moves",
     image: require("../../../assets/prisonerEyepatch.png"),
-    text: "Press the directional arrows to move your character",
+    text: "You have six attempts to guess each passcode",
   },
   {
-    header: "Throwing",
+    header: "Colors",
     image: require("../../../assets/prisonerEyepatch.png"),
-    text: "Swipe in any dircetion within the red circle to throw a spoon. If a guard is standing in the line of fire, they will be stunned for a short period of time",
+    text: "If a letter is correct, it will turn green. If a letter is correct but in the wrong spot, it will turn yellow. If a letter is incorrect, it will be grey.",
   },
   {
-    header: "Winning",
+    header: "Timer",
     image: require("../../../assets/star.png"),
-    text: "Make it to the star square, and you will be one step closer to escaping.",
+    text: "There are three level that have to be accomplished in 2 minutes, 1 minute, and 30 seconds.",
   },
 ];

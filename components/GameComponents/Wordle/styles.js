@@ -11,7 +11,6 @@ export default StyleSheet.create({
     title: {
       paddingTop: 6,
       fontSize: 32,
-      fontWeight: "bold",
       letterSpacing: 7,
   
     },
@@ -40,7 +39,6 @@ export default StyleSheet.create({
       
     },
     cellText: {
-      fontWeight: "bold",
-      fontSize: 30
+      fontSize: 30,
     }
   });

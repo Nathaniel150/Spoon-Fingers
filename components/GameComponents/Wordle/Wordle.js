@@ -6,6 +6,7 @@ import styles from './styles'
 import { CLEAR, ENTER, colors} from "./wordleConstants";
 
 import CountDown from 'react-native-countdown-component';
+import { fontStyles } from "../../../App";
 
 const NUM_TRIES = 5
 
@@ -121,15 +122,31 @@ const Wordle = ({ setVisible, setWon, targetWord, timerOn, setTimerOn, timeLimit
     if(letter === letters[col]) {
       return colors.green;
     }
-    if(letters.includes(letter)) {
+    console.log(letter)
+    if(letters.includes(letter) && isYellow(letter, row, col)) {
       return colors.yellow;
     }
 
     return colors.grey;
   }
 
-  const isYellow = (letter) => {
-    //make game logic for words that have mutiple of the same letter
+  const isYellow = (letter, row, col) => {
+    let yellow = true;
+
+    for(let i = 0; i < col; i++) {
+      if(rows[row][i] === letter) {
+        yellow = false;
+      }
+    }
+
+    for(let i = col; i < rows[0].length; i++){
+      if(rows[row][i] === letter) {
+        yellow = true;
+      }
+     // console.log("Col 2nd: ", i);
+    }
+
+    return yellow;
   }
 
   const getAllLetterWithColor = (color) => {
@@ -146,7 +163,7 @@ const Wordle = ({ setVisible, setWon, targetWord, timerOn, setTimerOn, timeLimit
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>LOCKLE</Text>
+      <Text style={[styles.title, fontStyles.pixelFont]}>LOCKLE</Text>
       <CountDown
           key={id}
           until={timeLimit}
@@ -174,7 +191,7 @@ const Wordle = ({ setVisible, setWon, targetWord, timerOn, setTimerOn, timeLimit
                     backgroundColor: getCellBGColor(i, j)
                   }
                 ]}>
-                <Text style={styles.cellText}>{letter.toUpperCase()}</Text>
+                <Text style={[styles.cellText, fontStyles.pixelFont ]}>{letter.toUpperCase()}</Text>
               </View>
             ))}
           </View>

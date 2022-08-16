@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     titleBottomBorder : {
         borderBottomWidth: 3,
         borderBottomColor: "white",
-        borderStyle: "dashed"
+        borderStyle: 'dashed',
     },
     lvlName: {
         marginHorizontal: 10,
