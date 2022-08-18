@@ -18,6 +18,7 @@ function BackButton({back}) {
                 type='font-awesome'
                 color='black'
                 onPress={() => {navigation.dispatch(popAction); navigation.navigate(back)}} 
+              
             />
         </View>
     );

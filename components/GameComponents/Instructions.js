@@ -90,7 +90,6 @@ const Instructions = ({ title, helpSlides, textInstructions }) => {
           </View>
         </SafeAreaView>
       </Modal>
-      <Text style={styles.text}>Help</Text>
     </Pressable>
   );
 };

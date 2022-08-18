@@ -1,5 +1,6 @@
 import { View, Text, ActivityIndicator } from "react-native";
 import { useState, useEffect } from "react";
+import { ImageBackground } from "react-native";
 
 import Keyboard from "./Keyboard";
 import styles from './styles'
@@ -7,6 +8,7 @@ import { CLEAR, ENTER, colors} from "./wordleConstants";
 
 import CountDown from 'react-native-countdown-component';
 import { fontStyles } from "../../../App";
+import { color } from "react-native-reanimated";
 
 const NUM_TRIES = 5
 
@@ -22,6 +24,10 @@ const Wordle = ({ setVisible, setWon, targetWord, timerOn, setTimerOn, timeLimit
     new Array(NUM_TRIES).fill(new Array(letters.length).fill(""))
   );
 
+  const [rowsBGColor, setBGColor] = useState(
+    new Array(NUM_TRIES).fill(new Array(letters.length).fill("#ffffff"))
+  )
+
   const[currRow, setCurrRow] = useState(0)
   const[currCol, setCurrCol] = useState(0)
 
@@ -33,9 +39,10 @@ const Wordle = ({ setVisible, setWon, targetWord, timerOn, setTimerOn, timeLimit
   }, [currRow])
 
 
-  
+
   const clearGame = () => {
     setRows(new Array(NUM_TRIES).fill(new Array(letters.length).fill("")))
+    setBGColor(new Array(NUM_TRIES).fill(new Array(letters.length).fill(null)))
     setCurrRow(0)
     setCurrCol(0)
     setTimerOn(false)
@@ -96,6 +103,7 @@ const Wordle = ({ setVisible, setWon, targetWord, timerOn, setTimerOn, timeLimit
 
     if(key === ENTER) {
       if(currCol === rows[0].length){
+        updateRowBGColor(currRow)
         setCurrRow(currRow + 1);
         setCurrCol(0);
       }
@@ -110,48 +118,59 @@ const Wordle = ({ setVisible, setWon, targetWord, timerOn, setTimerOn, timeLimit
       
   }
 
-  const isCellActive = (row, col) => {
-    return row === currRow && col === currCol
+
+  const updateRowBGColor = (row) => {
+    let updatedRowsColors = copyArray(rowsBGColor)
+    let answer = letters;
+    const guess = rows[row]
+    let newColors = [colors.black, colors.black, colors.black, colors.black, colors.black]
+
+    setGreens(newColors, guess, answer)
+    setYellows(newColors, guess, answer)
+
+    updatedRowsColors[row] = newColors
+    setBGColor(updatedRowsColors)
   }
 
-  const getCellBGColor = (row, col) => {
-    const letter = rows[row][col]
-    if(row >= currRow) {
-      return "pink"
-    }
-    if(letter === letters[col]) {
-      return colors.green;
-    }
-    console.log(letter)
-    if(letters.includes(letter) && isYellow(letter, row, col)) {
-      return colors.yellow;
-    }
-
-    return colors.grey;
-  }
-
-  const isYellow = (letter, row, col) => {
-    let yellow = true;
-
-    for(let i = 0; i < col; i++) {
-      if(rows[row][i] === letter) {
-        yellow = false;
+  const setGreens = (newColors, guess, answer) => {
+    for(let i = 0; i < guess.length; i++) {
+      if(guess[i] === answer[i]) {
+        newColors[i] = colors.green;
+        answer[i] = ""
       }
     }
-
-    for(let i = col; i < rows[0].length; i++){
-      if(rows[row][i] === letter) {
-        yellow = true;
-      }
-     // console.log("Col 2nd: ", i);
-    }
-
-    return yellow;
   }
+  const setYellows = (newColors, guess, answer) => {
+    for(let i = 0; i < guess.length; i++) {
+      if(newColors[i] != colors.green) {
+        if(answer.includes(guess[i])) {
+          newColors[i] = colors.yellow
+          answer[answer.indexOf(guess[i])] = ""
+        }
+      }
+    }
+  }
+
+
+
+  // const getCellBGColor = (row, col) => {
+  //   const letter = rows[row][col]
+  //   if(row >= currRow) {
+  //     return "pink"
+  //   }
+  //   if(letter === letters[col]) {
+  //     return colors.green;
+  //   }
+  //   if(letters.includes(letter)) {
+  //     return colors.yellow;
+  //   }
+
+  //   return colors.grey;
+  // }
 
   const getAllLetterWithColor = (color) => {
     return rows.flatMap((row, i) => 
-    row.filter((cell, j) => getCellBGColor(i, j) === color)
+    row.filter((cell, j) => rowsBGColor[i][j] === color)
     );
   }
 
@@ -163,7 +182,7 @@ const Wordle = ({ setVisible, setWon, targetWord, timerOn, setTimerOn, timeLimit
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.title, fontStyles.pixelFont]}>LOCKLE</Text>
+      {/* <Text style={[styles.title, fontStyles.pixelFont]}>LOCKLE</Text> */}
       <CountDown
           key={id}
           until={timeLimit}
@@ -180,19 +199,37 @@ const Wordle = ({ setVisible, setWon, targetWord, timerOn, setTimerOn, timeLimit
         {rows.map((row, i) => (
           <View key={`row-${i}`}style={styles.row}>
             {row.map((letter, j) => (
-              <View 
-                key={`cell-${i}-${j}`}
-                style={[
-                  styles.cell, 
-                  { 
-                    borderColor: isCellActive(i, j) 
-                      ? "blue" 
-                      : "white",
-                    backgroundColor: getCellBGColor(i, j)
-                  }
-                ]}>
-                <Text style={[styles.cellText, fontStyles.pixelFont ]}>{letter.toUpperCase()}</Text>
-              </View>
+              // <View 
+              //   key={`cell-${i}-${j}`}
+              //   style={[
+              //     styles.cell, 
+              //     { 
+              //       backgroundColor: rowsBGColor[i][j]
+              //     }
+              //   ]}>
+              //   <ImageBackground
+              //     style={{flex:1}}
+              //     source={require("../../../assets/locked.png")}
+              //   >
+              //       <Text style={[styles.cellText, fontStyles.pixelFont]}>{letter.toUpperCase()}</Text>
+
+              //   </ImageBackground>
+              // </View>
+              <ImageBackground
+                   style={[
+                    styles.cell, 
+                    //{ backgroundColor: rowsBGColor[i][j]}
+                  ]}
+                  source={letter=== "" ? 
+                  require("../../../assets/locked.png"): 
+                  rowsBGColor[i][j] === colors.green ? require("../../../assets/unlocked.png") : require("../../../assets/noHole.png")}
+                >
+
+                     <Text style={[styles.cellText, fontStyles.pixelFont, {color: rowsBGColor[i][j]}]}>{letter.toUpperCase()}</Text>
+
+              </ImageBackground>
+            
+
             ))}
           </View>
         ))}
@@ -208,7 +245,6 @@ const Wordle = ({ setVisible, setWon, targetWord, timerOn, setTimerOn, timeLimit
     
   );
 };
-
 
 
 export default Wordle;

@@ -1,6 +1,7 @@
 import { View, Text, Pressable } from "react-native";
 import { keys, ENTER, CLEAR, colors } from "./wordleConstants";
 import styles, { keyWidth } from "./keyboardStyles";
+import { fontStyles } from "../../../App";
 
 const Keyboard = ({
 onKeyPressed = () => {},
@@ -40,11 +41,22 @@ onKeyPressed = () => {},
                 { backgroundColor: getKeyBGColor(key) },
               ]}
             >
-              <Text style={styles.keyText}>{key.toUpperCase()}</Text>
+              <Text style={[styles.keyText, fontStyles.pixelFont]}>{key}</Text>
             </Pressable>
           ))}
         </View>
       ))}
+      <Pressable
+        onPress={() => onKeyPressed(ENTER)}
+        disabled={greyCaps.includes(ENTER)}
+        style={[
+          styles.key,
+          styles.enter
+        ]}
+      >
+        <Text style={[styles.keyText, fontStyles.pixelFont]}>{ENTER}</Text>
+
+      </Pressable>
     </View>
   );
 };

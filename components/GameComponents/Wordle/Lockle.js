@@ -153,7 +153,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   dialog: {
-    backgroundColor: colors.green,
   },
   button: {},
 });
