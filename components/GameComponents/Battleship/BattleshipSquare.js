@@ -39,7 +39,7 @@ export default function BattleshipSquare({
               width: blockSize,
               resizeMode: "contain",
             }}
-            source={require("../../../assets/prisonerEyepatch.png")}
+            source={require("../../../assets/Battleship/prisoner1_repeat.gif")}
             // We can use a gif here for short digging animation
           />
         </View>
@@ -111,7 +111,7 @@ export default function BattleshipSquare({
               width: blockSize,
               resizeMode: "contain",
             }}
-            source={require("../../../assets/prisonerEyepatch.png")}
+            source={require("../../../assets/Battleship/prisoner1_defeated.gif")}
             // We can use a gif here for short digging animation
           />
         </View>
@@ -125,7 +125,7 @@ export default function BattleshipSquare({
               width: blockSize,
               resizeMode: "contain",
             }}
-            source={require("../../../assets/prisonerEyepatch.png")}
+            source={require("../../../assets/Battleship/prisoner1_defeated.gif")}
             // We can use a gif here for short digging animation
           />
         </View>
@@ -141,8 +141,7 @@ export default function BattleshipSquare({
               width: blockSize,
               resizeMode: "contain",
             }}
-            source={require("../../../assets/prisonerEyepatch.png")}
-            // We can use a gif here for short digging animation
+            source={require("../../../assets/Battleship/prisoner1_repeat.gif")}
           />
         </View>
       );
@@ -180,21 +179,21 @@ const styles = new StyleSheet.create({
     borderWidth: 1,
   },
   red: {
-    backgroundColor: "red",
-    height: blockSize,
-    width: blockSize,
-    borderColor: "black",
-    borderWidth: 1,
-  },
-  darkRed: {
     backgroundColor: "#850900",
     height: blockSize,
     width: blockSize,
     borderColor: "black",
     borderWidth: 1,
   },
+  darkRed: {
+    backgroundColor: "black",
+    height: blockSize,
+    width: blockSize,
+    borderColor: "black",
+    borderWidth: 1,
+  },
   grey: {
-    backgroundColor: "#524d4a6f",
+    backgroundColor: "white",
     height: blockSize,
     width: blockSize,
     borderColor: "black",

@@ -22,7 +22,7 @@ const Ship = ({
             position: "absolute",
             left: x,
             top: y,
-            backgroundColor: "white",
+            backgroundColor: "grey",
             height: blockSize,
             width: blockSize * battleShipSize,
           },
@@ -31,7 +31,7 @@ const Ship = ({
       >
         <Image
           style={{ height: blockSize, width: blockSize, resizeMode: "contain" }}
-          source={require("../../../assets/prisonerEyepatch.png")}
+          source={require("../../../assets/Battleship/prisoner1.png")}
         />
       </View>
     );
@@ -44,7 +44,7 @@ const Ship = ({
             position: "absolute",
             left: x,
             top: y,
-            backgroundColor: "white",
+            backgroundColor: "grey",
             height: blockSize * battleShipSize,
             width: blockSize,
           },
@@ -53,7 +53,7 @@ const Ship = ({
       >
         <Image
           style={{ height: blockSize, width: blockSize, resizeMode: "contain" }}
-          source={require("../../../assets/prisonerEyepatch.png")}
+          source={require("../../../assets/Battleship/prisoner1.png")}
         />
       </View>
     );

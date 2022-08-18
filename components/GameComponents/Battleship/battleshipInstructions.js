@@ -1,25 +1,23 @@
 export var battleshipInstructions = [
-  "THIS IS JUST A COPY OF BATTLESHIP INSTRUCTIONS, AND WE ACTUALLY NEED TO WRITE THEM",
-  "Testing how this looks",
-  "You have almost escaped the prison, but you still have one final obstacle to overcome",
-  "Dig your way out of the prison using the spoons you collected in the cafeteria!",
-  "Avoid getting caught by the guards and reach the star square to win",
+  "It looks like the prison guards have decided to challenge you with their forks! It is a battle of kitchen utensils!",
+  "You're going to have to fight if you want to make it out of the prison",
+  "Position yourself and your inmates for victory and defeat the guards with your spoons!",
 ];
 
 export var battleshipHelpSlides = [
   {
-    header: "Movement",
+    header: "Placing the Inmates",
     image: require("../../../assets/prisonerEyepatch.png"),
-    text: "Press the directional arrows to move your character",
+    text: "Tap on a bar to select it, and it will highlight with red. Tap it again to rotate it. Then tap anywhere on the grid and the inmates will line up in that spot. Once you have placed all the inmates, you will have the option to start the battle or reset your board.",
   },
   {
-    header: "Throwing",
-    image: require("../../../assets/prisonerEyepatch.png"),
-    text: "Swipe in any dircetion within the red circle to throw a spoon. If a guard is standing in the line of fire, they will be stunned for a short period of time",
+    header: "Attacking",
+    image: require("../../../assets/spoon.png"),
+    text: "Tap on the bottom grid to attack the guards.",
   },
   {
     header: "Winning",
     image: require("../../../assets/star.png"),
-    text: "Make it to the star square, and you will be one step closer to escaping.",
+    text: "Defeat all of them before they defeat you to escape out of the cafeteria.",
   },
 ];
