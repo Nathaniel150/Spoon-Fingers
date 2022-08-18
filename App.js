@@ -6,6 +6,10 @@ import Main2 from "./components/Main2.0";
 import { useState } from "react";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
+import { LogBox } from "react-native";
+
+LogBox.ignoreLogs(["EventEmitter.removeListener"]);
+
 
 export default function App() {
   const [fontsloaded, setFontsLoaded] = useState(false);

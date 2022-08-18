@@ -19,13 +19,19 @@ export default StyleSheet.create({
     width: keyWidth - 4,
     height: keyHeight - 4,
     margin: 2,
-    borderRadius: 5,
+    borderRadius: 1,
     backgroundColor: colors.grey,
     justifyContent: "center",
     alignItems: "center",
   },
+  enter:{
+    width: "80%",
+    backgroundColor: colors.darkgrey,
+    alignSelf: "center"
+  },
   keyText: {
-    color: colors.lightgrey,
-    fontWeight: "bold",
+    color: "white",
+    fontSize: 18
+    
   },
 });

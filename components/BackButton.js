@@ -18,6 +18,7 @@ function BackButton({back}) {
                 type='font-awesome'
                 color='black'
                 onPress={() => {navigation.dispatch(popAction); navigation.navigate(back)}} 
+                style={{paddingRight: 20}}
             />
         </View>
     );
@@ -26,10 +27,8 @@ function BackButton({back}) {
 const styles = StyleSheet.create({
     bar: {
         textAlign: 'left',
-        fontSize: 30,
         width: '100%',
-        alignItems: 'flex-start'
-        
+        alignItems: 'flex-start',        
     }, 
 
 })
