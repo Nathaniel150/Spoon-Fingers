@@ -2,23 +2,18 @@ import { useState, useEffect } from "react";
 import {
   View,
   Text,
-  Pressable,
   SafeAreaView,
   Button,
   Image,
   StyleSheet,
-  StatusBar,
   Dimensions,
-  Header,
   ImageBackground,
 } from "react-native";
 import Constants from "../../Constants";
 import BattleshipSquare from "./BattleshipSquare";
-import Draggable from "react-native-draggable";
 import Ship from "./Ship";
 import {
   Dialog,
-  DialogHeader,
   DialogContent,
   DialogActions,
   Provider,
@@ -207,8 +202,11 @@ export default function BattleShipBoard({ navigation, route }) {
     for (let k = 0; k < infoTrackerCopy.length; k++) {
       //set the correct ship to selected.
       if (k == i) {
+        if (infoTrackerCopy[k].selected) {
+          //only change the ship's orientation if it is tapped after already being selected.
+          changeOrientation(i);
+        }
         infoTrackerCopy[k].selected = true;
-        changeOrientation(i);
       }
       //unselect all the other ships.
       else {
@@ -545,11 +543,7 @@ export default function BattleShipBoard({ navigation, route }) {
             }}
           >
             <Image
-              style={{
-                backgroundColor: "#663801",
-                width: "100%",
-                resizeMode: "contain",
-              }}
+              style={styles.spacer_image}
               source={require("../../../assets/200.gif")}
             />
           </View>
@@ -665,7 +659,7 @@ export default function BattleShipBoard({ navigation, route }) {
             <DialogActions>
               {/* TODO Once I have the new updateState function, this button will return the player to the levels page */}
               <Button
-                title="Continue"
+                title="Try Again"
                 compact
                 variant="text"
                 onPress={() => {
@@ -702,5 +696,11 @@ const styles = StyleSheet.create({
     display: "flex",
     borderWidth: 4,
     borderColor: "red",
+  },
+  spacer_image: {
+    backgroundColor: "#663801",
+    width: "100%",
+    resizeMode: "contain",
+    // marginLeft: 100,
   },
 });
