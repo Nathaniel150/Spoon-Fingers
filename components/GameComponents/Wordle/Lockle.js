@@ -44,29 +44,24 @@ function Lockle({ navigation, route }) {
       word: "spoon",
       endText: "endText 1",
       time: 180,
-      key: uuid.v4(),
     },
     {
       startText: "Level 2",
       word: "knife",
       endText: "endText 2",
       time: 120,
-      key: uuid.v4(),
     },
     {
       startText: "Level 3",
       word: "forks",
       endText: "endText 3",
       time: 60,
-      key: uuid.v4(),
     },
   ];
 
   const [won, setWon] = useState(false);
   const [visible, setVisible] = useState(false);
-  const [startScreenVisible, setStartScreenVisible] = useState(true);
   const [level, setLevel] = useState(0);
-  const [timerOn, setTimerOn] = useState(false);
 
   const checkandUpdateGame = () => {
     if (won) {
@@ -83,13 +78,9 @@ function Lockle({ navigation, route }) {
     }
 
     setVisible(false);
-    setStartScreenVisible(true);
   };
 
-  const startGame = () => {
-    setStartScreenVisible(false);
-    setTimerOn(true);
-  };
+
 
   return (
     <View style={styles.container}>
@@ -103,10 +94,6 @@ function Lockle({ navigation, route }) {
         setVisible={setVisible}
         setWon={setWon}
         targetWord={wordleContent[level].word}
-        timerOn={timerOn}
-        setTimerOn={setTimerOn}
-        timeLimit={wordleContent[level].time}
-        id={wordleContent[level].key}
       />
 
       <Provider>
@@ -126,25 +113,6 @@ function Lockle({ navigation, route }) {
         </Dialog>
       </Provider>
 
-      <Provider>
-        <Dialog
-          visible={startScreenVisible}
-          onDismiss={() => setVisible(false)}
-        >
-          <DialogHeader title={wordleContent[level].startText} />
-          <DialogContent style={styles.dialog}>
-            <Text></Text>
-          </DialogContent>
-          <DialogActions>
-            <Button
-              title="Ok"
-              compact
-              variant="text"
-              onPress={() => startGame()}
-            />
-          </DialogActions>
-        </Dialog>
-      </Provider>
     </View>
   );
 }
@@ -152,8 +120,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  dialog: {
-  },
-  button: {},
 });
 export default Lockle;

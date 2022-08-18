@@ -1,4 +1,4 @@
-import { View, Text, ActivityIndicator } from "react-native";
+import { View, Text} from "react-native";
 import { useState, useEffect } from "react";
 import { ImageBackground } from "react-native";
 
@@ -6,9 +6,7 @@ import Keyboard from "./Keyboard";
 import styles from './styles'
 import { CLEAR, ENTER, colors} from "./wordleConstants";
 
-import CountDown from 'react-native-countdown-component';
 import { fontStyles } from "../../../App";
-import { color } from "react-native-reanimated";
 
 const NUM_TRIES = 5
 
@@ -16,7 +14,7 @@ const copyArray = (arr) => {
   return [...arr.map(rows => [...rows])]
 }
 
-const Wordle = ({ setVisible, setWon, targetWord, timerOn, setTimerOn, timeLimit, id }) => {
+const Wordle = ({ setVisible, setWon, targetWord}) => {
   const word = targetWord;
   const letters = word.split(''); // ['h', 'e', 'l', 'l', 'o']
 
@@ -25,7 +23,7 @@ const Wordle = ({ setVisible, setWon, targetWord, timerOn, setTimerOn, timeLimit
   );
 
   const [rowsBGColor, setBGColor] = useState(
-    new Array(NUM_TRIES).fill(new Array(letters.length).fill("#ffffff"))
+    new Array(NUM_TRIES).fill(new Array(letters.length).fill(colors.white))
   )
 
   const[currRow, setCurrRow] = useState(0)
@@ -38,14 +36,12 @@ const Wordle = ({ setVisible, setWon, targetWord, timerOn, setTimerOn, timeLimit
 
   }, [currRow])
 
-
-
   const clearGame = () => {
+    console.log("cleared")
     setRows(new Array(NUM_TRIES).fill(new Array(letters.length).fill("")))
-    setBGColor(new Array(NUM_TRIES).fill(new Array(letters.length).fill(null)))
+    setBGColor(new Array(NUM_TRIES).fill(new Array(letters.length).fill(colors.white)))
     setCurrRow(0)
     setCurrCol(0)
-    setTimerOn(false)
   }
 
   function wait(ms){
@@ -57,26 +53,19 @@ const Wordle = ({ setVisible, setWon, targetWord, timerOn, setTimerOn, timeLimit
   }
 
   const checkGameState = () => {
+    console.log("In check game")
     if(checkIfWon()) {
       wait(500)
-      setWon(true)
+      setWon(true) 
       setVisible(true)
+      console.log("Won")
       clearGame()
-
     } else if(checkIfLost()) {
       wait(500)
       setWon(false)
       setVisible(true)
       clearGame()
-
     }
-  }
-
-  const loseGame = () => {
-    wait(500)
-    setWon(false)
-    setVisible(true)
-    clearGame()
   }
   
   const checkIfWon = () => {
@@ -152,22 +141,6 @@ const Wordle = ({ setVisible, setWon, targetWord, timerOn, setTimerOn, timeLimit
   }
 
 
-
-  // const getCellBGColor = (row, col) => {
-  //   const letter = rows[row][col]
-  //   if(row >= currRow) {
-  //     return "pink"
-  //   }
-  //   if(letter === letters[col]) {
-  //     return colors.green;
-  //   }
-  //   if(letters.includes(letter)) {
-  //     return colors.yellow;
-  //   }
-
-  //   return colors.grey;
-  // }
-
   const getAllLetterWithColor = (color) => {
     return rows.flatMap((row, i) => 
     row.filter((cell, j) => rowsBGColor[i][j] === color)
@@ -182,54 +155,22 @@ const Wordle = ({ setVisible, setWon, targetWord, timerOn, setTimerOn, timeLimit
 
   return (
     <View style={styles.container}>
-      {/* <Text style={[styles.title, fontStyles.pixelFont]}>LOCKLE</Text> */}
-      <CountDown
-          key={id}
-          until={timeLimit}
-          size={25}
-          onFinish={() => loseGame()}
-          digitStyle={{backgroundColor: 'white'}}
-          digitTxtStyle={{color: colors.darkgrey}}
-          timeToShow={['M', 'S']}
-          timeLabels={{m:null,s: null}}
-          running={timerOn}
-      />
       <View style={styles.map}>
 
         {rows.map((row, i) => (
           <View key={`row-${i}`}style={styles.row}>
             {row.map((letter, j) => (
-              // <View 
-              //   key={`cell-${i}-${j}`}
-              //   style={[
-              //     styles.cell, 
-              //     { 
-              //       backgroundColor: rowsBGColor[i][j]
-              //     }
-              //   ]}>
-              //   <ImageBackground
-              //     style={{flex:1}}
-              //     source={require("../../../assets/locked.png")}
-              //   >
-              //       <Text style={[styles.cellText, fontStyles.pixelFont]}>{letter.toUpperCase()}</Text>
-
-              //   </ImageBackground>
-              // </View>
               <ImageBackground
-                   style={[
+                key={`row-${i}:col${j}`}
+                style={[
                     styles.cell, 
-                    //{ backgroundColor: rowsBGColor[i][j]}
                   ]}
-                  source={letter=== "" ? 
+                source={letter=== "" ? 
                   require("../../../assets/locked.png"): 
                   rowsBGColor[i][j] === colors.green ? require("../../../assets/unlocked.png") : require("../../../assets/noHole.png")}
-                >
-
-                     <Text style={[styles.cellText, fontStyles.pixelFont, {color: rowsBGColor[i][j]}]}>{letter.toUpperCase()}</Text>
-
+              >
+                <Text style={[styles.cellText, fontStyles.pixelFont, {color: rowsBGColor[i][j]}]}>{letter.toUpperCase()}</Text>
               </ImageBackground>
-            
-
             ))}
           </View>
         ))}

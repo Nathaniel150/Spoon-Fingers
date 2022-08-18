@@ -6,7 +6,7 @@ export default StyleSheet.create({
       flex: 1,
       alignItems: "center",
       backgroundColor: "white",
-      paddingTop: 50,
+      paddingTop: 80,
       paddingBottom:15
   
     },
@@ -31,8 +31,6 @@ export default StyleSheet.create({
       justifyContent: "center",
     },
     cell: {
-     // borderColor: "grey",
-     // borderWidth: 2,
       flex: 1,
       aspectRatio: .8, //makes square
       margin: 4,
