@@ -8,17 +8,13 @@ export var wordleInstructions = [
 export var wordleHelpSlides = [
   {
     header: "Moves",
-    image: require("../../../assets/prisonerEyepatch.png"),
-    text: "You have six attempts to guess each passcode",
+    image: require("../../../assets/Wordle/instruction1.png"),
+    text: "You have 5 attempts to guess the 5-letter passcode \n\nAfter you make a guess and press 'Unlock', the letters will turn different colors",
   },
   {
     header: "Colors",
-    image: require("../../../assets/prisonerEyepatch.png"),
-    text: "If a letter is correct, it will turn green. If a letter is correct but in the wrong spot, it will turn yellow. If a letter is incorrect, it will be grey.",
+    image: require("../../../assets/Wordle/instruction2.png"),
+    text: "Green: letter is in the passcode and in right spot \n\nYellow: letter is in the passcode, but not in right spot \n\nBlack: letter is not in the word",
   },
-  {
-    header: "Timer",
-    image: require("../../../assets/star.png"),
-    text: "There are three level that have to be accomplished in 2 minutes, 1 minute, and 30 seconds.",
-  },
+
 ];

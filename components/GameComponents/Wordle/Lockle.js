@@ -41,7 +41,7 @@ function Lockle({ navigation, route }) {
   const wordleContent = [
     {
       startText: "Level 1",
-      word: "spoon",
+      word: "stair",
       endText: "endText 1",
       time: 180,
     },

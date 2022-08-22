@@ -5,8 +5,10 @@ export const colors = {
     darkgrey: "#3A3A3D",
     grey: "#818384",
     lightgrey: "#D7DADC",
-    green: "#00FB0A",
-    yellow: "#FAF700",
+    greenLock: "#19fc00",
+    yellowLock: "#FAF700",
+    green: "#007810",
+    yellow: "#d4be00",
     white: "#ffffff"
   };
   

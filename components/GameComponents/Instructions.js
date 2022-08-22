@@ -67,7 +67,7 @@ const Instructions = ({ title, helpSlides, textInstructions, onClose }) => {
         animationType="slide"
         transparent={true}
         visible={modalVisible}
-        onRequestClose={() => setModalVisible(!modalVisible)}
+       // onRequestClose={() => setModalVisible(!modalVisible)}
       >
         <SafeAreaView style={styles.centeredView}>
           <View style={styles.modalView}>
@@ -120,16 +120,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   instructionHeader: {
-    fontSize: 34,
-    fontWeight: "bold",
+    fontSize: 30,
+    //fontWeight: "bold",
   },
   modalTextHeader: {
     flex: 0.5,
     fontSize: 24,
-    fontWeight: "bold",
   },
   helpImage: {
-    flex: 1.5,
+   flex: 1,
     resizeMode: "contain",
     width: "100%",
   },
@@ -137,6 +136,7 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: "left",
     marginTop: 20,
+    fontSize: 15
   },
   closeButtonView: {
     alignSelf: "stretch",

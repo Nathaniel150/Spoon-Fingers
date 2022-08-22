@@ -124,16 +124,16 @@ const Wordle = ({ setVisible, setWon, targetWord}) => {
   const setGreens = (newColors, guess, answer) => {
     for(let i = 0; i < guess.length; i++) {
       if(guess[i] === answer[i]) {
-        newColors[i] = colors.green;
+        newColors[i] = colors.greenLock;
         answer[i] = ""
       }
     }
   }
   const setYellows = (newColors, guess, answer) => {
     for(let i = 0; i < guess.length; i++) {
-      if(newColors[i] != colors.green) {
+      if(newColors[i] != colors.greenLock) {
         if(answer.includes(guess[i])) {
-          newColors[i] = colors.yellow
+          newColors[i] = colors.yellowLock
           answer[answer.indexOf(guess[i])] = ""
         }
       }
@@ -148,8 +148,8 @@ const Wordle = ({ setVisible, setWon, targetWord}) => {
   }
 
 
-  const greenCaps = getAllLetterWithColor(colors.green);
-  const yellowCaps = getAllLetterWithColor(colors.yellow);
+  const greenCaps = getAllLetterWithColor(colors.greenLock);
+  const yellowCaps = getAllLetterWithColor(colors.yellowLock);
   const greyCaps = getAllLetterWithColor(colors.grey)
 
 
@@ -166,8 +166,8 @@ const Wordle = ({ setVisible, setWon, targetWord}) => {
                     styles.cell, 
                   ]}
                 source={letter=== "" ? 
-                  require("../../../assets/locked.png"): 
-                  rowsBGColor[i][j] === colors.green ? require("../../../assets/unlocked.png") : require("../../../assets/noHole.png")}
+                  require("../../../assets/Wordle/locked.png"): 
+                  rowsBGColor[i][j] === colors.green ? require("../../../assets/Wordle/unlocked.png") : require("../../../assets/Wordle/noHole.png")}
               >
                 <Text style={[styles.cellText, fontStyles.pixelFont, {color: rowsBGColor[i][j]}]}>{letter.toUpperCase()}</Text>
               </ImageBackground>
