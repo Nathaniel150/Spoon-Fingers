@@ -55,18 +55,21 @@ const Wordle = ({ setVisible, setWon, targetWord}) => {
   const checkGameState = () => {
     console.log("In check game")
     if(checkIfWon()) {
-      wait(500)
+      wait(1000)
       setWon(true) 
       setVisible(true)
       console.log("Won")
       clearGame()
+     
     } else if(checkIfLost()) {
-      wait(500)
+      wait(1000)
       setWon(false)
       setVisible(true)
       clearGame()
     }
   }
+
+
   
   const checkIfWon = () => {
     const row = rows[currRow - 1]

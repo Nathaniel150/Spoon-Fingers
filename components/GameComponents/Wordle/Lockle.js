@@ -1,21 +1,13 @@
 import React from "react";
 import Wordle from "./Wordle";
-import { StyleSheet, View, Button, Text } from "react-native";
-import {
-  Dialog,
-  DialogHeader,
-  DialogContent,
-  DialogActions,
-  Provider,
-} from "@react-native-material/core";
+import { StyleSheet, View, Button, Text} from "react-native";
 import { useState, useEffect } from "react";
 import { colors } from "./wordleConstants";
 import Constants from "../../Constants";
-import uuid from "react-native-uuid";
 import { StackActions } from "@react-navigation/routers";
-import Instructions from "../Instructions";
 import { wordleHelpSlides, wordleInstructions } from "./wordleInstructions";
-
+import Instructions from "../Instructions";
+import Popup from "../Popup";
 
 
 //Game 1(3minutes): Pop up(introducing the game and how to play), gameplay, pop-up if won or lost and trasinition to next game,
@@ -41,7 +33,7 @@ function Lockle({ navigation, route }) {
   const wordleContent = [
     {
       startText: "Level 1",
-      word: "stair",
+      word: "spoon",
       endText: "endText 1",
       time: 180,
     },
@@ -84,11 +76,7 @@ function Lockle({ navigation, route }) {
 
   return (
     <View style={styles.container}>
-      <Instructions
-        title="Wordle"
-        textInstructions={wordleInstructions}
-        helpSlides={wordleHelpSlides}
-      />
+      
 
       <Wordle
         setVisible={setVisible}
@@ -96,10 +84,22 @@ function Lockle({ navigation, route }) {
         targetWord={wordleContent[level].word}
       />
 
-      <Provider>
+      <Instructions
+        title="Wordle"
+        textInstructions={wordleInstructions}
+        helpSlides={wordleHelpSlides}
+      />
+
+      <Popup 
+        visible={visible}
+        text={won ? "You won! Onto the next level." : "You lost, guess you aren't breaking out today."}
+        button1={{ title: "Next", onPress: () => checkandUpdateGame() }}
+        />
+
+      {/* <Provider>
         <Dialog visible={visible}>
           <DialogHeader title={won === true ? "WON" : "LOST"} />
-          <DialogContent style={styles.dialog}>
+          <DialogContent style={styles.dialogtittle}>
             <Text>Content</Text>
           </DialogContent>
           <DialogActions>
@@ -108,10 +108,11 @@ function Lockle({ navigation, route }) {
               compact
               variant="text"
               onPress={() => checkandUpdateGame()}
+              
             />
           </DialogActions>
         </Dialog>
-      </Provider>
+      </Provider> */}
 
     </View>
   );
