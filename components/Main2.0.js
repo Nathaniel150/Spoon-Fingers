@@ -4,11 +4,8 @@ import { ActivityIndicator } from "@react-native-material/core";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Icon } from "@rneui/base";
-import { useNavigation } from "@react-navigation/core";
 
 import StartingScreen from "./StartingScreen";
-// import LevelSelect from "./LevelSelect";
 import LevelSelect2 from "./LevelSelect2";
 import StoryScene from "./SceneComponents/StoryScene";
 import Lockle from "./GameComponents/Wordle/Lockle";
@@ -17,7 +14,6 @@ import Digdug from "./GameComponents/Digdug/Digdug";
 import { storyP1, storyP2, storyP3, storyP4 } from "../assets/StoryData/scenes";
 import Constants from "./Constants.js";
 import BackButton from "./BackButton";
-import { unmountComponentAtNode } from "react-dom";
 
 const Stack = createNativeStackNavigator();
 
@@ -109,9 +105,12 @@ const Main2 = () => {
 
   return (
     <NavigationContainer>
+
       <Stack.Navigator>
+
         {levels.map((level, i) => {
           return (
+            
             <Stack.Screen
               key={i}
               name={level.name}

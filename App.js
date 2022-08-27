@@ -9,6 +9,8 @@ import AppLoading from "expo-app-loading";
 import { LogBox } from "react-native";
 
 LogBox.ignoreLogs(["EventEmitter.removeListener"]);
+LogBox.ignoreLogs(['Require cycle:']);
+
 
 
 export default function App() {
@@ -21,7 +23,9 @@ export default function App() {
     });
 
   if (fontsloaded) {
-    return <Main2 />;
+    return (
+      <Main2 />
+    )
   } else {
     return (
       <AppLoading

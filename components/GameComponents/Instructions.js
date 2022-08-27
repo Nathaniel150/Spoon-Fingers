@@ -13,6 +13,7 @@ import {
 
 import Swiper from "react-native-swiper";
 
+
 //this will need to take title,intructions(array of strings), and helpSlides(see current format below) as props.
 //onClose is an optional prop.
 const Instructions = ({ title, helpSlides, textInstructions, onClose }) => {
@@ -57,6 +58,7 @@ const Instructions = ({ title, helpSlides, textInstructions, onClose }) => {
     return helpSlideViews;
   };
 
+
   return (
     <Pressable
       onPress={() => {
@@ -67,7 +69,11 @@ const Instructions = ({ title, helpSlides, textInstructions, onClose }) => {
         animationType="slide"
         transparent={true}
         visible={modalVisible}
-       // onRequestClose={() => setModalVisible(!modalVisible)}
+        // isVisible={modalVisible}
+        // deviceHeight={Constants.MAX_HEIGHT + 30}
+        // animationInTiming={600}
+        // animationOutTiming={800}
+        // backdropOpacity={.4}
       >
         <SafeAreaView style={styles.centeredView}>
           <View style={styles.modalView}>
@@ -121,14 +127,13 @@ const styles = StyleSheet.create({
   },
   instructionHeader: {
     fontSize: 30,
-    //fontWeight: "bold",
   },
   modalTextHeader: {
-    flex: 0.5,
+    flex: 0.2,
     fontSize: 24,
   },
   helpImage: {
-   flex: 1,
+    flex: 1,
     resizeMode: "contain",
     width: "100%",
   },
@@ -161,7 +166,7 @@ const styles = StyleSheet.create({
   },
   modalView: {
     marginHorizontal: 20,
-    marginVertical: 100,
+    marginVertical: 85,
 
     backgroundColor: "white",
     padding: 35,
@@ -179,6 +184,7 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 18,
   },
+
 });
 
 export default Instructions;
