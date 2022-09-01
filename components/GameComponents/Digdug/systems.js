@@ -1,4 +1,4 @@
-var TIMER_LENGTH = 25;
+var TIMER_LENGTH = 50;
 var levels = 0;
 var guardMovementClock = 50; //every 50 ticks, the guards will move automatically even if the player hasn't moved
 
@@ -15,10 +15,10 @@ const MoveAvatar = (entities, { events, dispatch }) => {
     dispatch("caught");
   }
 
-  handleDefaultGuardMovement(
-    dirtArray.playerPosition,
-    dirtArray.guardPositions
-  );
+  // handleDefaultGuardMovement(
+  //   dirtArray.playerPosition,
+  //   dirtArray.guardPositions
+  // );
   handleStun(dirtArray.guardPositions);
 
   if (events.length) {
