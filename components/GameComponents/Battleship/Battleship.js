@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, StyleSheet, Platform, StatusBar } from "react-native";
 import BattleShipBoard from "./BattleShipBoard";
 import Instructions from "../Instructions";
 
@@ -15,6 +15,7 @@ const Battleship = ({ navigation, route }) => {
         textInstructions={battleshipInstructions}
         helpSlides={battleshipHelpSlides}
       />
+      <View style={styles.spacer} />
       <BattleShipBoard navigation={navigation} route={route} />
     </>
   );
@@ -24,6 +25,9 @@ const styles = StyleSheet.create({
   text: {
     textAlign: "center",
     marginTop: 200,
+  },
+  spacer: {
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
 });
 

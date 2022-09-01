@@ -6,7 +6,7 @@ export var battleshipInstructions = [
 
 export var battleshipHelpSlides = [
   {
-    header: "Placing the Inmates",
+    header: "Placing Inmates",
     image: require("../../../assets/prisonerEyepatch.png"),
     text: "Tap on a bar to select it, and it will highlight with red. Tap it again to rotate it. Then tap anywhere on the grid and the inmates will line up in that spot. Once you have placed all the inmates, you will have the option to start the battle or reset your board.",
   },

@@ -29,6 +29,10 @@ export default function BattleshipSquare({
     }
   };
 
+  if (setup && enemy) {
+    return <View style={styles.hidden} />;
+  }
+
   if (setup) {
     if (square.isShip) {
       return (
@@ -198,5 +202,9 @@ const styles = new StyleSheet.create({
     width: blockSize,
     borderColor: "black",
     borderWidth: 1,
+  },
+  hidden: {
+    height: blockSize,
+    width: blockSize,
   },
 });

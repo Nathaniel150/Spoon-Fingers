@@ -1,21 +1,18 @@
 export var digdugInstructions = [
-  "Press the direction arrows to move your character",
-  "Testing how this looks",
-  "You have almost escaped the prison, but you still have one final obstacle to overcome",
-  "Dig your way out of the prison using the spoons you collected in the cafeteria!",
-  "Avoid getting caught by the guards and reach the star square to win",
+  "You're almost past your final obstacle, but the guards are on your tail, and you're going to have to dig out!",
+  "Navigate and dig underground to get past the prison wall, but don't get caught by the guards!",
 ];
 
 export var digdugHelpSlides = [
   {
     header: "Movement",
     image: require("../../../assets/prisonerEyepatch.png"),
-    text: "Press the directional arrows to move your character",
+    text: "Press the directional arrows to move your character around. Careful, you can't move through rocks.",
   },
   {
-    header: "Throwing",
+    header: "Throwing Spoons",
     image: require("../../../assets/prisonerEyepatch.png"),
-    text: "Swipe in any dircetion within the red circle to throw a spoon. If a guard is standing in the line of fire, they will be stunned for a short period of time",
+    text: "Swipe in any direction within the red circle to throw a spoon. If a guard is standing in the line of fire, they will be stunned for a short period of time",
   },
   {
     header: "Winning",

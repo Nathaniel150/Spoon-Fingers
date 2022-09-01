@@ -1,30 +1,15 @@
 import { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  SafeAreaView,
-  Button,
-  Image,
-  StyleSheet,
-  Dimensions,
-  ImageBackground,
-} from "react-native";
+import { View, StyleSheet, Dimensions, ImageBackground } from "react-native";
 import Constants from "../../Constants";
 import BattleshipSquare from "./BattleshipSquare";
 import Ship from "./Ship";
-import {
-  Dialog,
-  DialogContent,
-  DialogActions,
-  Provider,
-} from "@react-native-material/core";
 import { StackActions } from "@react-navigation/routers";
+import Popup from "../Popup";
 
 export default function BattleShipBoard({ navigation, route }) {
   const lvlUnlock = route.params.lvlUnlock;
   const popAction = StackActions.pop(1);
 
-  //TODO I think this should have a dependence on shipInfoTracker, but it wasn't working for some reason.
   useEffect(() => {
     if (checkFinishedSetup()) {
       setReady(true);
@@ -503,11 +488,11 @@ export default function BattleShipBoard({ navigation, route }) {
 
   return (
     <ImageBackground
-      source={require("../../../assets/grey-background.jpeg")}
+      source={require("../../../assets/BackgroundImages/prison.png")}
       resizeMode="cover"
       style={styles.background}
     >
-      <SafeAreaView style={styles.battleship_container}>
+      <View style={styles.battleship_container}>
         <View style={styles.board}>
           {board.map((row, i) => {
             return (
@@ -533,50 +518,31 @@ export default function BattleShipBoard({ navigation, route }) {
           })}
         </View>
 
-        {/* Spacer will eventually have fight animation */}
-        {isSetup ? (
-          <></>
-        ) : (
-          <View
-            style={{
-              flexDirection: "row",
-            }}
-          >
-            <Image
-              style={styles.spacer_image}
-              source={require("../../../assets/200.gif")}
-            />
-          </View>
-        )}
-        {isSetup ? (
-          <></>
-        ) : (
-          <View style={styles.board}>
-            {enemyBoard.map((row, i) => {
-              return (
-                <View key={`row+${i}`}>
-                  {row.map((square, j) => {
-                    return (
-                      <BattleshipSquare
-                        key={`square+${i}+${j}`}
-                        setup={isSetup}
-                        placeShip={() => {}}
-                        square={square}
-                        board={enemyBoard}
-                        setBoard={setEnemyBoard}
-                        i={i}
-                        j={j}
-                        enemy={true}
-                        takeEnemyTurn={() => takeEnemyTurn()}
-                        checkIfSunk={checkIfSunk}
-                      />
-                    );
-                  })}
-                </View>
-              );
-            })}
-          </View>
-        )}
+        <View style={[styles.board]}>
+          {enemyBoard.map((row, i) => {
+            return (
+              <View key={`row+${i}`}>
+                {row.map((square, j) => {
+                  return (
+                    <BattleshipSquare
+                      key={`square+${i}+${j}`}
+                      setup={isSetup}
+                      placeShip={() => {}}
+                      square={square}
+                      board={enemyBoard}
+                      setBoard={setEnemyBoard}
+                      i={i}
+                      j={j}
+                      enemy={true}
+                      takeEnemyTurn={() => takeEnemyTurn()}
+                      checkIfSunk={checkIfSunk}
+                    />
+                  );
+                })}
+              </View>
+            );
+          })}
+        </View>
 
         {isSetup ? (
           shipInfoTracker.map((ship, i) => {
@@ -610,67 +576,38 @@ export default function BattleShipBoard({ navigation, route }) {
           <></>
         )}
 
-        <Provider>
-          <Dialog visible={ready}>
-            <DialogContent>
-              <Text>Content</Text>
-            </DialogContent>
-            <DialogActions>
-              <Button
-                title="Reset"
-                compact
-                variant="text"
-                onPress={() => resetBoard()}
-              />
-              <Button
-                title="Start"
-                compact
-                variant="text"
-                onPress={() => startGame()}
-              />
-            </DialogActions>
-          </Dialog>
-        </Provider>
-        {/* Popup menu when the player wins */}
-        <Provider>
-          <Dialog visible={won}>
-            <DialogContent>
-              <Text>Congrats!</Text>
-            </DialogContent>
-            <DialogActions>
-              <Button
-                title="Escape Cafeteria"
-                compact
-                variant="text"
-                onPress={() => {
-                  lvlUnlock();
-                  navigation.dispatch(popAction);
-                  navigation.navigate(Constants.STORY_P3);
-                }}
-              />
-            </DialogActions>
-          </Dialog>
-        </Provider>
-        <Provider>
-          <Dialog visible={lost}>
-            <DialogContent>
-              <Text>The Guards Have Defeated you!</Text>
-            </DialogContent>
-            <DialogActions>
-              {/* TODO Once I have the new updateState function, this button will return the player to the levels page */}
-              <Button
-                title="Try Again"
-                compact
-                variant="text"
-                onPress={() => {
-                  navigation.dispatch(popAction);
-                  navigation.navigate(Constants.STORY_P2);
-                }}
-              />
-            </DialogActions>
-          </Dialog>
-        </Provider>
-      </SafeAreaView>
+        <Popup
+          visible={ready && isSetup}
+          text="Are you ready for battle?"
+          button1={{ title: "Reset", onPress: () => resetBoard() }}
+          button2={{ title: "Start", onPress: () => startGame() }}
+        />
+
+        <Popup
+          visible={won}
+          text="You won the battle!"
+          button1={{
+            title: "Escape the cafeteria!",
+            onPress: () => {
+              lvlUnlock();
+              navigation.dispatch(popAction);
+              navigation.navigate(Constants.STORY_P3);
+            },
+          }}
+        />
+
+        <Popup
+          visible={lost}
+          text="The guards have defeated you!"
+          button1={{
+            title: "Try again...",
+            onPress: () => {
+              navigation.dispatch(popAction);
+              navigation.navigate(Constants.STORY_P2);
+            },
+          }}
+        />
+      </View>
     </ImageBackground>
   );
 }
@@ -678,9 +615,9 @@ export default function BattleShipBoard({ navigation, route }) {
 const styles = StyleSheet.create({
   battleship_container: {
     flex: 1,
-    justifyContent: "space-between",
+    justifyContent: "space-evenly",
     alignItems: "center",
-    // backgroundColor: "red",
+    backgroundColor: "white",
   },
   background: {
     flex: 1,
@@ -691,7 +628,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
   },
-
+  hide: {
+    display: "none",
+  },
   ship_container: {
     display: "flex",
     borderWidth: 4,
