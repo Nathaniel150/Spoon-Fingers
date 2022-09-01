@@ -96,6 +96,187 @@ export default function Digdug({ navigation, route }) {
         renderer: <DirtArray />,
       },
     },
+    {
+      dirtArray: {
+        playerPosition: [1, 0],
+        guardPositions: [
+          {
+            xPos: 4,
+            yPos: 0,
+            stunned: false,
+            stunnedTimer: 0,
+          },
+          {
+            xPos: 2,
+            yPos: 4,
+            stunned: false,
+            stunnedTimer: 0,
+          },
+        ],
+        levelNum: 1, //what level this is
+        level: [
+          [
+            { ...ground },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+          ],
+          [
+            { ...hole },
+            { ...rock },
+            { ...rock },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+          ],
+          [
+            { ...rock },
+            { ...rock },
+            { ...rock },
+            { ...hole },
+            { ...ground },
+            { ...ground },
+          ],
+          [
+            { ...ground },
+            { ...ground },
+            { ...hole },
+            { ...hole },
+            { ...rock },
+            { ...rock },
+          ],
+          [
+            { ...ground },
+            { ...hole },
+            { ...hole },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+          ],
+
+          [
+            { ...ground },
+            { ...win },
+            { ...ground },
+            { ...ground },
+            { ...rock },
+            { ...rock },
+          ],
+        ],
+        renderer: <DirtArray />,
+      },
+    },
+    {
+      dirtArray: {
+        playerPosition: [0, 1],
+        guardPositions: [
+          {
+            xPos: 0,
+            yPos: 4,
+            stunned: false,
+            stunnedTimer: 0,
+          },
+          {
+            xPos: 3,
+            yPos: 1,
+            stunned: false,
+            stunnedTimer: 0,
+          },
+          {
+            xPos: 5,
+            yPos: 2,
+            stunned: false,
+            stunnedTimer: 0,
+          },
+        ],
+        levelNum: 2, //what level this is
+        level: [
+          [
+            { ...ground },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+          ],
+          [
+            { ...rock },
+            { ...rock },
+            { ...rock },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+          ],
+          [
+            { ...rock },
+            { ...rock },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+          ],
+          [
+            { ...hole },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+            { ...rock },
+            { ...rock },
+            { ...rock },
+            { ...ground },
+          ],
+          [
+            { ...ground },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+            { ...rock },
+            { ...rock },
+            { ...rock },
+            { ...ground },
+          ],
+          [
+            { ...ground },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+            { ...rock },
+            { ...ground },
+          ],
+          [
+            { ...hole },
+            { ...hole },
+            { ...hole },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+            { ...rock },
+            { ...ground },
+          ],
+          [
+            { ...hole },
+            { ...ground },
+            { ...win },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+            { ...ground },
+          ],
+        ],
+        renderer: <DirtArray />,
+      },
+    },
 
     {
       dirtArray: {
@@ -405,6 +586,9 @@ const styles = StyleSheet.create({
     padding: 20,
   },
 });
+
+// Ideas: maybe you have ten spoons and can throw your spoon to stun guard,
+//  or use 1 to break a rock. If you get to 0 spoons, you can't dig anymore.
 
 let hole = {
   isRock: false,
