@@ -11,7 +11,7 @@ function StartingScreen({navigation}) {
             onTouchStart={() => {navigation.navigate(Constants.LEVEL_SELECT)}}
         >
             <ImageBackground
-                source={require("../assets/BackgroundImages/prison.png")}
+                source={require("../assets/BackgroundImages/StartingScreen4.png")}
                 resizeMode="cover"
                 style= {styles.background}
             >
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 70, 
         textAlign: "center",
-        color: "black",
+        color: "#eaeaea",
         
     },
     content: {
