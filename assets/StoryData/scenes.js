@@ -168,46 +168,46 @@ export const storyP3 = [
     {
         type: "narration",
         text: "Sah and his friends somehow defeat the prison guards and bolt for the exit carrying nothing but their spoons and a hope for freedom.",
-        bkgdImage: require("../BackgroundImages/background.jpeg")
+        bkgdImage: require("../BackgroundImages/wall.png")
     },
     {
         type: "dialogue",
         text: "We’ve gotta get out of here before they catch up to us.",
         character: characters.get("Sah"),
-        bkgdImage: require("../BackgroundImages/background.jpeg")
+        bkgdImage: require("../BackgroundImages/wall.png")
     },
     {
         type: "narration",
         text: "They run to the exit, but realize the prison is surrounded by a big wall.",
-        bkgdImage: require("../BackgroundImages/background.jpeg")
+        bkgdImage: require("../BackgroundImages/wall.png")
     },
     {
         type: "dialogue",
         text: "What is this doing here?!?! I thought we were home free.",
         character: characters.get("prisoner1"),
-        bkgdImage: require("../BackgroundImages/background.jpeg")
+        bkgdImage: require("../BackgroundImages/wall.png")
     },
     {
         type: "dialogue",
         text: "Don’t worry. I already thought of this.",
         character: characters.get("Sah"),
-        bkgdImage: require("../BackgroundImages/background.jpeg")
+        bkgdImage: require("../BackgroundImages/wall.png")
     },
     {
         type: "dialogue",
         text: "We’ll just have to dig our way out.",
         character: characters.get("Sah"),
-        bkgdImage: require("../BackgroundImages/background.jpeg")
+        bkgdImage: require("../BackgroundImages/wall.png")
     },
     {
         type: "narration",
         text: "Sah tapes a spoon to each of his 10 fingers and starts to dig.",
-        bkgdImage: require("../BackgroundImages/background.jpeg")
+        bkgdImage: require("../BackgroundImages/wall_guards.png")
     },
     {
         type: "narration",
         text: "Each prisoner follows suit. The guards were hot on their tails.",
-        bkgdImage: require("../BackgroundImages/background.jpeg")
+        bkgdImage: require("../BackgroundImages/wall_guards.png")
     },
 ]
 
