@@ -4,25 +4,25 @@ export const storyP1= [
     {
         type: "narration",
         text: "The prison walls quivered as the new prisoner approached",
-        bkgdImage: require("../BackgroundImages/StartingScreen3.png")
+        bkgdImage: require("../BackgroundImages/StartingScreen4.png")
 
     },
     {
         type: "narration",
         text: "They sensed something in the air...",
-        bkgdImage: require("../BackgroundImages/prison.png")
+        bkgdImage: require("../BackgroundImages/StartingScreen4.png")
 
     },
     {
         type: "narration",
         text: "A dangerous foe would soon call the prison home. But not for long",
-        bkgdImage: require("../BackgroundImages/background.jpeg")
+        bkgdImage: require("../BackgroundImages/StartingScreen4.png")
 
     },
     {
         type: "narration",
         text: "This is the legend of SPOONFINGERS",
-        bkgdImage: require("../BackgroundImages/background.jpeg")
+        bkgdImage: require("../BackgroundImages/StartingScreen4.png")
 
     },
     {
@@ -89,78 +89,78 @@ export const storyP2 = [
     {  
         type: "narration",
         text: "Sah and his prison inmates successfully picked the lock and escaped into the cafeteria.",
-        bkgdImage: require("../BackgroundImages/background.jpeg")
+        bkgdImage: require("../BackgroundImages/cafeteria.png")
     },
     {
         type: "dialogue",
         text: "I’m so glad they decided to model the lock after a popular word-puzzle game from late 2021.",
         character: characters.get("Sah"),
-        bkgdImage: require("../BackgroundImages/background.jpeg")
+        bkgdImage: require("../BackgroundImages/cafeteria.png")
     },
     {
         type: "dialogue",
         text: "But we’re not out of the woods yet boys! We need something to defend ourselves.",
         character: characters.get("Sah"),
-        bkgdImage: require("../BackgroundImages/background.jpeg")
+        bkgdImage: require("../BackgroundImages/cafeteria.png")
     },
     {
         type: "dialogue",
         text: "Start looking for weapons!",
         character: characters.get("Sah"),
-        bkgdImage: require("../BackgroundImages/background.jpeg")
+        bkgdImage: require("../BackgroundImages/cafeteria.png")
     },
     {
         type: "narration",
         text: "They rummage around the kitchen looking for useful items.",
-        bkgdImage: require("../BackgroundImages/background.jpeg")
+        bkgdImage: require("../BackgroundImages/cafeteria.png")
     },
     {
         type: "dialogue",
         text: "Knife? useless",
         character: characters.get("Sah"),
-        bkgdImage: require("../BackgroundImages/background.jpeg")
+        bkgdImage: require("../BackgroundImages/cafeteria.png")
     },
     {
         type: "dialogue",
         text: "Scissors? Ugh this won’t do.",
         character: characters.get("Sah"),
-        bkgdImage: require("../BackgroundImages/background.jpeg")
+        bkgdImage: require("../BackgroundImages/cafeteria.png")
     },
     {
         type: "dialogue",
         text: "Cheese grater? I aint no rat.",
         character: characters.get("Sah"),
-        bkgdImage: require("../BackgroundImages/background.jpeg")
+        bkgdImage: require("../BackgroundImages/cafeteria.png")
     },
     {
         type: "dialogue",
         text: "*GASP* I have an idea!",
         character: characters.get("Sah"),
-        bkgdImage: require("../BackgroundImages/background.jpeg")
+        bkgdImage: require("../BackgroundImages/cafeteria.png")
     },
     {
         type: "dialogue",
         text: "They’ll never see us coming with these SPOONS.",
         character: characters.get("Sah"),
-        bkgdImage: require("../BackgroundImages/background.jpeg")
+        bkgdImage: require("../BackgroundImages/cafeteria_spoon.png")
     },
     {
         type: "dialogue",
         text: "Hey put those spoons away or we’re gonna have to FORK you.",
         character: characters.get("guard"),
-        bkgdImage: require("../BackgroundImages/background.jpeg")
+        bkgdImage: require("../BackgroundImages/cafeteria_spoon.png")
     },
     {
         type: "dialogue",
         text: "Don’t you mean fight?",
         character: characters.get("Sah"),
-        bkgdImage: require("../BackgroundImages/background.jpeg")
+        bkgdImage: require("../BackgroundImages/cafeteria_spoon.png")
     },
     {
         type: "dialogue",
         text: "Did I stutter?",
         character: characters.get("guard"),
-        bkgdImage: require("../BackgroundImages/background.jpeg")
+        bkgdImage: require("../BackgroundImages/cafeteria_spoon.png")
     },
 ]
 
@@ -217,35 +217,35 @@ export const storyP4 = [
         type: "dialogue",
         text: "We’ve done it boys! We’re out!",
         character: characters.get("Sah"),
-        bkgdImage: require("../BackgroundImages/background.jpeg")
+        bkgdImage: require("../BackgroundImages/EndScene.png")
     },
     {
         type: "dialogue",
         text: "YUH",
         character: characters.get("prisoner1"),
-        bkgdImage: require("../BackgroundImages/background.jpeg")
+        bkgdImage: require("../BackgroundImages/EndScene.png")
     },
     {
         type: "dialogue",
         text: "I can’t wait to see my dog.",
         character: characters.get("prisoner1"),
-        bkgdImage: require("../BackgroundImages/background.jpeg")
+        bkgdImage: require("../BackgroundImages/EndScene.png")
     },
     {
         type: "dialogue",
         text: "yeah...about that…",
         character: characters.get("Sah"),
-        bkgdImage: require("../BackgroundImages/background.jpeg")
+        bkgdImage: require("../BackgroundImages/EndScene.png")
     },
     {
         type: "narration",
         text: " After the infamous escape of SPOONFINGERS, the prison never used spoons again…",
-        bkgdImage: require("../BackgroundImages/background.jpeg")
+        bkgdImage: require("../BackgroundImages/EndScene.png")
     },
     {
         type: "narration",
         text: "THE END",
-        bkgdImage: require("../BackgroundImages/background.jpeg")
+        bkgdImage: require("../BackgroundImages/EndScene.png")
     },
     
 ]

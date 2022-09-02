@@ -33,8 +33,9 @@ function LevelSelect2({navigation}) {
     const levels = [
         {
             lvlName: "1. The Cell",
-            img: require("../assets/BackgroundImages/prison.png"),
+            img: require("../assets/Levels/theCell.png"),
             onPress: () => {navigation.navigate(Constants.STORY_P1)},
+            bkgColor: "grey"
 
         },
         {
@@ -44,23 +45,25 @@ function LevelSelect2({navigation}) {
             bkgColor: "#833d9c"
         },
         {
-            lvlName: "3. Cafeteria",
+            lvlName: "3. Preparation",
             img: require("../assets/Levels/cheese_grater.png"),
             onPress: () => {navigation.navigate(Constants.STORY_P2)},
             bkgColor: "pink"
         },
         {
             lvlName: "4. Spoon vs Fork",
-            img: require("../assets/BackgroundImages/prison.png"),
+            img: require("../assets/Levels/spoonVsFork.png"),
             onPress: () => {navigation.navigate(Constants.BATTLESHIP)},
+            bkgColor: "#e66e2e"
         },
         {
-            lvlName: "5. Run",
-            img: require("../assets/BackgroundImages/prison.png"),
+            lvlName: "5. Cornered",
+            img: require("../assets/Levels/cornered.png"),
             onPress: () => {navigation.navigate(Constants.STORY_P3)},
+            bkgColor: "#424141"
         },
         {
-            lvlName: "6. Dig",
+            lvlName: "6. Final Escape",
             img: require("../assets/Levels/SpoonFingers.png"),
             onPress: () => {navigation.navigate(Constants.DIG_DUG)},
             bkgColor: "blue"
