@@ -10,7 +10,7 @@ export let characters = new Map([
     [   
         "prisoner1", 
         {
-            name:"Inmate", 
+            name:"Inmate Joe", 
             photo:require("../CharacterProfileImages/prisoner1.png"), 
             backgroundColor: "pink"
         }
@@ -19,7 +19,7 @@ export let characters = new Map([
         "guard",
         {
             name:"Prison Guard",
-            photo:require("../CharacterProfileImages/guard.png"),
+            photo:require("../CharacterProfileImages/prisonGuard.png"),
             backgroundColor: "white"
         }
     ]

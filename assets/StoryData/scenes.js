@@ -4,7 +4,7 @@ export const storyP1= [
     {
         type: "narration",
         text: "The prison walls quivered as the new prisoner approached",
-        bkgdImage: require("../BackgroundImages/prison.png")
+        bkgdImage: require("../BackgroundImages/StartingScreen3.png")
 
     },
     {

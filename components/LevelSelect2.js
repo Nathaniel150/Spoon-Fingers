@@ -35,16 +35,19 @@ function LevelSelect2({navigation}) {
             lvlName: "1. The Cell",
             img: require("../assets/BackgroundImages/prison.png"),
             onPress: () => {navigation.navigate(Constants.STORY_P1)},
+
         },
         {
             lvlName: "2. Locked In",
-            img: require("../assets/BackgroundImages/prison.png"),
+            img: require("../assets/Levels/lockAndKey.png"),
             onPress: () => {navigation.navigate(Constants.LOCKLE)},
+            bkgColor: "#833d9c"
         },
         {
             lvlName: "3. Cafeteria",
-            img: require("../assets/BackgroundImages/prison.png"),
+            img: require("../assets/Levels/cheese_grater.png"),
             onPress: () => {navigation.navigate(Constants.STORY_P2)},
+            bkgColor: "pink"
         },
         {
             lvlName: "4. Spoon vs Fork",
@@ -58,8 +61,9 @@ function LevelSelect2({navigation}) {
         },
         {
             lvlName: "6. Dig",
-            img: require("../assets/BackgroundImages/prison.png"),
+            img: require("../assets/Levels/SpoonFingers.png"),
             onPress: () => {navigation.navigate(Constants.DIG_DUG)},
+            bkgColor: "blue"
         },
         {
             lvlName: "7. Freedom",
@@ -79,7 +83,7 @@ function LevelSelect2({navigation}) {
                 <View style={styles.row} key={i}>
                     {i % 2 === 0 ? 
                         <View style={styles.row}>
-                            <Pressable onPress={level.onPress} disabled={!lvlsUnlocked[i]}>
+                            <Pressable onPress={level.onPress} disabled={!lvlsUnlocked[i]} style={{borderRadius: 63, backgroundColor: level.bkgColor}}>
                                 <Image
                                     source={level.img}
                                     style={lvlsUnlocked[i] ? styles.photo: [styles.photo, styles.blackTint ]}
@@ -91,7 +95,7 @@ function LevelSelect2({navigation}) {
                     :   <View style={[styles.row, styles.right]}>
                             <Text style={[styles.lvlName, fontStyles.pixelFont]}>{lvlsUnlocked[i] ? level.lvlName:"?"}</Text>
 
-                            <Pressable onPress={level.onPress} disabled={!lvlsUnlocked[i]}> 
+                            <Pressable onPress={level.onPress} disabled={!lvlsUnlocked[i]} style={{borderRadius: 63, backgroundColor: level.bkgColor}}> 
 
                                 <Image
                                     source={level.img}

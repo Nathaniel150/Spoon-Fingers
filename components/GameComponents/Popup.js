@@ -3,8 +3,6 @@ import { Modal, Text, Button, Pressable, StyleSheet, View, SafeAreaView } from '
 import { fontStyles } from '../../App';
 
 function Popup({visible, text, button1, button2}) {
-    const [popupVisible, setPopupVisible] = useState(visible);
-    console.log("In pop up")
     return (
         <Modal
             animationType="slide"
@@ -47,7 +45,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
         marginVertical: 85,
         backgroundColor: "white",
-        padding: 35,
+        padding: 30,
         alignItems: "center",
         shadowColor: "#000",
         shadowOffset: {
