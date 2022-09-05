@@ -166,7 +166,7 @@ const DirtSquare = ({
           width: blockSize,
           resizeMode: "contain",
         }}
-        source={require("../../../../assets/rock1withdirt.png")}
+        source={require("../../../../assets/rock.png")}
       />
     );
   }
@@ -180,7 +180,7 @@ const DirtSquare = ({
           width: blockSize,
           resizeMode: "contain",
         }}
-        source={require("../../../../assets/dirt1.png")}
+        source={require("../../../../assets/dirt.png")}
       />
     );
   }
