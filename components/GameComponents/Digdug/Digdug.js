@@ -1,5 +1,13 @@
 import React, { useState, useRef } from "react";
-import { StyleSheet, StatusBar, Text, View, Button } from "react-native";
+import {
+  StyleSheet,
+  StatusBar,
+  Text,
+  View,
+  Button,
+  ImageBackground,
+  Platform,
+} from "react-native";
 import { GameEngine } from "react-native-game-engine";
 import { MoveAvatar } from "./systems";
 import { DirtArray } from "./entities";
@@ -468,7 +476,6 @@ export default function Digdug({ navigation, route }) {
   const engine = useRef(null);
 
   const updateLevel = () => {
-    console.log();
     //if you are on the last level, move on with the story.
     if (currLevel >= entities.length - 1) {
       lvlUnlock();
@@ -495,100 +502,80 @@ export default function Digdug({ navigation, route }) {
 
   return (
     <>
-      <GameEngine
-        ref={engine}
-        style={styles.container}
-        running={running}
-        systems={[MoveAvatar]}
-        entities={entities[currLevel]}
-        onEvent={(e) => {
-          if (e === "winner") {
-            setRunning(false);
-            setHasWon(true);
-          } else if (e == "caught") {
-            setRunning(false);
-            setGotCaught(true);
-          }
-        }}
+      <ImageBackground
+        source={require("../../../assets/BackgroundImages/digdugBackground.png")}
+        resizeMode="cover"
+        style={styles.background}
       >
-        <StatusBar hidden={true} />
-      </GameEngine>
+        <GameEngine
+          ref={engine}
+          running={running}
+          systems={[MoveAvatar]}
+          entities={entities[currLevel]}
+          onEvent={(e) => {
+            if (e === "winner") {
+              setRunning(false);
+              setHasWon(true);
+            } else if (e == "caught") {
+              setRunning(false);
+              setGotCaught(true);
+            }
+          }}
+        >
+          <StatusBar hidden={false} />
+        </GameEngine>
 
-      <Instructions
-        title="Final Escape!"
-        textInstructions={digdugInstructions}
-        helpSlides={digdugHelpSlides}
-        onClose={() => startGame()}
-      />
+        <Instructions
+          title="Final Escape!"
+          textInstructions={digdugInstructions}
+          helpSlides={digdugHelpSlides}
+          onClose={() => startGame()}
+        />
 
-      <Popup
-        visible={hasWon}
-        text="One step closer!"
-        button1={{
-          title: "Escape",
-          onPress: () => {
-            updateLevel();
-          },
-        }}
-      />
+        <Popup
+          visible={hasWon}
+          text="One step closer!"
+          button1={{
+            title: "Escape",
+            onPress: () => {
+              updateLevel();
+            },
+          }}
+        />
 
-      <Popup
-        visible={gotCaught}
-        text="The Guards Have Defeated you!"
-        button1={{
-          title: "Try again...",
-          onPress: () => {
-            loseLevel();
-          },
-        }}
-      />
+        <Popup
+          visible={gotCaught}
+          text="The Guards Have Defeated you!"
+          button1={{
+            title: "Try again...",
+            onPress: () => {
+              loseLevel();
+            },
+          }}
+        />
 
-      {!(hasWon || gotCaught) ? (
-        <View style={styles.controllerContainer}>
-          <Controller engine={engine} type="move" />
-        </View>
-      ) : null}
-
-      <View style={styles.spacer}></View>
+        {!(hasWon || gotCaught) ? (
+          <View style={styles.controllerContainer}>
+            <Controller engine={engine} type="move" />
+          </View>
+        ) : null}
+      </ImageBackground>
     </>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  background: {
     flex: 1,
-    backgroundColor: "#FFF",
-  },
-  controller: {
-    display: "flex",
-    flexWrap: "wrap",
-    flexDirection: "row",
+    marginTop: -20,
   },
   controllerContainer: {
-    // backgroundColor: "grey",
-    height: "100%",
-    alignItems: "flex-end",
-    justifyContent: "flex-end",
-    marginBottom: 40,
+    alignItems: "center",
   },
   text: {
     textAlign: "center",
   },
-  spacer: {
-    marginTop: 30,
-  },
-  winModal: {
-    zIndex: 10,
-    position: "absolute",
-    top: "20%",
-    left: "26%",
-    backgroundColor: "lightblue",
-    padding: 20,
-  },
 });
-
-// Ideas: maybe you have ten spoons and can throw your spoon to stun guard,
-//  or use 1 to break a rock. If you get to 0 spoons, you can't dig anymore.
 
 let hole = {
   isRock: false,

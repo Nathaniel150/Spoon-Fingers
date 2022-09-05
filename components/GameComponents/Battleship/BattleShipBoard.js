@@ -488,7 +488,7 @@ export default function BattleShipBoard({ navigation, route }) {
 
   return (
     <ImageBackground
-      source={require("../../../assets/BackgroundImages/prison.png")}
+      source={require("../../../assets/BackgroundImages/battleshipBackground.png")}
       resizeMode="cover"
       style={styles.background}
     >
@@ -556,7 +556,7 @@ export default function BattleShipBoard({ navigation, route }) {
             let y =
               (screenWidth / Constants.BATTLESHIP_BOARD_WIDTH - 5) *
                 Constants.BATTLESHIP_BOARD_HEIGHT +
-              100;
+              150;
 
             return (
               <Ship
@@ -617,7 +617,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "space-evenly",
     alignItems: "center",
-    backgroundColor: "white",
   },
   background: {
     flex: 1,
@@ -640,6 +639,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#663801",
     width: "100%",
     resizeMode: "contain",
-    // marginLeft: 100,
   },
 });
