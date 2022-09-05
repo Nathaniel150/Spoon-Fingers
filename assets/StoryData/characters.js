@@ -4,7 +4,7 @@ export let characters = new Map([
         {
             name:"Sah", 
             photo:require("../CharacterProfileImages/sah.png"), 
-            backgroundColor: "yellow"
+            //backgroundColor: "#de6316"
         }
     ],
     [   
@@ -12,7 +12,7 @@ export let characters = new Map([
         {
             name:"Inmate Joe", 
             photo:require("../CharacterProfileImages/prisoner1.png"), 
-            backgroundColor: "pink"
+            //backgroundColor: "pink"
         }
     ],
     [

@@ -29,21 +29,21 @@ export const storyP1= [
         type: "dialogue",
         text: "Maybe I shouldn't have done that",
         character: characters.get("Sah"),
-        bkgdImage: require("../BackgroundImages/background.jpeg")
+        bkgdImage: require("../BackgroundImages/prison.png")
 
     },
     {
         type: "dialogue",
         text: "I can't believe I got caught...",
         character: characters.get("Sah"),
-        bkgdImage: require("../BackgroundImages/background.jpeg")
+        bkgdImage: require("../BackgroundImages/prison.png")
 
     },
     {
         type: "dialogue",
         text: "I mean it wasn't even my gun!",
         character: characters.get("Sah"),
-        bkgdImage: require("../BackgroundImages/background.jpeg")
+        bkgdImage: require("../BackgroundImages/prison.png")
 
     },
     // {
@@ -57,28 +57,28 @@ export const storyP1= [
         type: "dialogue",
         text: "There is no way we can stay in here with these losers.",
         character: characters.get("Sah"),
-        bkgdImage: require("../BackgroundImages/background.jpeg")
+        bkgdImage: require("../BackgroundImages/prison.png")
 
     },
     {
         type: "dialogue",
         text: "Come on boys, let’s get outta here.",
         character: characters.get("Sah"),
-        bkgdImage: require("../BackgroundImages/background.jpeg")
+        bkgdImage: require("../BackgroundImages/prison.png")
 
     },
     {
         type: "dialogue",
         text: "yeah yeah",
         character: characters.get("prisoner1"),
-        bkgdImage: require("../BackgroundImages/background.jpeg")
+        bkgdImage: require("../BackgroundImages/prison.png")
 
     },
     {
         type: "dialogue",
         text: "I bet I can pick this lock. This looks just like a game I know!",
         character: characters.get("Sah"),
-        bkgdImage: require("../BackgroundImages/background.jpeg")
+        bkgdImage: require("../BackgroundImages/prison.png")
 
     },
 ];

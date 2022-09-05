@@ -88,7 +88,7 @@ function Lockle({ navigation, route }) {
       />
 
       <Instructions
-        title="Wordle"
+        title="Lockle"
         textInstructions={wordleInstructions}
         helpSlides={wordleHelpSlides}
       />

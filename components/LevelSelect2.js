@@ -70,7 +70,7 @@ function LevelSelect2({navigation}) {
         },
         {
             lvlName: "7. Freedom",
-            img: require("../assets/BackgroundImages/prison.png"),
+            img: require("../assets/Levels/freedom_icon.jpg"),
             onPress: () => {navigation.navigate(Constants.STORY_P4)},
         },
     
@@ -86,7 +86,7 @@ function LevelSelect2({navigation}) {
                 <View style={styles.row} key={i}>
                     {i % 2 === 0 ? 
                         <View style={styles.row}>
-                            <Pressable onPress={level.onPress} disabled={!lvlsUnlocked[i]} style={{borderRadius: 63, backgroundColor: level.bkgColor}}>
+                            <Pressable onPress={level.onPress} disabled={!lvlsUnlocked[i]} style={{borderRadius: 63, backgroundColor: lvlsUnlocked[i] ? level.bkgColor : '#242424' }}>
                                 <Image
                                     source={level.img}
                                     style={lvlsUnlocked[i] ? styles.photo: [styles.photo, styles.blackTint ]}
@@ -98,7 +98,7 @@ function LevelSelect2({navigation}) {
                     :   <View style={[styles.row, styles.right]}>
                             <Text style={[styles.lvlName, fontStyles.pixelFont]}>{lvlsUnlocked[i] ? level.lvlName:"?"}</Text>
 
-                            <Pressable onPress={level.onPress} disabled={!lvlsUnlocked[i]} style={{borderRadius: 63, backgroundColor: level.bkgColor}}> 
+                            <Pressable onPress={level.onPress} disabled={!lvlsUnlocked[i]} style={{borderRadius: 63, backgroundColor: lvlsUnlocked[i] ? level.bkgColor : '#242424'}}> 
 
                                 <Image
                                     source={level.img}
