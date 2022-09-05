@@ -1,17 +1,17 @@
-import { View, Text, StyleSheet, Pressable, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  Image,
+  Platform,
+} from "react-native";
 import Constants from "../../Constants";
 
-const Ship = ({
-  selectShip,
-  changeOrientation,
-  battleShipSize,
-  ship,
-  orientation,
-  x,
-  y,
-  i,
-}) => {
-  const blockSize = Constants.MAX_WIDTH / Constants.BATTLESHIP_BOARD_WIDTH - 5;
+const Ship = ({ selectShip, battleShipSize, ship, x, y, i }) => {
+  const blockSize = Platform.isPad
+    ? Constants.MAX_WIDTH / Constants.BATTLESHIP_BOARD_WIDTH - 20
+    : Constants.MAX_WIDTH / Constants.BATTLESHIP_BOARD_WIDTH - 5;
 
   if (ship.orientation === "horizontal") {
     return (
@@ -22,7 +22,7 @@ const Ship = ({
             position: "absolute",
             left: x,
             top: y,
-            backgroundColor: "grey",
+            backgroundColor: "white",
             height: blockSize,
             width: blockSize * battleShipSize,
           },
@@ -44,7 +44,7 @@ const Ship = ({
             position: "absolute",
             left: x,
             top: y,
-            backgroundColor: "grey",
+            backgroundColor: "white",
             height: blockSize * battleShipSize,
             width: blockSize,
           },

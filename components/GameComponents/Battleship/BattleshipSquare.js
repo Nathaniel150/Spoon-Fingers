@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, Platform } from "react-native";
 import Constants from "../../Constants";
 
-const blockSize = Constants.MAX_WIDTH / Constants.BATTLESHIP_BOARD_WIDTH - 5;
+const blockSize = Platform.isPad
+  ? Constants.MAX_WIDTH / Constants.BATTLESHIP_BOARD_WIDTH - 20
+  : Constants.MAX_WIDTH / Constants.BATTLESHIP_BOARD_WIDTH - 5;
 
 export default function BattleshipSquare({
   square,
@@ -36,7 +38,7 @@ export default function BattleshipSquare({
   if (setup) {
     if (square.isShip) {
       return (
-        <View style={styles.grey}>
+        <View style={styles.white}>
           <Image
             style={{
               height: blockSize,
@@ -50,7 +52,7 @@ export default function BattleshipSquare({
       );
     } else {
       return (
-        <View onTouchStart={() => placeShip(i, j)} style={styles.blue}></View>
+        <View onTouchStart={() => placeShip(i, j)} style={styles.white}></View>
       );
     }
   }
@@ -58,15 +60,14 @@ export default function BattleshipSquare({
   if (enemy) {
     if (square.isSunk && square.isShip) {
       return (
-        <View style={styles.darkRed}>
+        <View style={styles.black}>
           <Image
             style={{
               height: blockSize,
               width: blockSize,
               resizeMode: "contain",
             }}
-            source={require("../../../assets/CharacterProfileImages/guard.png")}
-            // We can use a gif here for short digging animation
+            source={require("../../../assets/Battleship/prisonGuardDefeated.png")}
           />
         </View>
       );
@@ -79,36 +80,23 @@ export default function BattleshipSquare({
               width: blockSize,
               resizeMode: "contain",
             }}
-            source={require("../../../assets//CharacterProfileImages/guard.png")}
-            // We can use a gif here for short digging animation
+            source={require("../../../assets/Battleship/stunnedGuard.png")}
           />
         </View>
       );
     } else if (!square.isShip && square.isHit) {
-      return <View style={styles.white} />;
+      return <View style={styles.hit} />;
     } else if (square.isShip) {
-      return <View onTouchStart={gotHit} style={styles.blue}></View>;
+      return <View onTouchStart={gotHit} style={styles.white}></View>;
     } else {
-      return (
-        <View onTouchStart={gotHit} style={styles.blue}>
-          {/* <Image
-            style={{
-              height: blockSize,
-              width: blockSize,
-              resizeMode: "contain",
-            }}
-            source={require("../../../assets/table.png")}
-            // We can use a gif here for short digging animation
-          /> */}
-        </View>
-      );
+      return <View onTouchStart={gotHit} style={styles.white}></View>;
     }
   }
   //player's board. Basically the same except none of the onTouchStart functions trigger.
   else {
     if (square.isShip && square.isSunk) {
       return (
-        <View style={styles.darkRed}>
+        <View style={styles.black}>
           <Image
             style={{
               height: blockSize,
@@ -135,10 +123,10 @@ export default function BattleshipSquare({
         </View>
       );
     } else if (!square.isShip && square.isHit) {
-      return <View style={styles.white}></View>;
+      return <View style={styles.hit}></View>;
     } else if (square.isShip) {
       return (
-        <View style={styles.grey}>
+        <View style={styles.white}>
           <Image
             style={{
               height: blockSize,
@@ -150,32 +138,13 @@ export default function BattleshipSquare({
         </View>
       );
     } else {
-      return (
-        <View style={styles.blue}>
-          {/* <Image
-            style={{
-              height: blockSize,
-              width: blockSize,
-              resizeMode: "contain",
-            }}
-            source={require("../../../assets/table.png")}
-            // We can use a gif here for short digging animation
-          /> */}
-        </View>
-      );
+      return <View style={styles.white}></View>;
     }
   }
 }
 
 const styles = new StyleSheet.create({
-  blue: {
-    backgroundColor: "#ffffff3f",
-    height: blockSize,
-    width: blockSize,
-    borderColor: "black",
-    borderWidth: 1,
-  },
-  white: {
+  hit: {
     backgroundColor: "grey",
     height: blockSize,
     width: blockSize,
@@ -183,20 +152,20 @@ const styles = new StyleSheet.create({
     borderWidth: 1,
   },
   red: {
-    backgroundColor: "#850900",
+    backgroundColor: "#db2524",
     height: blockSize,
     width: blockSize,
     borderColor: "black",
     borderWidth: 1,
   },
-  darkRed: {
+  black: {
     backgroundColor: "black",
     height: blockSize,
     width: blockSize,
     borderColor: "black",
     borderWidth: 1,
   },
-  grey: {
+  white: {
     backgroundColor: "white",
     height: blockSize,
     width: blockSize,

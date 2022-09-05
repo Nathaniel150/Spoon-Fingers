@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform } from "react-native";
 
 import { View, Image } from "react-native";
 import Constants from "../../../Constants";
@@ -73,12 +73,12 @@ const DirtSquare = ({
     return (
       <Image
         style={{
-          backgroundColor: "black",
+          backgroundColor: "#221301",
           height: blockSize,
           width: blockSize,
           resizeMode: "contain",
         }}
-        source={require("../../../../assets/prisonerEyepatch.png")}
+        source={require("../../../../assets/Digdug/sah.png")}
       />
     );
   }
@@ -95,7 +95,7 @@ const DirtSquare = ({
             width: blockSize,
             resizeMode: "contain",
           }}
-          source={require("../../../../assets/prisonerMohawk.png")}
+          source={require("../../../../assets/Digdug/stunnedGuard.png")}
           // We can use a gif here for short digging animation
         />
       );
@@ -105,42 +105,28 @@ const DirtSquare = ({
       return (
         <Image
           style={{
-            backgroundColor: "black",
+            backgroundColor: "#221301",
             height: blockSize,
             width: blockSize,
             resizeMode: "contain",
           }}
-          source={require("../../../../assets/prisonerMohawk.png")}
+          source={require("../../../../assets/Digdug/prisonGuard.png")}
           // We can use a gif here for short digging animation
         />
       );
     }
-  }
-  //this is not working yet, but eventually I want to show the spoon moving through the air
-  else if (square.isSpoon) {
-    return (
-      <Image
-        style={{
-          backgroundColor: "brown",
-          height: blockSize,
-          width: blockSize,
-          resizeMode: "contain",
-        }}
-        source={require("../../../../assets/spoon.png")}
-      />
-    );
   }
   //this is the winning square
   else if (square.win) {
     return (
       <Image
         style={{
-          backgroundColor: "#663801",
+          backgroundColor: "#221301",
           height: blockSize,
           width: blockSize,
           resizeMode: "contain",
         }}
-        source={require("../../../../assets/star.png")}
+        source={require("../../../../assets/Digdug/star.png")}
       />
     );
   }
@@ -149,7 +135,7 @@ const DirtSquare = ({
     return (
       <View
         style={{
-          backgroundColor: "black",
+          backgroundColor: "#221301",
           height: blockSize,
           width: blockSize,
         }}
@@ -166,7 +152,7 @@ const DirtSquare = ({
           width: blockSize,
           resizeMode: "contain",
         }}
-        source={require("../../../../assets/rock1withdirt.png")}
+        source={require("../../../../assets/Digdug/rock1withdirt.png")}
       />
     );
   }
@@ -175,12 +161,12 @@ const DirtSquare = ({
     return (
       <Image
         style={{
-          backgroundColor: "black",
+          backgroundColor: "#221301",
           height: blockSize,
           width: blockSize,
           resizeMode: "contain",
         }}
-        source={require("../../../../assets/dirt1.png")}
+        source={require("../../../../assets/Digdug/dirt1.png")}
       />
     );
   }
@@ -207,7 +193,7 @@ const styles = StyleSheet.create({
     width: Constants.BLOCK_RADIUS * 2,
     height: Constants.BLOCK_RADIUS * 2,
     position: "absolute",
-    backgroundColor: "black",
+    backgroundColor: "#221301",
   },
 });
 
