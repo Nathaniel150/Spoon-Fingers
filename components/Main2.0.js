@@ -119,8 +119,8 @@ const Main2 = () => {
               options={{
                 headerTransparent: true,
                 headerTitle: level.back
-                  // ? (props) => <BackButton {...props} back={level.back} />
-                  ? " "
+                  ? (props) => <BackButton {...props} back={level.back} />
+                 
                   : "",
                 
                 headerBackVisible: false,
