@@ -36,10 +36,7 @@ const Main2 = () => {
     let dataString = await AsyncStorage.getItem("@lvlsUnlocked");
     try {
       let data = JSON.parse(dataString);
-      console.log("data_before", data)
       data[lvl] = true;
-      console.log("data_after", data)
-
 
       let dataString2 = JSON.stringify(data);
       await AsyncStorage.setItem("@lvlsUnlocked", dataString2)

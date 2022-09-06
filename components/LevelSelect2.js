@@ -20,7 +20,6 @@ function LevelSelect2({navigation}) {
 
         try {
             const data = JSON.parse(dataString);
-           // console.log("data", data)
             setLvlsUnlocked(data) ;
         } catch {
             console.log("can't parse string")

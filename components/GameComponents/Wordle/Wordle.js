@@ -37,7 +37,6 @@ const Wordle = ({ setVisible, setWon, targetWord}) => {
   }, [currRow])
 
   const clearGame = () => {
-    console.log("cleared")
     setRows(new Array(NUM_TRIES).fill(new Array(letters.length).fill("")))
     setBGColor(new Array(NUM_TRIES).fill(new Array(letters.length).fill(colors.white)))
     setCurrRow(0)
@@ -53,12 +52,10 @@ const Wordle = ({ setVisible, setWon, targetWord}) => {
   }
 
   const checkGameState = () => {
-    console.log("In check game")
     if(checkIfWon()) {
       wait(1000)
       setWon(true) 
       setVisible(true)
-      console.log("Won")
       clearGame()
      
     } else if(checkIfLost()) {
