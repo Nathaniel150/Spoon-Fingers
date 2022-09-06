@@ -20,7 +20,7 @@ export let characters = new Map([
         {
             name:"Prison Guard",
             photo:require("../CharacterProfileImages/prisonGuard.png"),
-            backgroundColor: "white"
+           // backgroundColor: "white"
         }
     ]
     

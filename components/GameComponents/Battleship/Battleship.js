@@ -15,7 +15,6 @@ const Battleship = ({ navigation, route }) => {
         textInstructions={battleshipInstructions}
         helpSlides={battleshipHelpSlides}
       />
-      <View style={styles.spacer} />
 
       <BattleShipBoard navigation={navigation} route={route} />
     </>
@@ -27,9 +26,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 200,
   },
-  spacer: {
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-  },
+  
 });
 
 export default Battleship;

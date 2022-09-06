@@ -585,7 +585,7 @@ export default function BattleShipBoard({ navigation, route }) {
 
         <Popup
           visible={won}
-          text="You won the battle!"
+          text="You and your immates emerge victorious! Don't guards usually carry guns?!?"
           button1={{
             title: "Escape the cafeteria!",
             onPress: () => {
@@ -598,7 +598,7 @@ export default function BattleShipBoard({ navigation, route }) {
 
         <Popup
           visible={lost}
-          text="The guards have defeated you!"
+          text="The guards have out forked you! That's embarrassing..."
           button1={{
             title: "Try again...",
             onPress: () => {
@@ -620,7 +620,7 @@ const styles = StyleSheet.create({
   },
   background: {
     flex: 1,
-    justifyContent: "flex-end",
+    //justifyContent: "flex-end",
   },
   board: {
     display: "flex",

@@ -24,7 +24,7 @@ const Main2 = () => {
   //if lvls unlocked is null, set it to inital state (just the first unlocked)
   const initalState = async () => {
     if(await AsyncStorage.getItem("@lvlsUnlocked") == null) {
-      const lvlsUnlocked = [true, false, false, false, false, false, true]
+      const lvlsUnlocked = [true, false, false, false, false, false, false]
       const lvlsUnlockedString = JSON.stringify(lvlsUnlocked);
       await AsyncStorage.setItem("@lvlsUnlocked", lvlsUnlockedString)
     }

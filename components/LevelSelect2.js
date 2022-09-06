@@ -110,7 +110,7 @@ function LevelSelect2({navigation}) {
                         </View>}
                 </View>
             ))}
-            <Text style={[styles.title, fontStyles.pixelBoldFont]}>Levels</Text>
+            <Text style={[styles.title, fontStyles.pixelBoldFont, styles.bottom]}>Levels</Text>
 
 
             
@@ -124,7 +124,8 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "black",
         paddingHorizontal: 40,
-        paddingVertical: 20
+        paddingVertical: 20,
+       
     },
     row: {
         width: "100%",
@@ -169,6 +170,9 @@ const styles = StyleSheet.create({
     },
     blackTint: {
         opacity: 0.3
+    },
+    bottom: {
+        paddingBottom: 50
     }
 
 })

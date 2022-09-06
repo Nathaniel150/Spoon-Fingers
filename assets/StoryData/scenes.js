@@ -3,7 +3,7 @@ import { characters } from "./characters";
 export const storyP1= [
     {
         type: "narration",
-        text: "The prison walls quivered as the new prisoner approached",
+        text: "The prison walls quivered as the new prisoner approached.",
         bkgdImage: require("../BackgroundImages/StartingScreen4.png")
 
     },
@@ -15,19 +15,19 @@ export const storyP1= [
     },
     {
         type: "narration",
-        text: "A dangerous foe would soon call the prison home. But not for long",
+        text: "A dangerous foe would soon call the prison home. But not for long.",
         bkgdImage: require("../BackgroundImages/StartingScreen4.png")
 
     },
     {
         type: "narration",
-        text: "This is the legend of SPOONFINGERS",
+        text: "This is the legend of SPOONFINGERS!",
         bkgdImage: require("../BackgroundImages/StartingScreen4.png")
 
     },
     {
         type: "dialogue",
-        text: "Maybe I shouldn't have done that",
+        text: "Maybe I shouldn't have done that...",
         character: characters.get("Sah"),
         bkgdImage: require("../BackgroundImages/prison.png")
 
@@ -88,7 +88,7 @@ export const storyP1= [
 export const storyP2 = [
     {  
         type: "narration",
-        text: "Sah and his prison inmates successfully picked the lock and escaped into the cafeteria.",
+        text: "Sah and his prison inmates successfully picked the locks and escaped into the cafeteria.",
         bkgdImage: require("../BackgroundImages/cafeteria.png")
     },
     {
@@ -128,13 +128,13 @@ export const storyP2 = [
     },
     {
         type: "dialogue",
-        text: "Cheese grater? I aint no rat.",
+        text: "Cheese grater? I ain't no rat.",
         character: characters.get("Sah"),
         bkgdImage: require("../BackgroundImages/cafeteria.png")
     },
     {
         type: "dialogue",
-        text: "*GASP* I have an idea!",
+        text: "*GASP*\n I have an idea!",
         character: characters.get("Sah"),
         bkgdImage: require("../BackgroundImages/cafeteria.png")
     },
@@ -195,7 +195,7 @@ export const storyP3 = [
     },
     {
         type: "dialogue",
-        text: "We’ll just have to dig our way out.",
+        text: "We’ll just have to dig our way out!",
         character: characters.get("Sah"),
         bkgdImage: require("../BackgroundImages/wall.png")
     },
@@ -206,7 +206,7 @@ export const storyP3 = [
     },
     {
         type: "narration",
-        text: "Each prisoner follows suit. The guards were hot on their tails.",
+        text: "Each prisoner follows suit. The guards are hot on their tails.",
         bkgdImage: require("../BackgroundImages/wall_guards.png")
     },
 ]
@@ -233,13 +233,13 @@ export const storyP4 = [
     },
     {
         type: "dialogue",
-        text: "yeah...about that…",
+        text: "Yeah...about that…",
         character: characters.get("Sah"),
         bkgdImage: require("../BackgroundImages/EndScene.png")
     },
     {
         type: "narration",
-        text: " After the infamous escape of SPOONFINGERS, the prison never used spoons again…",
+        text: "After the infamous escape of SPOONFINGERS, the prison never used spoons again…",
         bkgdImage: require("../BackgroundImages/EndScene.png")
     },
     {

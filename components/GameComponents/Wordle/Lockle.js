@@ -50,7 +50,7 @@ function Lockle({ navigation, route }) {
       word: "forks",
       endText: "endText 3",
       time: 60,
-      winText: "Hurray! You cracked all three locks"
+      winText: "Hooray! You cracked all three locks. Let's get out of here."
     },
   ];
 

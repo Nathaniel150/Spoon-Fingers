@@ -522,7 +522,7 @@ export default function Digdug({ navigation, route }) {
             }
           }}
         >
-          <StatusBar hidden={false} />
+          <StatusBar hidden={true} />
         </GameEngine>
 
         <Instructions
