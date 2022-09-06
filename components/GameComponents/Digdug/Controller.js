@@ -1,25 +1,10 @@
 import { StyleSheet, Pressable, Text, View } from "react-native";
 import { useState } from "react";
+import { Icon } from "@rneui/base";
 //handleThrowSpoon, handleBreakRock are optional;
 export default function Controller({ engine }) {
   const handlePress = (direction) => {
-    //if this controller is for spoon throwing;
-    // if (handleThrowSpoon) {
-    //   handleThrowSpoon();
-    // }
-    //if this controller is for breaking rocks;
-    // if (handleBreakRock) {
-    //   handleBreakRock();
-    // }
-    //if the action does not use spoons or there are still spoons left.
-
-    //dispatch the type of event in the correct direction
-
     engine.current.dispatch(`move-${direction}`);
-    // if (throwSpoon) {
-    //   engine.current.dispatch(`throw-spoon-${direction}`);
-    // } else {
-    // }
   };
 
   const [swipeStart, setSwipeStart] = useState([0, 0]);
@@ -40,12 +25,6 @@ export default function Controller({ engine }) {
 
     let changeX = endX - swipeStart[0];
     let changeY = endY - swipeStart[1];
-
-    // //if the swipe was not long enough(most likely the player pressed one of the buttons),
-    // // return without throwing a spoon.
-    // if (Math.abs(changeX) < 100 && Math.abs(changeY) < 100) {
-    //   return;
-    // }
 
     //if the x coordinate changed more than the y coordinate, register only a left or right swipe.
     if (Math.abs(changeX) > Math.abs(changeY)) {
@@ -78,7 +57,12 @@ export default function Controller({ engine }) {
             onPressIn={() => handlePress("up")}
             style={[styles.button, styles.upArrow]}
           >
-            <Text style={styles.text}>up</Text>
+            <Icon
+              name="chevron-up"
+              type="font-awesome"
+              color="black"
+              style={styles.text}
+            />
           </Pressable>
         </View>
 
@@ -87,13 +71,23 @@ export default function Controller({ engine }) {
             onPressIn={() => handlePress("left")}
             style={[styles.button, styles.leftArrow]}
           >
-            <Text style={styles.text}>left</Text>
+            <Icon
+              name="chevron-left"
+              type="font-awesome"
+              color="black"
+              style={styles.text}
+            />
           </Pressable>
           <Pressable
             onPressIn={() => handlePress("right")}
             style={[styles.button, styles.rightArrow]}
           >
-            <Text style={styles.text}>right</Text>
+            <Icon
+              name="chevron-right"
+              type="font-awesome"
+              color="black"
+              style={styles.text}
+            />
           </Pressable>
         </View>
 
@@ -102,7 +96,12 @@ export default function Controller({ engine }) {
             onPressIn={() => handlePress("down")}
             style={[styles.button, styles.downArrow]}
           >
-            <Text style={styles.text}>down</Text>
+            <Icon
+              name="chevron-down"
+              type="font-awesome"
+              color="black"
+              style={styles.text}
+            />
           </Pressable>
         </View>
       </View>
@@ -114,14 +113,12 @@ const styles = StyleSheet.create({
   button: {
     padding: 10,
     margin: 5,
-    backgroundColor: "lightblue",
+    backgroundColor: "#ffc534",
     // borderRadius: 15,
     width: "40%",
   },
   controlContainer: {
-    display: "flex",
-    justifyContent: "flex-start",
-    alignItems: "flex-end",
+    alignSelf: "center",
     width: "50%",
     marginRight: 20,
     marginBottom: 40,
@@ -144,9 +141,10 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
   throwArea: {
-    backgroundColor: "red",
-    height: "65%",
-    width: "40%",
+    alignSelf: "center",
+    backgroundColor: "#ffc534",
+    width: "30%",
+    aspectRatio: 1,
     borderRadius: 500, // just a lot to make sure it is a circle;
   },
   leftArrow: {

@@ -16,6 +16,7 @@ const Battleship = ({ navigation, route }) => {
         helpSlides={battleshipHelpSlides}
       />
       <View style={styles.spacer} />
+
       <BattleShipBoard navigation={navigation} route={route} />
     </>
   );
