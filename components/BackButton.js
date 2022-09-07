@@ -6,7 +6,6 @@ import { useNavigation } from '@react-navigation/core';
 import { StackActions } from '@react-navigation/routers';
 
 
-
 function BackButton({back}) {
     const navigation = useNavigation();
     const popAction = StackActions.pop(1);

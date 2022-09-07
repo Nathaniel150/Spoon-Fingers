@@ -1,6 +1,6 @@
 import React from 'react';
-import { useState, useLayoutEffect } from 'react';
-import { ImageBackground, Text, View, StyleSheet, TouchableHighlight } from 'react-native';
+import { useState,} from 'react';
+import { ImageBackground, View, StyleSheet, TouchableHighlight } from 'react-native';
 
 import DialogueScene from './DialogueScene';
 import NarrationScene from './NarrationScene';

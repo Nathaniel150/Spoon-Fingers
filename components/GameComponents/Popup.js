@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { Modal, Text, Button, Pressable, StyleSheet, View, SafeAreaView } from 'react-native';
+import { Modal, Text, Pressable, StyleSheet, View, SafeAreaView } from 'react-native';
 import { fontStyles } from '../../App';
 
 function Popup({visible, text, button1, button2}) {

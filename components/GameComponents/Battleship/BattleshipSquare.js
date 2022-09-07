@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { View, Text, StyleSheet, Image, Platform } from "react-native";
 import Constants from "../../Constants";
 

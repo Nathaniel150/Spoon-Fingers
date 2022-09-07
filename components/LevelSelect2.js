@@ -1,6 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ActivityIndicator } from "@react-native-material/core";
-import { StackActions } from '@react-navigation/routers';
 
 import React, { useEffect, useState } from 'react';
 import { ScrollView, View, Text, StyleSheet,Image, Pressable } from 'react-native';

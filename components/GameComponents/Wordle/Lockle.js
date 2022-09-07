@@ -1,8 +1,7 @@
 import React from "react";
 import Wordle from "./Wordle";
-import { StyleSheet, View, Button, Text} from "react-native";
-import { useState, useEffect } from "react";
-import { colors } from "./wordleConstants";
+import { StyleSheet, View } from "react-native";
+import { useState, } from "react";
 import Constants from "../../Constants";
 import { StackActions } from "@react-navigation/routers";
 import { wordleHelpSlides, wordleInstructions } from "./wordleInstructions";
