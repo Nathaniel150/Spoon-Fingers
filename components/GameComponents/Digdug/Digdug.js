@@ -13,7 +13,7 @@ import { MoveAvatar } from "./systems";
 import { DirtArray } from "./entities";
 import Controller from "./Controller";
 import Constants from "../../Constants";
-import { StackActions } from "@react-navigation/native";
+import { StackActions } from '@react-navigation/native';
 
 import Instructions from "../Instructions";
 import { digdugHelpSlides, digdugInstructions } from "./digdugInstructions";

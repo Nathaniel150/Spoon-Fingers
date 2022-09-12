@@ -24,10 +24,18 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/Levels/SpoonFingers.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "spoon.fingers",
+      "versionCode": 2
+
     },
     "web": {
       "favicon": "./assets/Levels/SpoonFingers.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "2a56b7c1-c61e-43bb-b5be-0af6a93be257"
+      }
     }
   }
 }

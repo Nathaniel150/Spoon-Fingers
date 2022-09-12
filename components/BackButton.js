@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, Platform, StatusBar, SafeAreaView } from 'react
 import { Icon } from '@rneui/base';
 import Constants from './Constants';
 import { useNavigation } from '@react-navigation/core';
-import { StackActions } from '@react-navigation/routers';
+import { StackActions } from '@react-navigation/native';
 
 
 function BackButton({back}) {
