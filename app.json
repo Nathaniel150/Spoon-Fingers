@@ -1,22 +1,20 @@
 {
   "expo": {
-    "name": "prison-break",
+    "name": "Spoon Fingers",
     "slug": "prison-break",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/Levels/SpoonFingers.png",
+    "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/Levels/SpoonFingers.png",
+      "image": "./assets/BackgroudImages/StartingScreen4.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -27,7 +25,6 @@
       },
       "package": "spoon.fingers",
       "versionCode": 2
-
     },
     "web": {
       "favicon": "./assets/Levels/SpoonFingers.png"
